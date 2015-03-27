@@ -4,6 +4,5 @@ CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += C++11
 
-SOURCES += main.cpp \
-    ../src/main.cpp
+SOURCES += ../src/*
 
