@@ -4,6 +4,14 @@ CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += C++11
 
-SOURCES += ./main.cpp
+SOURCES += ./main.cpp \
+    Position.cpp \
+    TileType.cpp \
+    Tile.cpp
 
-HEADERS +=
+HEADERS += \
+    Color.h \
+    Position.h \
+    TileType.h \
+    Shape.h \
+    Tile.h
