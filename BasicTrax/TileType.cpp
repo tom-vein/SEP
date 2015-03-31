@@ -23,15 +23,37 @@ Color TileType::getBottomColor() const
   {
     case Shape::CROSS:
       return (TileType::top_color_ = Color::WHITE) ? Color::WHITE : Color::RED;
+    case Shape::CURVE_TOP_LEFT_CORNER:
+      return (TileType::top_color_ = Color::WHITE) ? Color::WHITE : Color::RED;
+    case Shape::CURVE_TOP_RIGHT_CORNER:
+      return (TileType::top_color_ = Color::WHITE) ? Color::WHITE : Color::RED;
   }
 }
 
 Color TileType::getRightColor() const
 {
+  switch(shape_)
+  {
+    case Shape::CROSS:
+      return (TileType::top_color_ = Color::WHITE) ? Color::RED : Color::WHITE;
+    case Shape::CURVE_TOP_LEFT_CORNER:
+      return (TileType::top_color_ = Color::WHITE) ? Color::RED : Color::WHITE;
+    case Shape::CURVE_TOP_RIGHT_CORNER:
+      return (TileType::top_color_ = Color::WHITE) ? Color::WHITE : Color::RED;
+  }
 }
 
 Color TileType::getLeftColor() const
 {
+  switch(shape_)
+  {
+    case Shape::CROSS:
+      return (TileType::top_color_ = Color::WHITE) ? Color::RED : Color::WHITE;
+    case Shape::CURVE_TOP_LEFT_CORNER:
+      return (TileType::top_color_ = Color::WHITE) ? Color::WHITE : Color::RED;
+    case Shape::CURVE_TOP_RIGHT_CORNER:
+      return (TileType::top_color_ = Color::WHITE) ? Color::RED : Color::WHITE;
+  }
 }
 
 void TileType::initTileTypes()
