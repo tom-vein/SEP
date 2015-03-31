@@ -11,8 +11,8 @@ private:
   Shape shape_;
   Color top_color_;
   static std::vector<TileType> tile_types_;
-public:
   TileType(Shape shape, Color top_color);
+public:
   Shape getShape() const;
   Color getTopColor() const;
   Color getBottomColor() const;
