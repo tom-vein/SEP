@@ -1,16 +1,18 @@
 #ifndef TILE_H
 #define TILE_H
 
+#include <memory>
+
 #include "TileType.h"
 #include "Position.h"
 
 class Tile
 {
 private:
-  TileType type_;
+  std::shared_ptr<TileType> type_;
   Position position_;
 public:
-  Tile(TileType type, Position position);
+  Tile(std::shared_ptr<TileType>& type_, Position& position);
 };
 
 #endif // TILE_H
