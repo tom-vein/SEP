@@ -1,0 +1,24 @@
+#include <iostream>
+
+int main()
+{
+  printf("testdfdasf");
+  printf("test2");
+  printf("test3");
+  printf("test3.5");
+
+  int i;
+  int j;
+  int m;
+
+<<<<<<< HEAD
+  int main;
+  int hello;
+  int my_name_is_what;
+=======
+  printf("feature4");
+>>>>>>> 392577095b5bf4f0a0080f679f2da81364ce0ea8
+
+  return 0; //test
+}
+

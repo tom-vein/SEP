@@ -4,7 +4,6 @@ CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += C++11
 
-SOURCES += ./main.cpp \
-    feature2.cpp
+SOURCES += ./main.cpp
 
 HEADERS +=
