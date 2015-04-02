@@ -1,5 +1,7 @@
 #include "StartGameCommand.h"
+#include "GameBoard.h"
 
-StartGameCommand::StartGameCommand()
+virtual CommandLib::Code StartGameCommand::execute(GameBoard& game_board)
 {
+  game_board.startGame();
 }

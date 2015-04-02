@@ -11,11 +11,11 @@ SOURCES += ./main.cpp \
     Command.cpp \
     Game.cpp \
     Player.cpp \
-    AddTileCommand.cpp \
     StartGameCommand.cpp \
     GameBoard.cpp \
     Parser.cpp \
-    FileManager.cpp
+    FileManager.cpp \
+    DoTurnCommand.cpp
 
 HEADERS += \
     Position.h \
@@ -24,8 +24,8 @@ HEADERS += \
     Command.h \
     Game.h \
     Player.h \
-    AddTileCommand.h \
     StartGameCommand.h \
     GameBoard.h \
     Parser.h \
-    FileManager.h
+    FileManager.h \
+    DoTurnCommand.h

@@ -15,6 +15,7 @@ int main(int argc, char* argv[])
   command = Parser::parseCommand(arguments);
 
   //check if the command is an StartGameCommand
+  TileTypeLib::TileType::initTileTypes();
 
   std::array<Player, 2>players;
 
