@@ -58,11 +58,26 @@ Color TileType::getLeftColor() const
 
 void TileType::initTileTypes()
 {
-  //erzeugt die 6 arten der tiles (vector hinzufügen)
+  TileType cross_top_white(Shape::CROSS, Color::WHITE);
+  TileType cross_top_red(Shape::CROSS, Color::RED);
+  TileType curve_top_left_corner_top_white(Shape::CURVE_TOP_LEFT_CORNER,
+                                           Color::WHITE);
+  TileType curve_top_left_corner_top_red(Shape::CURVE_TOP_LEFT_CORNER,
+                                         Color::RED);
+  TileType curve_top_right_corner_top_white(Shape::CURVE_TOP_RIGHT_CORNER,
+                                            Color::WHITE);
+  TileType curve_top_right_corner_top_red(Shape::CURVE_TOP_RIGHT_CORNER,
+                                          Color::RED);
+  tile_types_.push_back(cross_top_white);
+  tile_types_.push_back((cross_top_red));
+  tile_types_.push_back(curve_top_left_corner_top_white);
+  tile_types_.push_back(curve_top_left_corner_top_red);
+  tile_types_.push_back(curve_top_right_corner_top_white);
+  tile_types_.push_back(curve_top_right_corner_top_red);
 }
 
 const TileType& TileType::getTileType(Shape shape, Color top_color)
 {
-  //dementsprechenden tile aus dem vector zurückgeben
+
 }
 
