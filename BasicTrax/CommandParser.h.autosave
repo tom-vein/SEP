@@ -1,6 +1,6 @@
 #ifndef COMMANDPARSER_H
 #define COMMANDPARSER_H
 
-namespace
+namespace 
 
 #endif // COMMANDPARSER_H

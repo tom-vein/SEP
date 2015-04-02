@@ -1,5 +1,11 @@
-#include "player.h"
+#include "Player.h"
 
-Player::Player()
+Player::Player(Color color) : color_(color)
 {
+
+}
+
+void Player::placeTile()
+{
+
 }

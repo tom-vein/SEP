@@ -1,4 +1,4 @@
-#include "addtilecommand.h"
+#include "AddTileCommand.h"
 
 AddTileCommand::AddTileCommand()
 {

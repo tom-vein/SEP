@@ -7,11 +7,25 @@ CONFIG += C++11
 SOURCES += ./main.cpp \
     Position.cpp \
     TileType.cpp \
-    Tile.cpp
+    Tile.cpp \
+    Command.cpp \
+    Game.cpp \
+    Player.cpp \
+    AddTileCommand.cpp \
+    StartGameCommand.cpp \
+    GameBoard.cpp \
+    CommandParser.cpp
 
 HEADERS += \
     Color.h \
     Position.h \
     TileType.h \
     Shape.h \
-    Tile.h
+    Tile.h \
+    Command.h \
+    Game.h \
+    Player.h \
+    AddTileCommand.h \
+    StartGameCommand.h \
+    GameBoard.h \
+    CommandParser.h

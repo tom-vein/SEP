@@ -1,5 +1,3 @@
-#include "commandparser.h"
+#include "CommandParser.h"
 
-CommandParser::CommandParser()
-{
-}
+

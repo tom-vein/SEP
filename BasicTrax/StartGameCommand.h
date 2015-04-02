@@ -1,7 +1,9 @@
 #ifndef STARTGAMECOMMAND_H
 #define STARTGAMECOMMAND_H
 
-class StartGameCommand
+#include "Command.h"
+
+class StartGameCommand : public Command
 {
 public:
   StartGameCommand();
