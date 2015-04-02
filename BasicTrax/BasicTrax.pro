@@ -13,17 +13,19 @@ SOURCES += ./main.cpp \
     Player.cpp \
     AddTileCommand.cpp \
     StartGameCommand.cpp \
-    GameBoard.cpp
+    GameBoard.cpp \
+    Parser.cpp \
+    FileManager.cpp
 
 HEADERS += \
-    Color.h \
     Position.h \
     TileType.h \
-    Shape.h \
     Tile.h \
     Command.h \
     Game.h \
     Player.h \
     AddTileCommand.h \
     StartGameCommand.h \
-    GameBoard.h
+    GameBoard.h \
+    Parser.h \
+    FileManager.h

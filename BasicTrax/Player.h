@@ -3,13 +3,22 @@
 
 #include "Color.h"
 
-class Player
+namespace PlayerLib
 {
-private:
-  Color color_;
-public:
-  Player(Color color);
-  void placeTile();
-};
+  enum class Color
+  {
+    WHITE,
+    RED
+  };
+
+  class Player
+  {
+  private:
+    Color color_;
+  public:
+    Player(Color color);
+    void placeTile();
+  };
+}
 
 #endif // PLAYER_H

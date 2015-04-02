@@ -5,6 +5,7 @@ class FileManager
 {
 public:
   FileManager();
+  void writeToFile();
 };
 
 #endif // FILEMANAGER_H

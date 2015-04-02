@@ -14,14 +14,25 @@
 #include <string>
 #include <vector>
 
-class Game;
+class GameBoard;
 
-class Command
+namespace CommandLib
 {
+  enum class Code
+  {
+    QUIT, WIN, DRAW, CONTINUE
+  };
+
+  const Command readCommand(); //Use the parser class for this method
+
+  class Command
+  {
   private:
     //--------------------------------------------------------------------------
     /// Name of this command
     std::string command_name_;
+
+    std::vector<std::string> params;
 
   public:
     //--------------------------------------------------------------------------
@@ -50,11 +61,13 @@ class Command
     // @param params Possible parameters neede for the execution
     // @return Integer representing the success of the action
 
-    virtual int execute(Game& board, std::vector<std::string>& params) = 0;
+    virtual Code execute(GameBoard& game_board) = 0;
 
     //--------------------------------------------------------------------------
     // Getter Methods
     const std::string& getName() const;
-};
+  };
+
+}
 
 #endif //COMMAND_H_INCLUDED

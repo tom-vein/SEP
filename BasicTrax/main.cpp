@@ -1,9 +1,21 @@
 #include <iostream>
 #include "Game.h"
 #include "Player.h"
+#include "Parser.h"
+#include "Command.h"
+#include "GameBoard.h"
 
 int main(int argc, char* argv[])
 {
+  std::string arguments;
+  CommandLib::Command command;
+  std::vector<std::string> params;
+
+  arguments = Parser::parseArguments(argc, argv);
+  command = Parser::parseCommand(arguments);
+
+  //check if the command is an StartGameCommand
+
   std::array<Player, 2>players;
 
   Player player1(Color::RED);
@@ -13,6 +25,13 @@ int main(int argc, char* argv[])
 
   Game game(players);
 
-  return 0; //test
+  GameBoard game_board(game);
+
+  while(command.execute(game_board) == CommandLib::Code::CONTINUE)
+  {
+    command = CommandLib::readCommand();
+  }
+
+  return 0;
 }
 
