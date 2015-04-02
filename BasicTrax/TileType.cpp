@@ -1,23 +1,23 @@
 #include "TileType.h"
 
-std::vector<TileType> TileType::tile_types_(6);
+std::vector<TileTypeLib::TileType> TileTypeLib::TileType::tile_types_(6);
 
-TileType::TileType(Shape shape, Color top_color) : shape_(shape),
+TileTypeLib::TileType::TileType(Shape shape, Color top_color) : shape_(shape),
   top_color_(top_color)
 {
 }
 
-Shape TileType::getShape() const
+TileTypeLib::Shape TileTypeLib::TileType::getShape() const
 {
   return shape_;
 }
 
-Color TileType::getTopColor() const
+TileTypeLib::Color TileTypeLib::TileType::getTopColor() const
 {
   return top_color_;
 }
 
-Color TileType::getBottomColor() const
+TileTypeLib::Color TileTypeLib::TileType::getBottomColor() const
 {
   switch(shape_)
   {
@@ -30,7 +30,7 @@ Color TileType::getBottomColor() const
   }
 }
 
-Color TileType::getRightColor() const
+TileTypeLib::Color TileTypeLib::TileType::getRightColor() const
 {
   switch(shape_)
   {
@@ -43,7 +43,7 @@ Color TileType::getRightColor() const
   }
 }
 
-Color TileType::getLeftColor() const
+TileTypeLib::Color TileTypeLib::TileType::getLeftColor() const
 {
   switch(shape_)
   {
@@ -56,7 +56,7 @@ Color TileType::getLeftColor() const
   }
 }
 
-void TileType::initTileTypes()
+void TileTypeLib::TileType::initTileTypes()
 {
   TileType cross_top_white(Shape::CROSS, Color::WHITE);
   TileType cross_top_red(Shape::CROSS, Color::RED);
@@ -76,8 +76,13 @@ void TileType::initTileTypes()
   tile_types_.push_back(curve_top_right_corner_top_red);
 }
 
-const TileType& TileType::getTileType(Shape shape, Color top_color)
-{
-
+const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Shape shape,
+                                                                Color top_color)
+{   
+ for(TileType& tile_type : tile_types_)
+ {
+    if(tile_type.getTopColor() == top_color && tile_type.getShape() == shape)
+      return TileType;
+ }
+ return nullptr;
 }
-
