@@ -13,8 +13,7 @@ SOURCES += ./main.cpp \
     Player.cpp \
     AddTileCommand.cpp \
     StartGameCommand.cpp \
-    GameBoard.cpp \
-    CommandParser.cpp
+    GameBoard.cpp
 
 HEADERS += \
     Color.h \
@@ -27,5 +26,4 @@ HEADERS += \
     Player.h \
     AddTileCommand.h \
     StartGameCommand.h \
-    GameBoard.h \
-    CommandParser.h
+    GameBoard.h
