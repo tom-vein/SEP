@@ -12,17 +12,17 @@
 
 
 //------------------------------------------------------------------------------
-Command::Command(std::string name) : command_name_(name)
+CommandLib::Command::Command(std::string name) : command_name_(name)
 {
 }
 
 //------------------------------------------------------------------------------
-Command::~Command()
+virtual CommandLib::Command::~Command()
 {
 }
 
 //------------------------------------------------------------------------------
-const std::string &Command::getName() const
+const std::string& CommandLib::SCommand::getName() const
 {
   return command_name_;
 }

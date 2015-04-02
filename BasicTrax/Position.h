@@ -17,7 +17,7 @@ public:
 
   bool parse(const std::string& input);
 
-  const std::string& toString() const;
+  const std::string toString() const;
 };
 
 #endif // POSITION_H

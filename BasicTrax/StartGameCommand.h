@@ -9,7 +9,8 @@ class StartGameCommand : public Command
 {
 public:
   StartGameCommand();
-  virtual CommandLib::Code execute(GameBoard& game_board);
+  virtual CommandLib::Code execute(GameBoard& game_board) const override;
+  virtual ~StartGameCommand() override;
 };
 
 #endif // STARTGAMECOMMAND_H

@@ -20,12 +20,12 @@ namespace GameLib
   {
   private:
     static const unsigned int MAX_OF_TILES = 64;
-    std::vector<Tile> tiles_(MAX_OF_TILES);
-    std::array<Player, 2> players_;
+    std::vector<Tile> tiles_;
+    std::array<PlayerLib::Player, 2> players_;
     State state_;
-    Player active_player_;
+    PlayerLib::Player active_player_;
   public:
-    Game(std::array<Player, 2> players);
+    Game(std::array<PlayerLib::Player, 2> players);
     void tooglePlayer();
     State getState() const;
     void setState(State state);

@@ -7,28 +7,25 @@
 
 int main(int argc, char* argv[])
 {
-  std::string arguments;
-  CommandLib::Command command;
   std::vector<std::string> params;
-
-  arguments = Parser::parseArguments(argc, argv);
-  command = Parser::parseCommand(arguments);
+  std::string arguments = Parser::parseArguments(argc, argv);
+  std::unique_ptr<CommandLib::Command> command =
+      Parser::parseCommand(arguments);
 
   //check if the command is an StartGameCommand
+
   TileTypeLib::TileType::initTileTypes();
 
-  std::array<Player, 2>players;
+  PlayerLib::Player player1(PlayerLib::Color::RED);
+  PlayerLib::Player player2(PlayerLib::Color::WHITE);
 
-  Player player1(Color::RED);
-  Player player2(Color::WHITE);
-  players.at(0) = player1;
-  players.at(1) = player2;
+  std::array<PlayerLib::Player, 2>players{player1, player2};
 
-  Game game(players);
+  GameLib::Game game(players);
 
   GameBoard game_board(game);
 
-  while(command.execute(game_board) == CommandLib::Code::CONTINUE)
+  while(command->execute(game_board) == CommandLib::Code::CONTINUE)
   {
     command = CommandLib::readCommand();
   }

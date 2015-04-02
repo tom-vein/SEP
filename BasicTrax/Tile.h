@@ -9,10 +9,10 @@
 class Tile
 {
 private:
-  std::shared_ptr<TileType> type_;
+  std::shared_ptr<TileTypeLib::TileType> type_;
   Position position_;
 public:
-  Tile(std::shared_ptr<TileType>& type_, Position& position);
+  Tile(std::shared_ptr<TileTypeLib::TileType>& type_, Position& position);
 };
 
 #endif // TILE_H

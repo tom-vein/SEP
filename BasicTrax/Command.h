@@ -13,17 +13,25 @@
 
 #include <string>
 #include <vector>
+#include <memory>
+#include "Command.h"
 
 class GameBoard;
 
 namespace CommandLib
 {
+  class Command;
+
   enum class Code
   {
     QUIT, WIN, DRAW, CONTINUE
   };
 
-  const Command readCommand(); //Use the parser class for this method
+  //Use the parser class for this method
+  //Output of sep>
+  //Parse the Command with the parser
+  //Return command
+  std::unique_ptr<Command> readCommand();
 
   class Command
   {
@@ -61,11 +69,12 @@ namespace CommandLib
     // @param params Possible parameters neede for the execution
     // @return Integer representing the success of the action
 
-    virtual Code execute(GameBoard& game_board) = 0;
+    virtual Code execute(GameBoard& game_board) const = 0;
 
     //--------------------------------------------------------------------------
     // Getter Methods
     const std::string& getName() const;
+    const std::vector<std::string> getParams() const;
   };
 
 }

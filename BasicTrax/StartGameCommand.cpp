@@ -5,3 +5,8 @@ virtual CommandLib::Code StartGameCommand::execute(GameBoard& game_board)
 {
   game_board.startGame();
 }
+
+virtual CommandLib::~StartGameCommand()
+{
+
+}

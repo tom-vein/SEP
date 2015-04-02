@@ -1,21 +1,21 @@
 #ifndef GAMEBOARD_H
 #define GAMEBOARD_H
 
-class Game;
-class Command;
-class FileManager;
+#include "FileManager.h"
+#include "Game.h"
 
 class GameBoard
 {
 private:
-  Game game_;
+  GameLib::Game game_;
   FileManager file_manager_;
+
   void doForcedPlay();
   bool checkWin();
   bool canTileBePlaced(); //are colors of edges correct
 
 public:
-  GameBoard(Game& game);
+  GameBoard(const GameLib::Game& game);
   void startGame();
   void doTurn();
 };
