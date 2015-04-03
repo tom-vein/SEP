@@ -8,7 +8,8 @@ class FileManager
 private:
   std::string file_name_;
 public:
-  FileManager(std::string file_name);
+  void setFileName(const std::string& file_name);
+  const std::string& getFileName() const;
   void writeToFile();
 };
 

@@ -63,7 +63,7 @@ bool Position::parse(const std::string& input)
   return true;
 }
 
-const std::string& Position::toString() const
+std::string Position::toString() const
 {
   std::ostringstream ostr;
   ostr << "(" << x_ << "," << y_ << ")";

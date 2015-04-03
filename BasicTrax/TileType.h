@@ -2,12 +2,14 @@
 #define TILETYPE_H
 
 #include <vector>
+#include <exception>
 
 namespace TileTypeLib
 {
 
   enum class Color
   {
+    NO_COLOR,
     WHITE,
     RED
   };

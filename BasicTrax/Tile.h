@@ -12,7 +12,8 @@ private:
   std::shared_ptr<TileTypeLib::TileType> type_;
   Position position_;
 public:
-  Tile(std::shared_ptr<TileTypeLib::TileType>& type_, Position& position);
+  Tile(const std::shared_ptr<TileTypeLib::TileType>& type,
+       const Position& position);
 };
 
 #endif // TILE_H

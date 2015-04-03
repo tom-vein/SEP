@@ -1,6 +1,6 @@
 #include "TileType.h"
 
-std::vector<TileTypeLib::TileType> TileTypeLib::TileType::tile_types_(6);
+std::vector<TileTypeLib::TileType> TileTypeLib::TileType::tile_types_;
 
 TileTypeLib::TileType::TileType(Shape shape, Color top_color) : shape_(shape),
   top_color_(top_color)
@@ -22,12 +22,14 @@ TileTypeLib::Color TileTypeLib::TileType::getBottomColor() const
   switch(shape_)
   {
     case Shape::CROSS:
-      return (TileType::top_color_ = Color::WHITE) ? Color::WHITE : Color::RED;
+      return (TileType::top_color_ == Color::WHITE) ? Color::WHITE : Color::RED;
     case Shape::CURVE_TOP_LEFT_CORNER:
-      return (TileType::top_color_ = Color::WHITE) ? Color::WHITE : Color::RED;
+      return (TileType::top_color_ == Color::WHITE) ? Color::WHITE : Color::RED;
     case Shape::CURVE_TOP_RIGHT_CORNER:
-      return (TileType::top_color_ = Color::WHITE) ? Color::WHITE : Color::RED;
+      return (TileType::top_color_ == Color::WHITE) ? Color::WHITE : Color::RED;
   }
+
+  return Color::NO_COLOR;
 }
 
 TileTypeLib::Color TileTypeLib::TileType::getRightColor() const
@@ -35,12 +37,14 @@ TileTypeLib::Color TileTypeLib::TileType::getRightColor() const
   switch(shape_)
   {
     case Shape::CROSS:
-      return (TileType::top_color_ = Color::WHITE) ? Color::RED : Color::WHITE;
+      return (TileType::top_color_ == Color::WHITE) ? Color::RED : Color::WHITE;
     case Shape::CURVE_TOP_LEFT_CORNER:
-      return (TileType::top_color_ = Color::WHITE) ? Color::RED : Color::WHITE;
+      return (TileType::top_color_ == Color::WHITE) ? Color::RED : Color::WHITE;
     case Shape::CURVE_TOP_RIGHT_CORNER:
-      return (TileType::top_color_ = Color::WHITE) ? Color::WHITE : Color::RED;
+      return (TileType::top_color_ == Color::WHITE) ? Color::WHITE : Color::RED;
   }
+
+  return Color::NO_COLOR;
 }
 
 TileTypeLib::Color TileTypeLib::TileType::getLeftColor() const
@@ -48,12 +52,14 @@ TileTypeLib::Color TileTypeLib::TileType::getLeftColor() const
   switch(shape_)
   {
     case Shape::CROSS:
-      return (TileType::top_color_ = Color::WHITE) ? Color::RED : Color::WHITE;
+      return (TileType::top_color_ == Color::WHITE) ? Color::RED : Color::WHITE;
     case Shape::CURVE_TOP_LEFT_CORNER:
-      return (TileType::top_color_ = Color::WHITE) ? Color::WHITE : Color::RED;
+      return (TileType::top_color_ == Color::WHITE) ? Color::WHITE : Color::RED;
     case Shape::CURVE_TOP_RIGHT_CORNER:
-      return (TileType::top_color_ = Color::WHITE) ? Color::RED : Color::WHITE;
+      return (TileType::top_color_ == Color::WHITE) ? Color::RED : Color::WHITE;
   }
+
+  return Color::NO_COLOR;
 }
 
 void TileTypeLib::TileType::initTileTypes()
@@ -79,10 +85,11 @@ void TileTypeLib::TileType::initTileTypes()
 const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Shape shape,
                                                                 Color top_color)
 {   
- for(TileType& tile_type : tile_types_)
- {
+  for(TileType& tile_type : tile_types_)
+  {
     if(tile_type.getTopColor() == top_color && tile_type.getShape() == shape)
-      return TileType;
- }
- return nullptr;
+      return tile_type;
+  }
+
+  throw std::exception(); //Create better exception
 }

@@ -10,19 +10,48 @@
 
 #include "Command.h"
 
+std::shared_ptr<CommandLib::Command> CommandLib::readCommand()
+{
+
+}
 
 //------------------------------------------------------------------------------
-CommandLib::Command::Command(std::string name) : command_name_(name)
+CommandLib::Command::Command(const std::string& name) : command_name_(name)
 {
 }
 
 //------------------------------------------------------------------------------
-virtual CommandLib::Command::~Command()
+CommandLib::Command::~Command()
 {
 }
 
 //------------------------------------------------------------------------------
-const std::string& CommandLib::SCommand::getName() const
+const std::string& CommandLib::Command::getName() const
 {
   return command_name_;
+}
+
+CommandLib::Code CommandLib::StartGameCommand::execute(GameBoard& game_board)
+const
+{
+  game_board.startGame();
+}
+
+CommandLib::StartGameCommand::~StartGameCommand()
+{
+
+}
+
+const std::string& CommandLib::StartGameCommand::getFileName() const
+{
+  return file_name_;
+}
+
+CommandLib::Code CommandLib::DoTurnCommand::execute(GameBoard& game_board) const
+{
+  game_board.doTurn();
+}
+
+CommandLib::DoTurnCommand::~DoTurnCommand()
+{
 }

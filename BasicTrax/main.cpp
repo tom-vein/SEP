@@ -8,11 +8,19 @@
 int main(int argc, char* argv[])
 {
   std::vector<std::string> params;
-  std::string arguments = Parser::parseArguments(argc, argv);
-  std::unique_ptr<CommandLib::Command> command =
-      Parser::parseCommand(arguments);
+  std::string arguments;
+  std::shared_ptr<CommandLib::Command> command;
+  std::shared_ptr<CommandLib::StartGameCommand> start_game_command;
 
-  //check if the command is an StartGameCommand
+  arguments = Parser::parseArguments(argc, argv);
+  command = Parser::parseCommand(arguments);
+
+  //Check if this comparison works
+  if(typeid(command) != typeid(CommandLib::StartGameCommand))
+    std::cout << "throw an appropriate exception here" << std::endl;
+
+  start_game_command =
+      std::dynamic_pointer_cast<CommandLib::StartGameCommand>(command);
 
   TileTypeLib::TileType::initTileTypes();
 
@@ -23,7 +31,7 @@ int main(int argc, char* argv[])
 
   GameLib::Game game(players);
 
-  GameBoard game_board(game);
+  GameBoard game_board(game, start_game_command->getFileName());
 
   while(command->execute(game_board) == CommandLib::Code::CONTINUE)
   {

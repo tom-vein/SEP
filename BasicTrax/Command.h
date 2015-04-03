@@ -15,6 +15,7 @@
 #include <vector>
 #include <memory>
 #include "Command.h"
+#include "GameBoard.h"
 
 class GameBoard;
 
@@ -31,7 +32,7 @@ namespace CommandLib
   //Output of sep>
   //Parse the Command with the parser
   //Return command
-  std::unique_ptr<Command> readCommand();
+  std::shared_ptr<Command> readCommand();
 
   class Command
   {
@@ -46,7 +47,7 @@ namespace CommandLib
     //--------------------------------------------------------------------------
     // Constructor
 
-    Command(std::string name);
+    Command(const std::string& name);
 
     //--------------------------------------------------------------------------
     // Deleted copy constructor
@@ -74,7 +75,26 @@ namespace CommandLib
     //--------------------------------------------------------------------------
     // Getter Methods
     const std::string& getName() const;
-    const std::vector<std::string> getParams() const;
+    const std::vector<std::string>& getParams() const;
+  };
+
+  class StartGameCommand : public CommandLib::Command
+  {
+  private:
+    std::string file_name_;
+  public:
+    StartGameCommand();
+    virtual Code execute(GameBoard& game_board) const override;
+    virtual ~StartGameCommand() override;
+    const std::string& getFileName() const;
+  };
+
+  class DoTurnCommand : public CommandLib::Command
+  {
+  public:
+    DoTurnCommand();
+    virtual Code execute(GameBoard& game_board) const override;
+    virtual ~DoTurnCommand() override;
   };
 
 }

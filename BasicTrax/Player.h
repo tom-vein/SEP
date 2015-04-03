@@ -5,6 +5,7 @@ namespace PlayerLib
 {
   enum class Color
   {
+    NO_COLOR,
     WHITE,
     RED
   };

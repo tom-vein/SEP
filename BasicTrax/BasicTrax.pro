@@ -11,11 +11,9 @@ SOURCES += ./main.cpp \
     Command.cpp \
     Game.cpp \
     Player.cpp \
-    StartGameCommand.cpp \
     GameBoard.cpp \
     Parser.cpp \
-    FileManager.cpp \
-    DoTurnCommand.cpp
+    FileManager.cpp
 
 HEADERS += \
     Position.h \
@@ -24,8 +22,6 @@ HEADERS += \
     Command.h \
     Game.h \
     Player.h \
-    StartGameCommand.h \
     GameBoard.h \
     Parser.h \
-    FileManager.h \
-    DoTurnCommand.h
+    FileManager.h
