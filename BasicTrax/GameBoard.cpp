@@ -17,6 +17,7 @@ void GameBoard::startGame()
 
 bool GameBoard::canTileBePlaced(const Tile& tile_to_add) const
 {
+
   return false;
 }
 

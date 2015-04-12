@@ -18,7 +18,7 @@ public:
   std::shared_ptr<Tile> getConnectedTileAtPosition(TileTypeLib::Edge edge);
   std::shared_ptr<Tile> getConnectedTileByLine(std::shared_ptr<Tile> requester);
 
-  Position getPosition() const {return position_;}
+  const Position& getPosition() const {return position_;}
 
 };
 

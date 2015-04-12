@@ -5,6 +5,7 @@
 #include <array>
 #include "Tile.h"
 #include "Player.h"
+#include "Exceptions.h"
 
 namespace GameLib
 {
@@ -29,7 +30,12 @@ namespace GameLib
     void tooglePlayer();
     State getState() const;
     void setState(State state);
-    const Tile& getTile(const Position& position);
+    Tile& getTileByPosition(const Position& position, int offset_x = 0, int offset_y = 0)
+      throw(InvalidPositionException);
+    void removeTileAtPosition(const Position& position)
+      throw(InvalidPositionException);
+    void removeTile(const Tile& tile_to_remove);
+    const std::vector<Tile>& getTouchingTiles(const Position& position);
   };
 }
 

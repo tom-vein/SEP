@@ -1,0 +1,12 @@
+INPUT(
+./release\main.o
+./release\Position.o
+./release\TileType.o
+./release\Tile.o
+./release\Command.o
+./release\Game.o
+./release\Player.o
+./release\GameBoard.o
+./release\Parser.o
+./release\FileManager.o
+);
