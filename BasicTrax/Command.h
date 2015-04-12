@@ -19,6 +19,8 @@
 
 namespace CommandLib
 {
+  class Command;
+
   enum class Code
   {
     QUIT, WIN, DRAW, CONTINUE
