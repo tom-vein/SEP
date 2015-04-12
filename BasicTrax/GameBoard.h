@@ -12,13 +12,15 @@ private:
                              //set to true
   bool should_write_to_file_;
 
-  void doForcedPlay();
+  void doForcedPlay(std::shared_ptr<Tile> last_placed);
   bool checkWin();
-  bool canTileBePlaced() const; //are colors of edges correct
+  bool canTileBePlaced(std::shared_ptr<Tile> tile_to_check) const; //are colors of edges correct
+  void addTile(std::shared_ptr<Tile> tile_to_add);
+  std::shared_ptr<Tile> getTileByPosition(Position position);
 public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);
   void startGame();
-  void doTurn();
+  void doTurn(std::shared_ptr<Tile> tile_to_add) throw(std::exception*);
 };
 
 #endif // GAMEBOARD_H
