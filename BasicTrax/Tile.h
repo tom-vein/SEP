@@ -6,19 +6,25 @@
 #include "TileType.h"
 #include "Position.h"
 
+class Tile;
+
+typedef std::shared_ptr<Tile> TilePtr;
+
+
 class Tile
 {
 private:
-  std::shared_ptr<TileTypeLib::TileType> type_;
+  TileTypeLib::TileType type_;
   Position position_;
 public:
-  Tile(const std::shared_ptr<TileTypeLib::TileType>& type,
+  Tile(const TileTypeLib::TileType& type,
        const Position& position);
 
-  std::shared_ptr<Tile> getConnectedTileAtPosition(TileTypeLib::Edge edge);
-  std::shared_ptr<Tile> getConnectedTileByLine(std::shared_ptr<Tile> requester);
+  TilePtr getConnectedTileAtPosition(TileTypeLib::Edge edge);
+  TilePtr getConnectedTileByLine(TilePtr requester);
 
   const Position& getPosition() const {return position_;}
+  TileTypeLib::Color getColorAtEdge(TileTypeLib::Edge edge)  {return type_.getColorAtEdge(edge);}
 
 };
 

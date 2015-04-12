@@ -25,4 +25,5 @@ HEADERS += \
     GameBoard.h \
     Parser.h \
     FileManager.h \
+    Exceptions.h \
     Exceptions.h

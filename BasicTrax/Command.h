@@ -80,9 +80,9 @@ namespace CommandLib
   class DoTurnCommand : public Command
   {
   private:
-    std::shared_ptr<Tile> tile_;
+    TilePtr tile_;
   public:
-    DoTurnCommand(std::shared_ptr<Tile> tile);
+    DoTurnCommand(TilePtr tile);
     virtual Code execute(GameBoard& game_board) const override;
     virtual ~DoTurnCommand() override;
   };

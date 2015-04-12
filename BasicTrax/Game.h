@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Exceptions.h"
 
+
 namespace GameLib
 {
   enum class State
@@ -21,7 +22,7 @@ namespace GameLib
   {
   private:
     static const unsigned int MAX_OF_TILES = 64;
-    std::vector<std::shared_ptr<Tile>> tiles_;
+    std::vector<TilePtr> tiles_;
     std::array<PlayerLib::Player, 2> players_;
     State state_ = State::NOTHING;
     PlayerLib::Player& active_player_;
@@ -30,13 +31,14 @@ namespace GameLib
     void tooglePlayer();
     State getState() const;
     void setState(State state);
-    std::shared_ptr<Tile> getTileByPosition(const Position& position, int offset_x = 0, int offset_y = 0)
+    TilePtr getTileByPosition(const Position& position, int offset_x = 0, int offset_y = 0)
       throw(InvalidPositionException);
     void removeTileAtPosition(const Position& position)
       throw(InvalidPositionException);
-    void removeTile(std::shared_ptr<Tile> tile_to_remove);
-    const std::vector<std::shared_ptr<Tile>> getTouchingTiles(const Position& position);
-    void addTile(std::shared_ptr<Tile> toAdd) {tiles_.push_back(toAdd);}
+    void removeTile(TilePtr tile_to_remove);
+    const std::vector<TilePtr> getTouchingTiles(const Position& position);
+    void addTile(TilePtr toAdd)
+      throw(NoTilesLeftException);
   };
 }
 

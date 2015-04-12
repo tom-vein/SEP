@@ -5,6 +5,7 @@ std::vector<TileTypeLib::TileType> TileTypeLib::TileType::tile_types_;
 TileTypeLib::TileType::TileType(Shape shape, Color top_color) : shape_(shape),
   top_color_(top_color)
 {
+  //TODO Fill top_color_ ect
 }
 
 TileTypeLib::Shape TileTypeLib::TileType::getShape() const
@@ -46,5 +47,11 @@ const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Shape shape,
 
 TileTypeLib::Color TileTypeLib::TileType::getColorAtEdge(Edge edge) const
 {
-
+  switch(edge)
+  {
+    case TileTypeLib::Edge::TOP: return top_color_;
+    case TileTypeLib::Edge::BOTTOM: return bottom_color_;
+    case TileTypeLib::Edge::LEFT: return left_color_;
+    case TileTypeLib::Edge::RIGHT: return right_color_;
+  }
 }
