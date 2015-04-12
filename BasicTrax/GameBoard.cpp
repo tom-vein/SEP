@@ -15,15 +15,24 @@ void GameBoard::startGame()
 
 }
 
-bool GameBoard::canTileBePlaced(std::shared_ptr<Tile> tile_to_add)
+bool GameBoard::canTileBePlaced(const Tile& tile_to_add) const
 {
   return false;
 }
 
-void GameBoard::doTurn(const Tile& tile) throw(std::exception*)
+void GameBoard::doTurn(const Tile& tile) throw(InvalidPositionException)
 {
   if(!canTileBePlaced(tile))
-    throw new std::exception("TODO cant be placed");
+    throw InvalidPositionException("TODO cant be placed", tile.getPosition());
+
   addTile(tile);
   doForcedPlay(tile);
+}
+void GameBoard::addTile(const Tile& tile_to_add)
+{
+
+}
+void GameBoard::doForcedPlay(const Tile& last_placed)
+{
+
 }
