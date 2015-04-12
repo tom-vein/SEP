@@ -85,13 +85,16 @@ void GameBoard::doTurn(TilePtr tile)
     doForcedPlay(tile);
   }
   //TODO catch and treat exceptions different
-  catch (std::exception &e)
+  catch (MessageException &e)
   {
     for(std::vector<TilePtr>::iterator it = tried_insertions_.begin(); it != tried_insertions_.end(); it++)
     {
       game_.removeTile(*it);
     }
+    tried_insertions_.clear();
+    throw(e);
   }
+  tried_insertions_.clear();
 
 }
 
