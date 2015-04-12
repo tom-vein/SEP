@@ -29,6 +29,7 @@ namespace GameLib
     void tooglePlayer();
     State getState() const;
     void setState(State state);
+    const Tile& getTile(const Position& position);
   };
 }
 
