@@ -1,2 +1,0 @@
-# SEP
-The Trax project

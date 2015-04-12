@@ -14,6 +14,10 @@ private:
 public:
   Tile(const std::shared_ptr<TileTypeLib::TileType>& type,
        const Position& position);
+
+  std::shared_ptr<Tile> getConnectedTileAtPosition(TileTypeLib::Edge edge);
+  std::shared_ptr<Tile> getConnectedTileByLine(std::shared_ptr<Tile> requester);
+
 };
 
 #endif // TILE_H

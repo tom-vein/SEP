@@ -21,6 +21,14 @@ namespace TileTypeLib
     CURVE_TOP_RIGHT_CORNER,
   };
 
+  enum class Edge
+  {
+    BOTTOM,
+    TOP,
+    LEFT,
+    RIGHT,
+  };
+
   class TileType
   {
   private:
@@ -30,10 +38,7 @@ namespace TileTypeLib
     TileType(Shape shape, Color top_color);
   public:
     Shape getShape() const;
-    Color getTopColor() const;
-    Color getBottomColor() const;
-    Color getRightColor() const;
-    Color getLeftColor() const;
+    Color getColorAtEdge(Edge edge) const;
     static void initTileTypes();
     static const TileType& getTileType(Shape shape, Color top_color);
   };
