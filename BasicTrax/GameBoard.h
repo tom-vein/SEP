@@ -15,16 +15,16 @@ private:
   std::vector<Position> tired_insertions_; // used for rollback when invalid move would be made
   bool should_write_to_file_;
 
-  void doForcedPlay(const Tile& last_placed);
+  void doForcedPlay(std::shared_ptr<Tile> last_placed);
   bool checkWin();
-  bool canTileBePlaced(const Tile& tile_to_check) const; //are colors of edges correct
-  void addTile(const Tile& tile_to_add);
+  bool canTileBePlaced(std::shared_ptr<Tile> tile_to_check) const; //are colors of edges correct
+  void addTile(std::shared_ptr<Tile> tile_to_add);
 
 
 public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);
   void startGame();
-  void doTurn(const Tile& tile)
+  void doTurn(std::shared_ptr<Tile> tile)
     throw(InvalidPositionException);
 };
 

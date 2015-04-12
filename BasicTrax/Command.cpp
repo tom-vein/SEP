@@ -42,7 +42,7 @@ const std::string& CommandLib::StartGameCommand::getFileName() const
   return file_name_;
 }
 
-CommandLib::DoTurnCommand::DoTurnCommand(const Tile& tile) : tile_(tile)
+CommandLib::DoTurnCommand::DoTurnCommand(std::shared_ptr<Tile> tile) : tile_(tile)
 {
 
 }
