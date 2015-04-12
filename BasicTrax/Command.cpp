@@ -49,7 +49,7 @@ const std::string& CommandLib::StartGameCommand::getFileName() const
 
 CommandLib::Code CommandLib::DoTurnCommand::execute(GameBoard& game_board) const
 {
-  game_board.doTurn();
+  game_board.doTurn(tile_);
 }
 
 CommandLib::DoTurnCommand::~DoTurnCommand()

@@ -20,7 +20,7 @@ private:
 public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);
   void startGame();
-  void doTurn(std::shared_ptr<Tile> tile_to_add) throw(std::exception*);
+  void doTurn(const Tile& tile) throw(std::exception*);
 };
 
 #endif // GAMEBOARD_H

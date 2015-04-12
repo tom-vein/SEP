@@ -41,8 +41,6 @@ namespace CommandLib
     /// Name of this command
     std::string command_name_;
 
-    std::vector<std::string> params;
-
   public:
     //--------------------------------------------------------------------------
     // Constructor
@@ -91,6 +89,8 @@ namespace CommandLib
 
   class DoTurnCommand : public CommandLib::Command
   {
+  private:
+    Tile tile_;
   public:
     DoTurnCommand();
     virtual Code execute(GameBoard& game_board) const override;

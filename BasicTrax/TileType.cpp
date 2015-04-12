@@ -12,56 +12,6 @@ TileTypeLib::Shape TileTypeLib::TileType::getShape() const
   return shape_;
 }
 
-TileTypeLib::Color TileTypeLib::TileType::getTopColor() const
-{
-  return top_color_;
-}
-
-TileTypeLib::Color TileTypeLib::TileType::getBottomColor() const
-{
-  switch(shape_)
-  {
-    case Shape::CROSS:
-      return (TileType::top_color_ == Color::WHITE) ? Color::WHITE : Color::RED;
-    case Shape::CURVE_TOP_LEFT_CORNER:
-      return (TileType::top_color_ == Color::WHITE) ? Color::WHITE : Color::RED;
-    case Shape::CURVE_TOP_RIGHT_CORNER:
-      return (TileType::top_color_ == Color::WHITE) ? Color::WHITE : Color::RED;
-  }
-
-  return Color::NO_COLOR;
-}
-
-TileTypeLib::Color TileTypeLib::TileType::getRightColor() const
-{
-  switch(shape_)
-  {
-    case Shape::CROSS:
-      return (TileType::top_color_ == Color::WHITE) ? Color::RED : Color::WHITE;
-    case Shape::CURVE_TOP_LEFT_CORNER:
-      return (TileType::top_color_ == Color::WHITE) ? Color::RED : Color::WHITE;
-    case Shape::CURVE_TOP_RIGHT_CORNER:
-      return (TileType::top_color_ == Color::WHITE) ? Color::WHITE : Color::RED;
-  }
-
-  return Color::NO_COLOR;
-}
-
-TileTypeLib::Color TileTypeLib::TileType::getLeftColor() const
-{
-  switch(shape_)
-  {
-    case Shape::CROSS:
-      return (TileType::top_color_ == Color::WHITE) ? Color::RED : Color::WHITE;
-    case Shape::CURVE_TOP_LEFT_CORNER:
-      return (TileType::top_color_ == Color::WHITE) ? Color::WHITE : Color::RED;
-    case Shape::CURVE_TOP_RIGHT_CORNER:
-      return (TileType::top_color_ == Color::WHITE) ? Color::RED : Color::WHITE;
-  }
-
-  return Color::NO_COLOR;
-}
-
 void TileTypeLib::TileType::initTileTypes()
 {
   TileType cross_top_white(Shape::CROSS, Color::WHITE);
@@ -87,9 +37,14 @@ const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Shape shape,
 {   
   for(TileType& tile_type : tile_types_)
   {
-    if(tile_type.getTopColor() == top_color && tile_type.getShape() == shape)
+    if(tile_type.getColorAtEdge(Edge::TOP) == top_color && tile_type.getShape() == shape)
       return tile_type;
   }
 
   throw std::exception(); //Create better exception
+}
+
+TileTypeLib::Color TileTypeLib::TileType::getColorAtEdge(Edge edge) const
+{
+
 }
