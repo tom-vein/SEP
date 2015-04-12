@@ -74,7 +74,7 @@ namespace CommandLib
     const std::vector<std::string>& getParams() const;
   };
 
-  class StartGameCommand : public CommandLib::Command
+  class StartGameCommand : public Command
   {
   private:
     std::string file_name_;
@@ -85,7 +85,7 @@ namespace CommandLib
     const std::string& getFileName() const;
   };
 
-  class DoTurnCommand : public CommandLib::Command
+  class DoTurnCommand : public Command
   {
   private:
     Tile tile_;
