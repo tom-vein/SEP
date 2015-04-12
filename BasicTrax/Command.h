@@ -34,16 +34,8 @@ namespace CommandLib
 
   class Command
   {
-  private:
-    //--------------------------------------------------------------------------
-    /// Name of this command
-    std::string command_name_;
-
   public:
-    //--------------------------------------------------------------------------
-    // Constructor
-
-    Command(const std::string& name);
+    Command() = default;
 
     //--------------------------------------------------------------------------
     // Deleted copy constructor
@@ -70,7 +62,6 @@ namespace CommandLib
 
     //--------------------------------------------------------------------------
     // Getter Methods
-    const std::string& getName() const;
     const std::vector<std::string>& getParams() const;
   };
 
@@ -79,7 +70,7 @@ namespace CommandLib
   private:
     std::string file_name_;
   public:
-    StartGameCommand();
+    StartGameCommand(const std::string& file_name);
     virtual Code execute(GameBoard& game_board) const override;
     virtual ~StartGameCommand() override;
     const std::string& getFileName() const;

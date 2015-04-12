@@ -16,19 +16,14 @@ std::shared_ptr<CommandLib::Command> CommandLib::readCommand()
 }
 
 //------------------------------------------------------------------------------
-CommandLib::Command::Command(const std::string& name) : command_name_(name)
-{
-}
-
-//------------------------------------------------------------------------------
 CommandLib::Command::~Command()
 {
 }
 
-//------------------------------------------------------------------------------
-const std::string& CommandLib::Command::getName() const
+CommandLib::StartGameCommand::StartGameCommand(const std::string& file_name) :
+  file_name_(file_name)
 {
-  return command_name_;
+
 }
 
 CommandLib::Code CommandLib::StartGameCommand::execute(GameBoard& game_board)
