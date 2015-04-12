@@ -18,6 +18,8 @@ public:
   bool parse(const std::string& input);
 
   std::string toString() const;
+
+  bool operator==(const Position& other) const;
 };
 
 #endif // POSITION_H

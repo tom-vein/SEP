@@ -5,6 +5,7 @@
 #include <array>
 #include "Tile.h"
 #include "Player.h"
+#include "Exceptions.h"
 
 namespace GameLib
 {
@@ -20,7 +21,7 @@ namespace GameLib
   {
   private:
     static const unsigned int MAX_OF_TILES = 64;
-    std::vector<Tile> tiles_;
+    std::vector<std::shared_ptr<Tile>> tiles_;
     std::array<PlayerLib::Player, 2> players_;
     State state_ = State::NOTHING;
     PlayerLib::Player& active_player_;
@@ -29,7 +30,12 @@ namespace GameLib
     void tooglePlayer();
     State getState() const;
     void setState(State state);
-    const Tile& getTile(const Position& position);
+    std::shared_ptr<Tile> getTileByPosition(const Position& position, int offset_x = 0, int offset_y = 0)
+      throw(InvalidPositionException);
+    void removeTileAtPosition(const Position& position)
+      throw(InvalidPositionException);
+    void removeTile(std::shared_ptr<Tile> tile_to_remove);
+    const std::vector<std::shared_ptr<Tile>> getTouchingTiles(const Position& position);
   };
 }
 
