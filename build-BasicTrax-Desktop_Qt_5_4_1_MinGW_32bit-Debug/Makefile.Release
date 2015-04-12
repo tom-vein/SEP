@@ -72,7 +72,8 @@ DIST          =  Position.h \
 		Player.h \
 		GameBoard.h \
 		Parser.h \
-		FileManager.h ..\BasicTrax\main.cpp \
+		FileManager.h \
+		Exceptions.h ..\BasicTrax\main.cpp \
 		..\BasicTrax\Position.cpp \
 		..\BasicTrax\TileType.cpp \
 		..\BasicTrax\Tile.cpp \
@@ -190,7 +191,8 @@ release/GameBoard.o: ../BasicTrax/GameBoard.cpp ../BasicTrax/GameBoard.h \
 		../BasicTrax/Tile.h \
 		../BasicTrax/TileType.h \
 		../BasicTrax/Position.h \
-		../BasicTrax/Player.h
+		../BasicTrax/Player.h \
+		../BasicTrax/Exceptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\GameBoard.o ..\BasicTrax\GameBoard.cpp
 
 release/Parser.o: ../BasicTrax/Parser.cpp ../BasicTrax/Parser.h \

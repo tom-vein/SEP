@@ -24,4 +24,5 @@ HEADERS += \
     Player.h \
     GameBoard.h \
     Parser.h \
-    FileManager.h
+    FileManager.h \
+    Exceptions.h
