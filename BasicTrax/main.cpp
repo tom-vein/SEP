@@ -7,7 +7,6 @@
 
 int main(int argc, char* argv[])
 {
-  std::vector<std::string> params;
   std::string arguments;
   std::shared_ptr<CommandLib::Command> command;
   std::shared_ptr<CommandLib::StartGameCommand> start_game_command;
