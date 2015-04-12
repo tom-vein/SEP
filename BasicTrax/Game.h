@@ -36,6 +36,7 @@ namespace GameLib
       throw(InvalidPositionException);
     void removeTile(std::shared_ptr<Tile> tile_to_remove);
     const std::vector<std::shared_ptr<Tile>> getTouchingTiles(const Position& position);
+    void addTile(std::shared_ptr<Tile> toAdd) {tiles_.push_back(toAdd);}
   };
 }
 

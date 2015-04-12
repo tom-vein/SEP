@@ -27,7 +27,7 @@ void GameBoard::doTurn(std::shared_ptr<Tile> tile)
   if(!canTileBePlaced(tile))
     throw InvalidPositionException("TODO cant be placed", tile->getPosition());
 
-  addTile(tile);
+  game_.addTile(tile);
   doForcedPlay(tile);
 }
 void GameBoard::addTile(std::shared_ptr<Tile> tile_to_add)
