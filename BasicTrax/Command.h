@@ -11,6 +11,7 @@
 #ifndef COMMAND_H_INCLUDED
 #define COMMAND_H_INCLUDED
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <memory>
@@ -88,8 +89,19 @@ namespace CommandLib
 
   class QuitCommand : public Command
   {
+  public:
     virtual Code execute(GameBoard& game_board) const override;
     virtual ~QuitCommand() override;
+  };
+
+  class ErrorCommand : public Command
+  {
+  private:
+    std::string message_;
+  public:
+    ErrorCommand(std::string message);
+    virtual Code execute(GameBoard&) const override;
+    virtual ~ErrorCommand() override;
   };
 }
 
