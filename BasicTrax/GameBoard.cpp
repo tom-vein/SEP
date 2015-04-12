@@ -15,7 +15,7 @@ void GameBoard::startGame()
 
 }
 
-void GameBoard::doTurn()
+void GameBoard::doTurn(const Tile& tile)
 {
 
 }

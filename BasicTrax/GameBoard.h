@@ -18,7 +18,7 @@ private:
 public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);
   void startGame();
-  void doTurn();
+  void doTurn(const Tile& tile);
 };
 
 #endif // GAMEBOARD_H
