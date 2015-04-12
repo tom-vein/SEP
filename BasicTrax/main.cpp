@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
   GameBoard game_board(game, start_game_command->getFileName());
 
-  while(command->execute(game_board) == CommandLib::Code::CONTINUE)
+  while(command->execute(game_board) != CommandLib::Code::QUIT)
   {
     command = CommandLib::readCommand();
   }

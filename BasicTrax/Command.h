@@ -86,6 +86,11 @@ namespace CommandLib
     virtual ~DoTurnCommand() override;
   };
 
+  class QuitCommand : public Command
+  {
+    virtual Code execute(GameBoard& game_board) const override;
+    virtual ~QuitCommand() override;
+  };
 }
 
 #endif //COMMAND_H_INCLUDED

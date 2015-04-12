@@ -55,3 +55,13 @@ CommandLib::Code CommandLib::DoTurnCommand::execute(GameBoard& game_board) const
 CommandLib::DoTurnCommand::~DoTurnCommand()
 {
 }
+
+CommandLib::Code CommandLib::QuitCommand::execute(GameBoard& game_board) const
+{
+  //Maybe some quit actions in game_board!!!!!!
+  return Code::QUIT;
+}
+
+CommandLib::QuitCommand::~QuitCommand()
+{
+}
