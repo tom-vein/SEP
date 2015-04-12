@@ -17,12 +17,8 @@
 #include "Command.h"
 #include "GameBoard.h"
 
-class GameBoard;
-
 namespace CommandLib
 {
-  class Command;
-
   enum class Code
   {
     QUIT, WIN, DRAW, CONTINUE
