@@ -42,6 +42,11 @@ const std::string& CommandLib::StartGameCommand::getFileName() const
   return file_name_;
 }
 
+CommandLib::DoTurnCommand::DoTurnCommand(const Tile& tile) : tile_(tile)
+{
+
+}
+
 CommandLib::Code CommandLib::DoTurnCommand::execute(GameBoard& game_board) const
 {
   game_board.doTurn(tile_);

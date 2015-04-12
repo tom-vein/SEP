@@ -81,7 +81,7 @@ namespace CommandLib
   private:
     Tile tile_;
   public:
-    DoTurnCommand();
+    DoTurnCommand(const Tile& tile);
     virtual Code execute(GameBoard& game_board) const override;
     virtual ~DoTurnCommand() override;
   };
