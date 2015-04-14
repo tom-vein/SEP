@@ -9,15 +9,13 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
 
 std::string Parser::parseArguments(int argc, char* argv[])
 {
-  if(argc == 1 || argc == 3)
-  {
-    std::vector<std::string> all_args(argv, argv + argc);
-    return all_args;
-  }
-  else
-  {
-    std::string errorstring("Wrong Number of Arguments");
-    CommandLib::ErrorCommand(errorstring);
-    //return?
-  }
+
+  if(argc == 1)
+    return std::string(argv[0]);
+
+  if(argc == 3)
+    return std::string(argv[0], argv[1], argv[2]);
+
+  throw exception();
+
 }
