@@ -100,5 +100,11 @@ void GameBoard::doTurn(TilePtr tile)
 
 void GameBoard::doForcedPlay(TilePtr last_placed)
 {
+  std::vector<Position> empty_positions = game_.getEmptyPositionsAround(last_placed->getPosition());
 
+  for(std::vector<Position>::iterator it = empty_positions.begin(); it != empty_positions.end(); it++)
+  {
+    std::map<GameLib::RelativePosition,TilePtr> touching_tiles = game_.getTouchingTiles(*it);
+
+  }
 }

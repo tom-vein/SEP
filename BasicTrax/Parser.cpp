@@ -12,15 +12,15 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
       std::string filename;
       filename.push_back(command_string.at(i));
     }
-    CommandLib::StartGameCommand(filename);
-    return command_string;
+   // CommandLib::StartGameCommand(filename);
+    //return command_string;
   }
-  if(command_string == CommandLib::Code::QUIT)
+  //if(command_string == CommandLib::Code::QUIT)
   {
-    CommandLib::QuitCommand::Command(CommandLib::Code::QUIT); // ????
-    return command_string;
+   // CommandLib::QuitCommand::Command(CommandLib::Code::QUIT); // ????
+   // return command_string;
   }
-  throw exception;
+  //throw exception;
 }
 
 std::string Parser::parseArguments(int argc, char* argv[])
@@ -35,5 +35,5 @@ std::string Parser::parseArguments(int argc, char* argv[])
     return ss.str();
   }
 
-  throw exception();
+//  throw exception();
 }

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <array>
+#include <map>
 #include "Tile.h"
 #include "Player.h"
 #include "Exceptions.h"
@@ -16,6 +17,13 @@ namespace GameLib
     RUNNING,
     DRAW,
     WIN
+  };
+  enum class RelativePosition
+  {
+    LEFT,
+    TOP,
+    RIGHT,
+    BOTTOM,
   };
 
   class Game
@@ -36,7 +44,8 @@ namespace GameLib
     void removeTileAtPosition(const Position& position)
       throw(InvalidPositionException);
     void removeTile(TilePtr tile_to_remove);
-    const std::vector<TilePtr> getTouchingTiles(const Position& position);
+    std::map<RelativePosition, TilePtr> getTouchingTiles(const Position& position, int offset_x = 0, int offset_y = 0);
+    std::vector<Position> getEmptyPositionsAround(const Position& position, int offset_x = 0, int offset_y = 0);
     void addTile(TilePtr toAdd)
       throw(NoTilesLeftException);
   };
