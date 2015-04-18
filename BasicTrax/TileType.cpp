@@ -1,11 +1,13 @@
 #include "TileType.h"
+#include "Exceptions.h"
 
 std::vector<TileTypeLib::TileType> TileTypeLib::TileType::tile_types_;
 
 TileTypeLib::TileType::TileType(Shape shape, Color top_color) : shape_(shape),
   top_color_(top_color)
 {
-  //TODO Fill top_color_ ect
+  //TODO add colors
+  //TODO finish implementation
 }
 
 TileTypeLib::Shape TileTypeLib::TileType::getShape() const
@@ -53,5 +55,6 @@ TileTypeLib::Color TileTypeLib::TileType::getColorAtEdge(Edge edge) const
     case TileTypeLib::Edge::BOTTOM: return bottom_color_;
     case TileTypeLib::Edge::LEFT: return left_color_;
     case TileTypeLib::Edge::RIGHT: return right_color_;
+  default: throw(MessageException("No such edge"));
   }
 }

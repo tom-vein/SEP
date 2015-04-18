@@ -19,6 +19,8 @@ private:
   bool checkWin();
   bool canTileBePlaced(TilePtr tile_to_check) //are colors of edges correct
     throw(InvalidPositionException);
+  bool canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check);
+  bool checkTwoTiles(TilePtr first, TilePtr second, TileTypeLib::Edge touching_edge_of_second_tile);
   void addTile(TilePtr tile_to_add);
 
 

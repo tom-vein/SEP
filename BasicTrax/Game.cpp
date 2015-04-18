@@ -54,22 +54,22 @@ void GameLib::Game::removeTile(TilePtr tile_to_remove)
   throw(InvalidPositionException("No Tile with this position.", tile_to_remove->getPosition()));
 }
 
-std::map<GameLib::RelativePosition, TilePtr> GameLib::Game::getTouchingTiles(const Position &position, int offset_x, int offset_y)
+std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(const Position &position, int offset_x, int offset_y)
 {
-  std::map<GameLib::RelativePosition, TilePtr> touching_tiles;
+  std::map<TileTypeLib::Edge, TilePtr> touching_tiles;
   TilePtr tile;
   // Left
   if(tile = getTileByPosition(position, offset_x - 1, offset_y))
-    touching_tiles.insert(std::pair<GameLib::RelativePosition, TilePtr>(GameLib::RelativePosition::LEFT, tile));
+    touching_tiles.insert(std::pair<TileTypeLib::Edge, TilePtr>(TileTypeLib::Edge::LEFT, tile));
   // Top
   if(tile = getTileByPosition(position, offset_x, offset_y -1))
-    touching_tiles.insert(std::pair<GameLib::RelativePosition, TilePtr>(GameLib::RelativePosition::TOP, tile));
+    touching_tiles.insert(std::pair<TileTypeLib::Edge, TilePtr>(TileTypeLib::Edge::TOP, tile));
   //Right
   if(tile = getTileByPosition(position, offset_x + 1, offset_y))
-    touching_tiles.insert(std::pair<GameLib::RelativePosition, TilePtr>(GameLib::RelativePosition::RIGHT, tile));
+    touching_tiles.insert(std::pair<TileTypeLib::Edge, TilePtr>(TileTypeLib::Edge::RIGHT, tile));
   //Bottom
   if(tile = getTileByPosition(position, offset_x, offset_y + 1))
-    touching_tiles.insert(std::pair<GameLib::RelativePosition, TilePtr>(GameLib::RelativePosition::BOTTOM, tile));
+    touching_tiles.insert(std::pair<TileTypeLib::Edge, TilePtr>(TileTypeLib::Edge::BOTTOM, tile));
   return touching_tiles;
 }
 std::vector<Position> GameLib::Game::getEmptyPositionsAround(const Position& position, int offset_x, int offset_y)

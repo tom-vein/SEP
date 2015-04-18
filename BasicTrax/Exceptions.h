@@ -1,12 +1,15 @@
 #ifndef EXCEPTIONS
 #define EXCEPTIONS
 
+#include "Position.h"
+
 class MessageException : public std::exception
 {
 public:
   MessageException(std::string message) : message_(message) {}
   virtual ~MessageException() {}
-  std::string getMessage() {return message_;}
+  virtual const char* what() const throw() {return message_.c_str();}
+  //std::string getMessage() {return message_;}
 protected:
   std::string message_;
 };
@@ -15,8 +18,8 @@ class PositionException : public MessageException
 {
 public:
   PositionException(std::string message, Position position) : MessageException(message), position_(position) {}
-  virtual ~PositionException() {}
-  std::string getMessage() {return message_;}
+  virtual ~PositionException() {}  
+  //std::string getMessage() {return message_;}
   Position getPosition() {return position_;}
 
 protected:
