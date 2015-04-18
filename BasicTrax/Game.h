@@ -45,10 +45,10 @@ namespace GameLib
       throw(InvalidPositionException);
     void removeTile(TilePtr tile_to_remove);
     std::map<TileTypeLib::Edge, TilePtr> getTouchingTiles(const Position& position, int offset_x = 0, int offset_y = 0);
+    std::map<TileTypeLib::Edge, TileTypeLib::Color> getTouchingColors(const Position& position, int offset_x = 0, int offset_y = 0);
     std::vector<Position> getEmptyPositionsAround(const Position& position, int offset_x = 0, int offset_y = 0);
     void addTile(TilePtr toAdd)
       throw(NoTilesLeftException);
-    TilePtr createTile(TileTypeLib::Shape shape, Position position);
   };
 }
 

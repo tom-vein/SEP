@@ -6,8 +6,7 @@ std::vector<TileTypeLib::TileType> TileTypeLib::TileType::tile_types_;
 TileTypeLib::TileType::TileType(Shape shape, Color top_color) : shape_(shape),
   top_color_(top_color)
 {
-  //TODO add colors
-  //TODO finish implementation
+
 }
 
 TileTypeLib::Shape TileTypeLib::TileType::getShape() const
@@ -46,15 +45,61 @@ const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Shape shape,
 
   throw std::exception(); //Create better exception
 }
+const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Color left_edge_color, Color top_edge_color,
+                                                                Color right_edge_color, Color bottom_edge_color)
+{
+  for(TileType& tile_type : tile_types_)
+  {
+    if(tile_type.getColorAtEdge(Edge::LEFT) == left_edge_color &&
+       tile_type.getColorAtEdge(Edge::TOP) == top_edge_color &&
+       tile_type.getColorAtEdge(Edge::RIGHT) == right_edge_color &&
+       tile_type.getColorAtEdge(Edge::BOTTOM) == bottom_edge_color)
+      return tile_type;
 
-TileTypeLib::Color TileTypeLib::TileType::getColorAtEdge(Edge edge) const
+  }
+  throw(MessageException("No such tiletype"));
+}
+
+TileTypeLib::Color TileTypeLib::TileType::getColorAtEdge(Edge edge)
 {
   switch(edge)
   {
-    case TileTypeLib::Edge::TOP: return top_color_;
-    case TileTypeLib::Edge::BOTTOM: return bottom_color_;
-    case TileTypeLib::Edge::LEFT: return left_color_;
-    case TileTypeLib::Edge::RIGHT: return right_color_;
+    case TileTypeLib::Edge::TOP:
+    {
+      return top_color_;
+    }
+
+    case TileTypeLib::Edge::BOTTOM:
+    {
+      if(shape_ == TileTypeLib::Shape::CROSS)
+        return top_color_;
+      else if(top_color_ == TileTypeLib::Color::RED)
+        return TileTypeLib::Color::WHITE;
+      else
+        return TileTypeLib::Color::RED;
+    }
+    case TileTypeLib::Edge::LEFT:
+    {
+      if(shape_ == TileTypeLib::Shape::CROSS || shape_ == TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER)
+      {
+        if(top_color_ == TileTypeLib::Color::RED)
+          return TileTypeLib::Color::WHITE;
+        else
+          return TileTypeLib::Color::RED;
+      }
+      else
+        return top_color_;
+    }
+    case TileTypeLib::Edge::RIGHT:
+    {
+      if(shape_ == TileTypeLib::Shape::CROSS || shape_ == TileTypeLib::Shape::CURVE_TOP_LEFT_CORNER)
+      {
+        if(top_color_ == TileTypeLib::Color::RED)
+          return TileTypeLib::Color::WHITE;
+        else
+          return TileTypeLib::Color::RED;
+      }
+    }
   default: throw(MessageException("No such edge"));
   }
 }

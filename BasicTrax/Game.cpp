@@ -16,7 +16,7 @@ TilePtr GameLib::Game::getTileByPosition(const Position& position, int offset_x,
    if( (*it)->getPosition() == position_to_return)
      return *it;
   }
-  throw InvalidPositionException("No Tile at this Position.", position);
+  return TilePtr();
 }
 
 void GameLib::Game::addTile(TilePtr to_add)
@@ -72,6 +72,36 @@ std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(const Posit
     touching_tiles.insert(std::pair<TileTypeLib::Edge, TilePtr>(TileTypeLib::Edge::BOTTOM, tile));
   return touching_tiles;
 }
+std::map<TileTypeLib::Edge, TileTypeLib::Color> GameLib::Game::getTouchingColors(const Position &position, int offset_x, int offset_y)
+{
+  std::map<TileTypeLib::Edge, TileTypeLib::Color> touching_colors;
+  TilePtr tile;
+  //Left
+  if(tile = getTileByPosition(position, offset_x - 1, offset_y))
+    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::LEFT, tile->getColorAtEdge(TileTypeLib::Edge::LEFT)));
+  else
+    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::LEFT, TileTypeLib::Color::NO_COLOR));
+
+  //Top
+  if(tile = getTileByPosition(position, offset_x, offset_y -1))
+    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::TOP, tile->getColorAtEdge(TileTypeLib::Edge::TOP)));
+  else
+    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::TOP, TileTypeLib::Color::NO_COLOR));
+
+  //Right
+  if(tile = getTileByPosition(position, offset_x + 1, offset_y))
+    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::RIGHT, tile->getColorAtEdge(TileTypeLib::Edge::RIGHT)));
+  else
+    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::RIGHT, TileTypeLib::Color::NO_COLOR));
+
+  //bottom
+  if(tile = getTileByPosition(position, offset_x, offset_y + 1))
+    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::BOTTOM, tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM)));
+  else
+    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::BOTTOM, TileTypeLib::Color::NO_COLOR));
+  return touching_colors;
+}
+
 std::vector<Position> GameLib::Game::getEmptyPositionsAround(const Position& position, int offset_x, int offset_y)
 {
   std::vector<Position> empty_positions;

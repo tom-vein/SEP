@@ -18,11 +18,7 @@ private:
   Position position_;
 public:
   Tile(const TileTypeLib::TileType& type,
-       const Position& position);
-
-  //TODO: Add implementation
-  Tile(const TileTypeLib::Color& color_bottom, const TileTypeLib::Color& color_left,
-       const TileTypeLib::Color& color_top, const TileTypeLib::Color& color_right);
+       const Position& position) : type_(type), position_(position) {}
 
   TilePtr getConnectedTileAtPosition(TileTypeLib::Edge edge);
   TilePtr getConnectedTileByLine(TilePtr requester);

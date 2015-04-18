@@ -36,15 +36,15 @@ namespace TileTypeLib
     Color top_color_;
     static std::vector<TileType> tile_types_;
     TileType(Shape shape, Color top_color);
-    Color head_color_; //TODO rename
-    Color bottom_color_;
-    Color left_color_;
-    Color right_color_;
+
   public:
     Shape getShape() const;
-    Color getColorAtEdge(Edge edge) const;
+    Color getColorAtEdge(Edge edge);
     static void initTileTypes();
     static const TileType& getTileType(Shape shape, Color top_color);
+    static const TileType& getTileType(Color left_edge_color, Color top_edge_color,
+                                       Color right_edge_color, Color bottom_edge_color);
+    static const std::vector<TileType>& getAllTileTypes() {return tile_types_;}
   };
 
 }

@@ -15,68 +15,6 @@ void GameBoard::startGame()
 
 }
 
-//Depricated!
-//bool GameBoard::canTileBePlaced(TilePtr tile_to_add)
-//  throw(InvalidPositionException)
-//{
-//    //TODO Umbau auf game_.getTouchingTiles()!
-
-//  bool hasTouchingTiles = false;
-//  bool canBePlaced = false;
-//  TilePtr touching_tile = nullptr;
-//  const Position position_to_add = tile_to_add->getPosition();
-
-//  if(game_.getTileByPosition(position_to_add) != nullptr)
-//    throw NotEmptyException("Invalid coordinates - field not empty\n", position_to_add);
-
-//  // Top
-//  touching_tile = game_.getTileByPosition(position_to_add, 0, -1);
-//  if(touching_tile != nullptr)
-//  {
-//    hasTouchingTiles = true;
-//    if(touching_tile->getColorAtEdge(TileTypeLib::Edge::TOP) != tile_to_add->getColorAtEdge(TileTypeLib::Edge::BOTTOM))
-//      throw ColorMismatchException("Invalid move - connected line colors mismatch\n", position_to_add);
-
-//   canBePlaced = true;
-//  }
-
-//  // Bottom
-//  touching_tile = game_.getTileByPosition(position_to_add, 0, 1);
-//  if(touching_tile != nullptr)
-//  {
-//    hasTouchingTiles = true;
-//    if(touching_tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM) != tile_to_add->getColorAtEdge(TileTypeLib::Edge::TOP))
-//      throw ColorMismatchException("Invalid move - connected line colors mismatch\n", position_to_add);
-
-//    canBePlaced = true;
-//  }
-
-//  // Left
-//  touching_tile = game_.getTileByPosition(position_to_add, -1, 0);
-//  if(touching_tile != nullptr)
-//  {
-//    hasTouchingTiles = true;
-//    if(touching_tile->getColorAtEdge(TileTypeLib::Edge::RIGHT) != tile_to_add->getColorAtEdge(TileTypeLib::Edge::LEFT))
-//      throw ColorMismatchException("Invalid move - connected line colors mismatch\n", position_to_add);
-
-//    canBePlaced = true;
-//  }
-
-//  // Right
-//  touching_tile = game_.getTileByPosition(position_to_add, 1, 0);
-//  if(touching_tile != nullptr)
-//  {
-//    hasTouchingTiles = true;
-//    if(touching_tile->getColorAtEdge(TileTypeLib::Edge::LEFT) != tile_to_add->getColorAtEdge(TileTypeLib::Edge::RIGHT))
-//      throw ColorMismatchException("Invalid move - connected line colors mismatch\n", position_to_add);
-
-//    canBePlaced = true;
-//  }
-
-
-//  return canBePlaced && hasTouchingTiles;
-//}
-
 void GameBoard::doTurn(TilePtr tile_to_add)
   throw(InvalidPositionException)
 {
@@ -114,6 +52,7 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
 {
   // Get all empty positions around the last placed tile
   std::vector<Position> empty_positions = game_.getEmptyPositionsAround(last_placed->getPosition());
+  std::vector<TileTypeLib::TileType> tile_types = TileTypeLib::TileType::getAllTileTypes();
 
   // for all empty positions
   for(std::vector<Position>::iterator it = empty_positions.begin(); it != empty_positions.end(); it++)
@@ -125,12 +64,23 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     if(touching_tiles.size() < 2)
       continue;
 
-    //TODO: not last_placed! try different tiles here
-    // Check which tiletype could place and create a tile
-    if(canTileBePlaced(touching_tiles, last_placed))
+
+    int counter = 0;
+    TilePtr tile;
+    TilePtr tile_to_try;
+
+    for(std::vector<TileTypeLib::TileType>::iterator types_it = tile_types.begin(); types_it != tile_types.end(); types_it++)
     {
-      doTurn(last_placed);
+      tile_to_try.reset(new Tile(*types_it, *it));
+      if(canTileBePlaced(touching_tiles, tile_to_try))
+      {
+        counter++;
+        tile = tile_to_try;
+      }
     }
+
+    if(counter == 1)
+    doTurn(tile);
 
 
   }
