@@ -138,3 +138,19 @@ std::vector<TilePtr> GameLib::Game::getLastPlacedTiles() const
 
   return last_placed_tiles;
 }
+
+const PlayerLib::Player& GameLib::Game::getActivePlayer() const
+{
+  return active_player_;
+}
+
+const PlayerLib::Player& GameLib::Game::getPausedPlayer() const
+{
+  if(active_player_ == players_.at(0))
+    return players_.at(1);
+
+  if(active_player_ == players_.at(1))
+    return players_.at(0);
+
+  throw MessageException("No suitable paused player found!!!");
+}

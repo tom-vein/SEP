@@ -133,8 +133,28 @@ bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other, TileTypeLib:
     }
 }
 
-PlayerLib::Color GameBoard::WinnerChecker::checkWinner(
+const PlayerLib::Player& GameBoard::WinnerChecker::determineWinner(
     const GameLib::Game& game) const
 {
+  const PlayerLib::Player& active_player = game.getActivePlayer();
+  const PlayerLib::Player& paused_player = game.getPausedPlayer();
+
+  if(hasPlayerWon(active_player, game))
+    return active_player;
+
+  if(hasPlayerWon(paused_player, game))
+    return paused_player;
+
+  throw NoPlayerWinsException("no player has won");
+}
+
+bool GameBoard::WinnerChecker::hasPlayerWon(const PlayerLib::Player& player,
+                                          const GameLib::Game& game) const
+{
   std::vector<TilePtr> last_placed_tiles = game.getLastPlacedTiles();
+
+  for(TilePtr tile_ptr : last_placed_tiles)
+  {
+
+  }
 }

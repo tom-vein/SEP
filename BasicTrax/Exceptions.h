@@ -31,34 +31,43 @@ class InvalidPositionException : public PositionException
 {
 public:
   InvalidPositionException(std::string message, Position position) : PositionException(message, position) {}
-  ~InvalidPositionException() {}
+  virtual ~InvalidPositionException() {}
 };
 
 class OutOfMemoryException : public MessageException
 {
 public:
   OutOfMemoryException(std::string message) : MessageException(message) {}
-  ~OutOfMemoryException() {}
+  virtual ~OutOfMemoryException() {}
 };
+
 class NoTilesLeftException : public MessageException
 {
 public:
   NoTilesLeftException(std::string message) : MessageException(message) {}
-  ~NoTilesLeftException() {}
+  virtual ~NoTilesLeftException() {}
 };
+
 class NotEmptyException : public PositionException
 {
 public:
   NotEmptyException(std::string message, Position position) : PositionException(message, position) {}
-  ~NotEmptyException() {}
+  virtual ~NotEmptyException() {}
 };
+
 class ColorMismatchException : public PositionException
 {
 public:
   ColorMismatchException(std::string message, Position position) : PositionException(message, position) {}
-  ~ColorMismatchException() {}
+  virtual ~ColorMismatchException() {}
 };
 
+class NoPlayerWinsException : public MessageException
+{
+public:
+  NoPlayerWinsException(std::string message) : MessageException(message) {}
+  virtual ~NoPlayerWinsException() {}
+};
 
 #endif // EXCEPTIONS
 

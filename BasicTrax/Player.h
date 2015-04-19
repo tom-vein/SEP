@@ -3,6 +3,8 @@
 
 namespace PlayerLib
 {
+  class Player;
+
   enum class Color
   {
     NONE,
@@ -10,13 +12,16 @@ namespace PlayerLib
     RED
   };
 
+  bool operator==(const Player& player01, const Player& player02);
+
   class Player
   {
   private:
     Color color_;
   public:
     Player(Color color);
-    void placeTile();
+    Color getColor() const;
+    friend bool operator==(const Player& player01, const Player& player02);
   };
 }
 

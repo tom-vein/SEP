@@ -51,6 +51,8 @@ namespace GameLib
     void addTile(TilePtr toAdd)
       throw(NoTilesLeftException);
     std::vector<TilePtr> getLastPlacedTiles() const;
+    const PlayerLib::Player& getActivePlayer() const;
+    const PlayerLib::Player& getPausedPlayer() const;
   };
 }
 
