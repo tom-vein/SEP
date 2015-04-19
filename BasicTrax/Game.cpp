@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <utility>
 
-GameLib::Game::Game(const std::array<PlayerLib::Player, 2>& players) :
+GameLib::Game::Game(const std::array<Player, 2>& players) :
   players_(players), active_player_(players_.at(0))
 {
 
@@ -16,7 +16,8 @@ TilePtr GameLib::Game::getTileByPosition(const Position& position, int offset_x,
    if( (*it)->getPosition() == position_to_return)
      return *it;
   }
-  return TilePtr();
+
+  return nullptr;
 }
 
 void GameLib::Game::addTile(TilePtr to_add)
@@ -37,6 +38,7 @@ void GameLib::Game::removeTileAtPosition(const Position& position)
     if( (*it)->getPosition() == position)
     {
       tiles_.erase(it);
+      --num_of_placed_tiles_in_current_turn_;
       return;
     }
   }
@@ -50,6 +52,7 @@ void GameLib::Game::removeTile(TilePtr tile_to_remove)
     if( (*it) == tile_to_remove)
     {
       tiles_.erase(it);
+      --num_of_placed_tiles_in_current_turn_;
       return;
     }
   }
@@ -74,33 +77,33 @@ std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(const Posit
     touching_tiles.insert(std::pair<TileTypeLib::Edge, TilePtr>(TileTypeLib::Edge::BOTTOM, tile));
   return touching_tiles;
 }
-std::map<TileTypeLib::Edge, TileTypeLib::Color> GameLib::Game::getTouchingColors(const Position &position, int offset_x, int offset_y)
+std::map<TileTypeLib::Edge, Color> GameLib::Game::getTouchingColors(const Position &position, int offset_x, int offset_y)
 {
-  std::map<TileTypeLib::Edge, TileTypeLib::Color> touching_colors;
+  std::map<TileTypeLib::Edge, Color> touching_colors;
   TilePtr tile;
   //Left
   if(tile = getTileByPosition(position, offset_x - 1, offset_y))
-    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::LEFT, tile->getColorAtEdge(TileTypeLib::Edge::LEFT)));
+    touching_colors.insert(std::pair<TileTypeLib::Edge, Color>(TileTypeLib::Edge::LEFT, tile->getColorAtEdge(TileTypeLib::Edge::LEFT)));
   else
-    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::LEFT, TileTypeLib::Color::NO_COLOR));
+    touching_colors.insert(std::pair<TileTypeLib::Edge, Color>(TileTypeLib::Edge::LEFT, Color::NONE));
 
   //Top
   if(tile = getTileByPosition(position, offset_x, offset_y -1))
-    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::TOP, tile->getColorAtEdge(TileTypeLib::Edge::TOP)));
+    touching_colors.insert(std::pair<TileTypeLib::Edge, Color>(TileTypeLib::Edge::TOP, tile->getColorAtEdge(TileTypeLib::Edge::TOP)));
   else
-    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::TOP, TileTypeLib::Color::NO_COLOR));
+    touching_colors.insert(std::pair<TileTypeLib::Edge, Color>(TileTypeLib::Edge::TOP, Color::NONE));
 
   //Right
   if(tile = getTileByPosition(position, offset_x + 1, offset_y))
-    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::RIGHT, tile->getColorAtEdge(TileTypeLib::Edge::RIGHT)));
+    touching_colors.insert(std::pair<TileTypeLib::Edge, Color>(TileTypeLib::Edge::RIGHT, tile->getColorAtEdge(TileTypeLib::Edge::RIGHT)));
   else
-    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::RIGHT, TileTypeLib::Color::NO_COLOR));
+    touching_colors.insert(std::pair<TileTypeLib::Edge, Color>(TileTypeLib::Edge::RIGHT, Color::NONE));
 
   //bottom
   if(tile = getTileByPosition(position, offset_x, offset_y + 1))
-    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::BOTTOM, tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM)));
+    touching_colors.insert(std::pair<TileTypeLib::Edge, Color>(TileTypeLib::Edge::BOTTOM, tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM)));
   else
-    touching_colors.insert(std::pair<TileTypeLib::Edge, TileTypeLib::Color>(TileTypeLib::Edge::BOTTOM, TileTypeLib::Color::NO_COLOR));
+    touching_colors.insert(std::pair<TileTypeLib::Edge, Color>(TileTypeLib::Edge::BOTTOM, Color::NONE));
   return touching_colors;
 }
 
@@ -139,12 +142,12 @@ std::vector<TilePtr> GameLib::Game::getLastPlacedTiles() const
   return last_placed_tiles;
 }
 
-const PlayerLib::Player& GameLib::Game::getActivePlayer() const
+const Player& GameLib::Game::getActivePlayer() const
 {
   return active_player_;
 }
 
-const PlayerLib::Player& GameLib::Game::getPausedPlayer() const
+const Player& GameLib::Game::getPausedPlayer() const
 {
   if(active_player_ == players_.at(0))
     return players_.at(1);

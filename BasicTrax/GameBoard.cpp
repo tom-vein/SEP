@@ -133,11 +133,11 @@ bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other, TileTypeLib:
     }
 }
 
-const PlayerLib::Player& GameBoard::WinnerChecker::determineWinner(
+const Player& GameBoard::WinnerChecker::determineWinner(
     const GameLib::Game& game) const
 {
-  const PlayerLib::Player& active_player = game.getActivePlayer();
-  const PlayerLib::Player& paused_player = game.getPausedPlayer();
+  const Player& active_player = game.getActivePlayer();
+  const Player& paused_player = game.getPausedPlayer();
 
   if(hasPlayerWon(active_player, game))
     return active_player;
@@ -148,13 +148,32 @@ const PlayerLib::Player& GameBoard::WinnerChecker::determineWinner(
   throw NoPlayerWinsException("no player has won");
 }
 
-bool GameBoard::WinnerChecker::hasPlayerWon(const PlayerLib::Player& player,
+bool GameBoard::WinnerChecker::hasPlayerWon(const Player& player,
                                           const GameLib::Game& game) const
 {
   std::vector<TilePtr> last_placed_tiles = game.getLastPlacedTiles();
 
   for(TilePtr tile_ptr : last_placed_tiles)
   {
-
+    if(isLoop(player.getColor(), tile_ptr, tile_ptr, game) ||
+       isLineLongEnough(player.getColor(), tile_ptr, game))
+      return true;
   }
+
+  return false;
+}
+
+bool GameBoard::WinnerChecker::isLoop(Color player_color,
+                                      TilePtr start_tile,
+                                      TilePtr current_tile,
+                                      const GameLib::Game& game) const
+{
+  //game.getTouchingColors()
+}
+
+bool GameBoard::WinnerChecker::isLineLongEnough(Color player_color,
+                                                TilePtr start_tile,
+                                                const GameLib::Game& game) const
+{
+
 }

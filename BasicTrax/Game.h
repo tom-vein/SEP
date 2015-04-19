@@ -32,11 +32,11 @@ namespace GameLib
     static const unsigned int MAX_OF_TILES = 64;
     unsigned int num_of_placed_tiles_in_current_turn_ = 0;
     std::vector<TilePtr> tiles_;
-    std::array<PlayerLib::Player, 2> players_;
+    std::array<Player, 2> players_;
     State state_ = State::NOTHING;
-    PlayerLib::Player& active_player_;
+    Player& active_player_;
   public:
-    Game(const std::array<PlayerLib::Player, 2>& players);
+    Game(const std::array<Player, 2>& players);
     void tooglePlayer(); //reset num_of_placed_tiles_in_current_turn_ to 0
     State getState() const;
     void setState(State state);
@@ -46,13 +46,13 @@ namespace GameLib
       throw(InvalidPositionException);
     void removeTile(TilePtr tile_to_remove);
     std::map<TileTypeLib::Edge, TilePtr> getTouchingTiles(const Position& position, int offset_x = 0, int offset_y = 0);
-    std::map<TileTypeLib::Edge, TileTypeLib::Color> getTouchingColors(const Position& position, int offset_x = 0, int offset_y = 0);
+    std::map<TileTypeLib::Edge, Color> getTouchingColors(const Position& position, int offset_x = 0, int offset_y = 0);
     std::vector<Position> getEmptyPositionsAround(const Position& position, int offset_x = 0, int offset_y = 0);
     void addTile(TilePtr toAdd)
       throw(NoTilesLeftException);
     std::vector<TilePtr> getLastPlacedTiles() const;
-    const PlayerLib::Player& getActivePlayer() const;
-    const PlayerLib::Player& getPausedPlayer() const;
+    const Player& getActivePlayer() const;
+    const Player& getPausedPlayer() const;
   };
 }
 

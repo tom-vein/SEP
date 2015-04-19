@@ -3,17 +3,10 @@
 
 #include <vector>
 #include <exception>
+#include "Color.h"
 
 namespace TileTypeLib
 {
-
-  enum class Color
-  {
-    NO_COLOR,
-    WHITE,
-    RED
-  };
-
   enum class Shape
   {
     CROSS,

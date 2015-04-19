@@ -60,7 +60,7 @@ const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Color left_edge_
   throw(MessageException("No such tiletype"));
 }
 
-TileTypeLib::Color TileTypeLib::TileType::getColorAtEdge(Edge edge)
+Color TileTypeLib::TileType::getColorAtEdge(Edge edge)
 {
   switch(edge)
   {
@@ -73,19 +73,19 @@ TileTypeLib::Color TileTypeLib::TileType::getColorAtEdge(Edge edge)
     {
       if(shape_ == TileTypeLib::Shape::CROSS)
         return top_color_;
-      else if(top_color_ == TileTypeLib::Color::RED)
-        return TileTypeLib::Color::WHITE;
+      else if(top_color_ == Color::RED)
+        return Color::WHITE;
       else
-        return TileTypeLib::Color::RED;
+        return Color::RED;
     }
     case TileTypeLib::Edge::LEFT:
     {
       if(shape_ == TileTypeLib::Shape::CROSS || shape_ == TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER)
       {
-        if(top_color_ == TileTypeLib::Color::RED)
-          return TileTypeLib::Color::WHITE;
+        if(top_color_ == Color::RED)
+          return Color::WHITE;
         else
-          return TileTypeLib::Color::RED;
+          return Color::RED;
       }
       else
         return top_color_;
@@ -94,10 +94,10 @@ TileTypeLib::Color TileTypeLib::TileType::getColorAtEdge(Edge edge)
     {
       if(shape_ == TileTypeLib::Shape::CROSS || shape_ == TileTypeLib::Shape::CURVE_TOP_LEFT_CORNER)
       {
-        if(top_color_ == TileTypeLib::Color::RED)
-          return TileTypeLib::Color::WHITE;
+        if(top_color_ == Color::RED)
+          return Color::WHITE;
         else
-          return TileTypeLib::Color::RED;
+          return Color::RED;
       }
     }
   default: throw(MessageException("No such edge"));

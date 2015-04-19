@@ -23,10 +23,10 @@ int main(int argc, char* argv[])
 
   TileTypeLib::TileType::initTileTypes();
 
-  PlayerLib::Player player1(PlayerLib::Color::RED);
-  PlayerLib::Player player2(PlayerLib::Color::WHITE);
+  Player player1(Color::RED);
+  Player player2(Color::WHITE);
 
-  std::array<PlayerLib::Player, 2>players{player1, player2};
+  std::array<Player, 2>players{player1, player2};
 
   GameLib::Game game(players);
 

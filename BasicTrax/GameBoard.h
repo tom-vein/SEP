@@ -26,14 +26,14 @@ private:
   class WinnerChecker
   {
   private:
-    bool hasPlayerWon(const PlayerLib::Player& player,
+    bool hasPlayerWon(const Player& player,
                       const GameLib::Game& game) const;
-    bool isLoop(PlayerLib::Color color, TilePtr start_tile,
-                const GameLib::Game& game) const;
-    bool isLine(PlayerLib::Color color, TilePtr start_tile,
+    bool isLoop(Color player_color, TilePtr start_tile,
+                TilePtr current_tile, const GameLib::Game& game) const;
+    bool isLineLongEnough(Color player_color, TilePtr start_tile,
                 const GameLib::Game& game) const;
   public:
-    const PlayerLib::Player& determineWinner(const GameLib::Game& game) const;
+    const Player& determineWinner(const GameLib::Game& game) const;
   };
 
 public:

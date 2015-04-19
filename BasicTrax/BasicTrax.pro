@@ -26,4 +26,5 @@ HEADERS += \
     Parser.h \
     FileManager.h \
     Exceptions.h \
-    Exceptions.h
+    Exceptions.h \
+    Color.h
