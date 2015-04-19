@@ -22,9 +22,10 @@ TilePtr GameLib::Game::getTileByPosition(const Position& position, int offset_x,
 void GameLib::Game::addTile(TilePtr to_add)
   throw(NoTilesLeftException)
 {
-  tiles_.push_back(to_add);
-  if(tiles_.size() > MAX_OF_TILES)
+  if(tiles_.size() >= MAX_OF_TILES)
     throw NoTilesLeftException("Invalid move - not enough tiles left\n");
+
+  tiles_.push_back(to_add);
 }
 
 void GameLib::Game::removeTileAtPosition(const Position& position)
