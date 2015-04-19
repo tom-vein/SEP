@@ -85,25 +85,25 @@ std::map<TileTypeLib::Edge, Color> GameLib::Game::getTouchingColors(const Positi
   TilePtr tile;
   //Left
   if(tile = getTileByPosition(position, offset_x - 1, offset_y))
-    touching_colors[TileTypeLib::Edge::LEFT] = tile->getColorAtEdge(TileTypeLib::Edge::LEFT);
+    touching_colors[TileTypeLib::Edge::LEFT] = tile->getColorAtEdge(TileTypeLib::Edge::RIGHT);
   else
     touching_colors[TileTypeLib::Edge::LEFT] = Color::NONE;
 
   //Top
   if(tile = getTileByPosition(position, offset_x, offset_y -1))
-    touching_colors[TileTypeLib::Edge::TOP] = tile->getColorAtEdge(TileTypeLib::Edge::TOP);
+    touching_colors[TileTypeLib::Edge::TOP] = tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM);
   else
     touching_colors[TileTypeLib::Edge::TOP] = Color::NONE;
 
   //Right
   if(tile = getTileByPosition(position, offset_x + 1, offset_y))
-    touching_colors[TileTypeLib::Edge::RIGHT] = tile->getColorAtEdge(TileTypeLib::Edge::RIGHT);
+    touching_colors[TileTypeLib::Edge::RIGHT] = tile->getColorAtEdge(TileTypeLib::Edge::LEFT);
   else
     touching_colors[TileTypeLib::Edge::RIGHT] = Color::NONE;
 
   //bottom
   if(tile = getTileByPosition(position, offset_x, offset_y + 1))
-    touching_colors[TileTypeLib::Edge::BOTTOM] = tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM);
+    touching_colors[TileTypeLib::Edge::BOTTOM] = tile->getColorAtEdge(TileTypeLib::Edge::TOP);
   else
     touching_colors[TileTypeLib::Edge::BOTTOM] = Color::NONE;
 
