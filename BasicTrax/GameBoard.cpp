@@ -80,7 +80,7 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     }
 
     if(counter == 1)
-    doTurn(tile);
+      doTurn(tile);
 
 
   }
