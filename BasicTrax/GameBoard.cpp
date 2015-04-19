@@ -132,3 +132,9 @@ bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other, TileTypeLib:
         throw(MessageException("No such edge"));
     }
 }
+
+PlayerLib::Color GameBoard::WinnerChecker::checkWinner(
+    const GameLib::Game& game) const
+{
+  std::vector<TilePtr> last_placed_tiles = game.getLastPlacedTiles();
+}

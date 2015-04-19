@@ -26,9 +26,10 @@ private:
   class WinnerChecker
   {
   private:
-
+    bool isLoop(PlayerLib::Color color);
+    bool isLine(PlayerLib::Color color);
   public:
-    PlayerLib::Color checkWinner(const Game& game) const;
+    PlayerLib::Color checkWinner(const GameLib::Game& game) const;
   };
 
 public:
