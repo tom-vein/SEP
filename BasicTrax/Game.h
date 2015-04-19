@@ -30,13 +30,14 @@ namespace GameLib
   {
   private:
     static const unsigned int MAX_OF_TILES = 64;
+    unsigned int num_of_placed_tiles_in_current_turn_ = 0;
     std::vector<TilePtr> tiles_;
     std::array<PlayerLib::Player, 2> players_;
     State state_ = State::NOTHING;
     PlayerLib::Player& active_player_;
   public:
     Game(const std::array<PlayerLib::Player, 2>& players);
-    void tooglePlayer();
+    void tooglePlayer(); //reset num_of_placed_tiles_in_current_turn_ to 0
     State getState() const;
     void setState(State state);
     TilePtr getTileByPosition(const Position& position, int offset_x = 0, int offset_y = 0)
@@ -49,6 +50,7 @@ namespace GameLib
     std::vector<Position> getEmptyPositionsAround(const Position& position, int offset_x = 0, int offset_y = 0);
     void addTile(TilePtr toAdd)
       throw(NoTilesLeftException);
+    unsigned int getNumOfPlacedTilesInCurrentTurn() const;
   };
 }
 

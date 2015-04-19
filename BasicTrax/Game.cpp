@@ -26,6 +26,7 @@ void GameLib::Game::addTile(TilePtr to_add)
     throw NoTilesLeftException("Invalid move - not enough tiles left\n");
 
   tiles_.push_back(to_add);
+  ++num_of_placed_tiles_in_current_turn_;
 }
 
 void GameLib::Game::removeTileAtPosition(const Position& position)
@@ -120,4 +121,9 @@ std::vector<Position> GameLib::Game::getEmptyPositionsAround(const Position& pos
     empty_positions.push_back(Position(position.getX() + offset_x, position.getY() + offset_y + 1));
 
   return empty_positions;
+}
+
+unsigned int GameLib::Game::getNumOfPlacedTilesInCurrentTurn() const
+{
+  return num_of_placed_tiles_in_current_turn_;
 }

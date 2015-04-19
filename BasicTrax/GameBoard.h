@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Exceptions.h"
 
+
 class GameBoard
 {
 private:
@@ -21,8 +22,14 @@ private:
     throw(InvalidPositionException);
   bool canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check);
   bool checkTwoTiles(TilePtr first, TilePtr second, TileTypeLib::Edge touching_edge_of_second_tile);
-  void addTile(TilePtr tile_to_add);
 
+  class WinnerChecker
+  {
+  private:
+
+  public:
+    PlayerLib::Color checkWinner(const Game& game) const;
+  };
 
 public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);
