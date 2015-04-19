@@ -8,7 +8,7 @@
 
 class Tile;
 
-typedef std::shared_ptr<Tile> TilePtr;
+using TilePtr = std::shared_ptr<Tile>;
 
 
 class Tile
