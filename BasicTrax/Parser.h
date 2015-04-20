@@ -18,8 +18,8 @@ public:
   static std::shared_ptr<CommandLib::Command> parseCommand(
       const std::string& command_string, const GameLib::Game& game);
   static std::string parseArguments(int argc, char* argv[]);
-  static void parsePosition(const std::string& input);
-  static void parseTileType(const std::string& input);
+  static Position parsePosition(const std::string& input);
+  static TileTypeLib::TileType parseTileType(const std::string& input);
 };
 
 #endif // PARSER_H
