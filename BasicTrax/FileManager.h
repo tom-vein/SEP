@@ -2,6 +2,7 @@
 #define FILEMANAGER_H
 
 #include <string>
+#include <fstream>
 #include "Color.h"
 #include "Game.h"
 
@@ -11,7 +12,7 @@ private:
   class FileHeader
   {
   private:
-    char magic_number_ [4] = {'T', 'R', 'A', 'X'};
+    std::string magic_number_ = "TRAX";
     Color active_player_;
     signed char min_x_;
     signed char min_y_;
@@ -21,6 +22,7 @@ private:
     FileHeader(Color active_player, signed char min_x,
                signed char min_y, signed char max_x,
                signed char max_y);
+    std::ostream& write(std::ostream& os);
   };
 
   class Field
@@ -30,6 +32,7 @@ private:
     Color top_color_;
   public:
     Field(TileTypeLib::Shape shape, Color top_color);
+    std::ostream& write(std::ostream& os);
   };
 
   std::string file_name_;

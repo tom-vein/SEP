@@ -108,5 +108,12 @@ public:
   virtual ~InappropriateNumberOfNextTilesException() {}
 };
 
+class FileWriteException : public MessageException
+{
+public:
+  FileWriteException(std::string message) : MessageException(message) {}
+  virtual ~FileWriteException() {}
+};
+
 #endif // EXCEPTIONS
 

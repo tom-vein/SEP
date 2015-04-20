@@ -22,13 +22,34 @@ FileManager::Field::Field(TileTypeLib::Shape shape, Color top_color) :
 void FileManager::writeToFile(const GameLib::Game& game) const
 {
   std::vector<Field> fields;
+  std::string error_msg = std::string("Cannot write file ") + file_name_ +
+                          std::string("\n");
 
   if(game.getTileCount() == 0)
     throw NoTilesLeftException("Board is empty!\n");
 
+  std::ofstream output_file(file_name_, std::ios::binary);
+
+  if(!output_file)
+    throw FileWriteException(error_msg);
+
   FileHeader file_header = createFileHeader(game);
   initFields(fields, game);
-  //Continue with write
+
+  file_header.write(output_file);
+
+  if(!output_file)
+    throw FileWriteException(error_msg);
+
+  for(Field field : fields)
+  {
+    field.write(output_file);
+
+    if(!output_file)
+      throw FileWriteException(error_msg);
+  }
+
+  output_file.close();
 }
 
 FileManager::FileHeader FileManager::createFileHeader(
@@ -71,4 +92,24 @@ FileManager::Field FileManager::createField(TilePtr tile) const
   }
 
   return Field(TileTypeLib::Shape::NONE, Color::NONE);
+}
+
+std::ostream& FileManager::FileHeader::write(std::ostream& os)
+{
+  os << magic_number_;
+  os.write(reinterpret_cast<char*>(&active_player_), sizeof(active_player_));
+  os << min_x_;
+  os << min_y_;
+  os << max_x_;
+  os << max_y_;
+
+  return os;
+}
+
+std::ostream& FileManager::Field::write(std::ostream& os)
+{
+  os.write(reinterpret_cast<char*>(&shape_), sizeof(shape_));
+  os.write(reinterpret_cast<char*>(&top_color_), sizeof(top_color_));
+
+  return os;
 }
