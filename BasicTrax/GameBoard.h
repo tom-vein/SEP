@@ -4,6 +4,7 @@
 #include "FileManager.h"
 #include "Game.h"
 #include "Exceptions.h"
+#include "Command.h"
 #include <set>
 
 
@@ -71,7 +72,7 @@ private:
 public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);
   void startGame();
-  void doTurn(TilePtr tile)
+  CommandLib::Code doTurn(TilePtr tile)
   throw(InvalidPositionException);
 };
 

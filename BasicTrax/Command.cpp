@@ -50,7 +50,7 @@ CommandLib::DoTurnCommand::DoTurnCommand(TilePtr tile) : tile_(tile)
 
 CommandLib::Code CommandLib::DoTurnCommand::execute(GameBoard& game_board) const
 {
-  game_board.doTurn(tile_);
+  return game_board.doTurn(tile_);
 }
 
 CommandLib::DoTurnCommand::~DoTurnCommand()
