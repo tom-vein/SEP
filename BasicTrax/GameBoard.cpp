@@ -156,7 +156,7 @@ bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other, TileTypeLib:
   }
 }
 
-const Player& GameBoard::WinnerChecker::determineWinner(
+const Player& GameBoard::ResultChecker::determineWinner(
     const GameLib::Game& game) const
 {
   const Player& active_player = game.getActivePlayer();
@@ -171,7 +171,12 @@ const Player& GameBoard::WinnerChecker::determineWinner(
   throw NoPlayerWinsException("no player has won");
 }
 
-bool GameBoard::WinnerChecker::hasPlayerWon(const Player& player,
+bool GameBoard::ResultChecker::isDraw(const GameLib::Game& game) const
+{
+  return game.getTileCount() >= GameLib::Game::getMaxOfTiles();
+}
+
+bool GameBoard::ResultChecker::hasPlayerWon(const Player& player,
                                             const GameLib::Game& game) const
 {
   std::vector<TilePtr> last_placed_tiles = game.getLastPlacedTiles();
@@ -186,7 +191,7 @@ bool GameBoard::WinnerChecker::hasPlayerWon(const Player& player,
   return false;
 }
 
-bool GameBoard::WinnerChecker::isLoop(Color player_color,
+bool GameBoard::ResultChecker::isLoop(Color player_color,
                                       TilePtr start_tile,
                                       TilePtr previous_tile,
                                       TilePtr current_tile,
@@ -216,7 +221,7 @@ bool GameBoard::WinnerChecker::isLoop(Color player_color,
   return isLoop(player_color, start_tile, current_tile, next_tile, game, false);
 }
 
-bool GameBoard::WinnerChecker::doesLineWin(Color player_color,
+bool GameBoard::ResultChecker::doesLineWin(Color player_color,
                                            TilePtr start_tile,
                                            const GameLib::Game& game) const
 {
@@ -228,7 +233,7 @@ bool GameBoard::WinnerChecker::doesLineWin(Color player_color,
   return line_winning_criteria.allWinningCriteriaFulfilled(game);
 }
 
-void GameBoard::WinnerChecker::checkIfLineWins(Color player_color,
+void GameBoard::ResultChecker::checkIfLineWins(Color player_color,
                                                TilePtr previous_tile,
                                                TilePtr current_tile,
                                                const GameLib::Game& game,
@@ -261,7 +266,7 @@ const
   }
 }
 
-std::vector<TilePtr> GameBoard::WinnerChecker::determineNextTiles(
+std::vector<TilePtr> GameBoard::ResultChecker::determineNextTiles(
     Color player_color,
     TilePtr previous_tile,
     TilePtr current_tile,
@@ -283,7 +288,7 @@ const
   return next_tiles;
 }
 
-void GameBoard::WinnerChecker::LineWinningCriteria::analyseLineEnd(
+void GameBoard::ResultChecker::LineWinningCriteria::analyseLineEnd(
     Color color, TilePtr tile, const GameLib::Game& game)
 {
   LineDirection line_direction = LineDirection::NONE;
@@ -326,8 +331,8 @@ void GameBoard::WinnerChecker::LineWinningCriteria::analyseLineEnd(
   }
 }
 
-GameBoard::WinnerChecker::LineWinningCriteria::LineDirection
-GameBoard::WinnerChecker::LineWinningCriteria::
+GameBoard::ResultChecker::LineWinningCriteria::LineDirection
+GameBoard::ResultChecker::LineWinningCriteria::
 determineDirectionOfFreeEdge(Color color, TilePtr tile, const
                              GameLib::Game& game)
 const
@@ -367,17 +372,17 @@ const
   throw NoSuitableLineDirectionException("no suitable line direction found");
 }
 
-void GameBoard::WinnerChecker::LineWinningCriteria::addXValue(int x)
+void GameBoard::ResultChecker::LineWinningCriteria::addXValue(int x)
 {
   x_values_of_line_.insert(x);
 }
 
-void GameBoard::WinnerChecker::LineWinningCriteria::addYValue(int y)
+void GameBoard::ResultChecker::LineWinningCriteria::addYValue(int y)
 {
   y_values_of_line_.insert(y);
 }
 
-bool GameBoard::WinnerChecker::LineWinningCriteria::
+bool GameBoard::ResultChecker::LineWinningCriteria::
 allWinningCriteriaFulfilled(const GameLib::Game& game) const
 {
   if(x_values_of_line_.size() >= MIN_LENGTH_OF_WINNING_LINE &&

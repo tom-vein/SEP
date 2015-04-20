@@ -252,3 +252,13 @@ int GameLib::Game::getMinYValue() const
 
   return min_y_value;
 }
+
+unsigned int GameLib::Game::getTileCount() const
+{
+  return tiles_.size();
+}
+
+unsigned int GameLib::Game::getMaxOfTiles()
+{
+  return MAX_OF_TILES;
+}

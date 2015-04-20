@@ -57,7 +57,8 @@ namespace GameLib
     int getMinXValue() const;
     int getMaxYValue() const;
     int getMinYValue() const;
-    int getTileCount() {return tiles_.size();}
+    unsigned int getTileCount() const;
+    static unsigned int getMaxOfTiles();
   };
 }
 

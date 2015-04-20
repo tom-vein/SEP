@@ -10,7 +10,7 @@
 class GameBoard
 {
 private:
-  class WinnerChecker
+  class ResultChecker
   {
   private:
     class LineWinningCriteria
@@ -52,11 +52,12 @@ private:
                                             const GameLib::Game& game) const;
   public:
     const Player& determineWinner(const GameLib::Game& game) const;
+    bool isDraw(const GameLib::Game& game) const;
   };
 
   GameLib::Game game_;
   FileManager file_manager_; //Before writing look if should_write_to_file_ is
-  WinnerChecker winner_checker_;
+  ResultChecker result_checker_;
 
   std::vector<TilePtr> tried_insertions_; // used for rollback when invalid move would be made
   bool should_write_to_file_;
