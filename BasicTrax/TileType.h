@@ -7,8 +7,9 @@
 
 namespace TileTypeLib
 {
-  enum class Shape
+  enum class Shape : char
   {
+    NONE = 0,
     CROSS,
     CURVE_TOP_LEFT_CORNER,
     CURVE_TOP_RIGHT_CORNER,
