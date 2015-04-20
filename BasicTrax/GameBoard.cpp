@@ -20,40 +20,44 @@ throw(InvalidPositionException)
 {
   try
   {
-    // Hole alle touching tiles
+    // If first tile not on (0,0)
+    if(game_.getTileCount() == 0 && tile_to_add->getPosition() != Position(0,0))
+      throw(InvalidPositionException("Invalid coordinates - first tile must be set on (0,0)\n",tile_to_add->getPosition()));
+
+    if(game_.getTileByPosition(tile_to_add->getPosition()))
+      throw(InvalidPositionException("Invalid coordinates - field not empty\n", tile_to_add->getPosition()));
+
     std::map<TileTypeLib::Edge, TilePtr> touching_tiles = game_.getTouchingTiles(tile_to_add->getPosition());
-    // Teste ob hier platziert werden kann
+
     canTileBePlaced(touching_tiles, tile_to_add);
 
-    // Speichere zwischen (falls später was passiert)
+    // Save all insertions of this turn
     tried_insertions_.push_back(tile_to_add);
 
-    // Zum Spielfeld hinzufügen
     game_.addTile(tile_to_add);
+    doForcedPlay(tile_to_add);
 
-    // Checken ob weitere tiles platziert werden sollen / müssen
-    try
-    {
-      doForcedPlay(tile_to_add);
-    }
-    catch(ColorMismatchException &e)
-    {
 
-    }
-
+    //TODO: push winner to game_!
+    Player winner = result_checker_.determineWinner(game_);
   }
-  //TODO catch and treat exceptions different
-  catch (MessageException &e)
+  catch (NoPlayerWinsException& e)
+  {
+    //Nothing to do here
+  }
+  catch (MessageException& e)
   {
     for(std::vector<TilePtr>::iterator it = tried_insertions_.begin(); it != tried_insertions_.end(); it++)
     {
       game_.removeTile(*it);
     }
     tried_insertions_.clear();
-    throw(e);
+    std::cout << e.what();
   }
-  tried_insertions_.clear();
 
+  tried_insertions_.clear();
+  //TODO: implement toggleplayer
+  //game_.tooglePlayer();
 }
 
 void GameBoard::doForcedPlay(TilePtr last_placed)
@@ -92,32 +96,25 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
       {
         //nothing to do
       }
-
     }
 
     if(counter == 1)
       doTurn(tile);
-
-    if(counter > 1)
-      throw(ColorMismatchException("Invalid move - connected line colors mismatch\n", last_placed->getPosition()));
-
   }
 }
 
 bool GameBoard::canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check)
 {
-  // Wenn tile_to_check nachbarn hat
-  if(touching_tiles.empty() && game_.getTileCount() != 0)
-    //TODO right exception
-    throw(InvalidPositionException("No touching tiles", tile_to_check->getPosition()));
+  // If tile has touching tiles
+    if(touching_tiles.empty() && game_.getTileCount() != 0)
+        throw(InvalidPositionException("Invalid coordinates - field not connected to tile\n", tile_to_check->getPosition()));
 
-  // Für jeden nachbarn
+  // For each touching tile
   for(std::map<TileTypeLib::Edge, TilePtr>::iterator it = touching_tiles.begin(); it != touching_tiles.end(); it++)
   {
-    // Wenn Edges nicht zusammenpassen
+
     if(!checkTwoTiles(tile_to_check, it->second, it->first))
-      //TODO right exception
-      throw(ColorMismatchException("Color mismatch", tile_to_check->getPosition()));
+      throw(ColorMismatchException("Invalid move - connected line colors mismatch\n", tile_to_check->getPosition()));
   }
   return true;
 }

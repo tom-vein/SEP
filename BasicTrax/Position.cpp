@@ -28,3 +28,10 @@ bool Position::operator ==(const Position& other) const
   else
     return false;
 }
+bool Position::operator !=(const Position& other) const
+{
+  if(other.getX() != x_ || other.getY() != y_)
+    return true;
+  else
+    return false;
+}

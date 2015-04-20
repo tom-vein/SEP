@@ -4,7 +4,9 @@
 #include "FileManager.h"
 #include "Game.h"
 #include "Exceptions.h"
+//#include "Command.h"
 #include <set>
+#include <iostream>
 
 
 class GameBoard
