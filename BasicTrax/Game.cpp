@@ -180,3 +180,57 @@ const Player& GameLib::Game::getPausedPlayer() const
 
   throw MessageException("No suitable paused player found!!!");
 }
+
+int GameLib::Game::getExtremValue(ExtremType extrem_type, AxisType axis_type)
+const
+{
+  int extrem_value;
+
+  if(tiles_.empty())
+    throw NoTilesException("There are no tiles in game");
+
+  if(extrem_type != ExtremType::MAX || extrem_type != ExtremType::MIN)
+  {
+    throw ExtremTypeNotAllowed
+      ("The extrem type you want to use is not supported here");
+  }
+
+  if(axis_type != AxisType::X || axis_type != AxisType::Y)
+  {
+    throw AxisTypeNotAllowed
+        ("The axis type you want to use is not supported here");
+  }
+
+  if(axis_type == AxisType::X)
+    extrem_value = tiles_.at(0)->getPosition().getX();
+  else if(axis_type == AxisType::Y)
+    extrem_value = tiles_.at(0)->getPosition().getY();
+
+  for(int i = 1; i < tiles_.size(); i++)
+  {
+    TilePtr tile = tiles_.at(i);
+
+    if(extrem_type == ExtremType::MAX && axis_type == AxisType::X)
+    {
+      if(tile->getPosition().getX() > extrem_value)
+        extrem_value = tile->getPosition().getX();
+    }
+    else if(extrem_type == ExtremType::MIN && axis_type == AxisType::X)
+    {
+      if(tile->getPosition().getX() < extrem_value)
+        extrem_value = tile->getPosition().getX();
+    }
+    else if(extrem_type == ExtremType::MAX && axis_type == AxisType::Y)
+    {
+      if(tile->getPosition().getY() > extrem_value)
+        extrem_value = tile->getPosition().getX();
+    }
+    else if(extrem_type == ExtremType::MIN && axis_type == AxisType::Y)
+    {
+      if(tile->getPosition().getY() < extrem_value)
+        extrem_value = tile->getPosition().getX();
+    }
+  }
+
+  return extrem_value;
+}

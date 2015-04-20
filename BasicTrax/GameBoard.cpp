@@ -167,24 +167,31 @@ bool GameBoard::WinnerChecker::isLoop(Color player_color,
                                       TilePtr start_tile,
                                       TilePtr previous_tile,
                                       TilePtr current_tile,
-                                      const GameLib::Game& game) const
+                                      const GameLib::Game& game,
+                                      bool start_of_recursion) const
 {
-  TilePtr next_tile;
+  std::vector<TilePtr> next_tiles;
 
-  try
-  {
-    next_tile = determineNextTile(player_color, previous_tile, current_tile,
+
+  next_tiles = determineNextTiles(player_color, previous_tile, current_tile,
                                   game);
-  }
-  catch(NoSuitableSurroundingTileFoundException ex)
-  {
+
+  if(next_tiles.size() == 0)
     return false;
+
+  if((next_tiles.size() == 2 && !start_of_recursion) ||
+     next_tiles.size() > 2)
+  {
+    throw InappropriateNumberOfNextTilesException
+        ("the number of next tiles is inappropriate here");
   }
+
+  TilePtr next_tile = next_tiles.at(0);
 
   if(next_tile == start_tile)
     return true;
 
-  return isLoop(player_color, start_tile, current_tile, next_tile, game);
+  return isLoop(player_color, start_tile, current_tile, next_tile, game, false);
 }
 
 bool GameBoard::WinnerChecker::isLineLongEnough(Color player_color,
@@ -195,81 +202,80 @@ bool GameBoard::WinnerChecker::isLineLongEnough(Color player_color,
   std::set<int> y_values_of_line;
   LineDirection direction_of_first_end = LineDirection::NONE;
   LineDirection direction_of_second_end = LineDirection::NONE;
-  std::map<TileTypeLib::Edge, TilePtr> touching_tiles =
-      game.getTouchingTiles(start_tile->getPosition(), player_color);
 
-  x_values_of_line.insert(start_tile->getPosition().getX());
-  y_values_of_line.insert(start_tile->getPosition().getY());
+  isLineLongEnough(player_color, nullptr, start_tile, game, x_values_of_line,
+                   y_values_of_line, direction_of_first_end,
+                   direction_of_second_end);
 
-  //for(auto&)
+  if(x_values_of_line.size() >= MIN_LENGTH_OF_WINNING_LINE &&
+     (direction_of_first_end == LineDirection::RIGHT ||
+      direction_of_first_end == LineDirection::LEFT) &&
+     (direction_of_second_end == LineDirection::RIGHT ||
+      direction_of_second_end == LineDirection::LEFT) &&
+     direction_of_first_end != direction_of_second_end)
+    return true;
 
-  for(auto& touching_tile : touching_tiles)
-  {
-    TileTypeLib::Edge edge = touching_tile.first;
-    TilePtr tile = touching_tile.second;
+  if(y_values_of_line.size() >= MIN_LENGTH_OF_WINNING_LINE &&
+     (direction_of_first_end == LineDirection::UP ||
+      direction_of_first_end == LineDirection::DOWN) &&
+     (direction_of_second_end == LineDirection::UP ||
+      direction_of_second_end == LineDirection::DOWN) &&
+     direction_of_first_end != direction_of_second_end)
+    return true;
 
-    //Only handle the edges where the color is equal to the player_color
-    if(start_tile->getColorAtEdge(edge) == player_color)
-    {
-      isLineLongEnough(player_color, start_tile, tile, game,
-                          x_values_of_line, y_values_of_line);
-    }
-  }
-
-//  if(is_a_horizontal_line && x_values_of_line >= MIN_LENGTH_OF_WINNING_LINE)
-//    return true;
-
-  return true;
+  return false;
 }
 
-GameBoard::WinnerChecker::LineDirection
-GameBoard::WinnerChecker::isLineLongEnough(Color player_color,
-                                           TilePtr previous_tile,
-                                           TilePtr current_tile,
-                                           const GameLib::Game& game,
-                                           std::set<int>& x_values_of_line,
-                                           std::set<int>& y_values_of_line)
+void GameBoard::WinnerChecker::isLineLongEnough(Color player_color,
+                                                TilePtr previous_tile,
+                                                TilePtr current_tile,
+                                                const GameLib::Game& game,
+                                                std::set<int>& x_values_of_line,
+                                                std::set<int>& y_values_of_line,
+                                                LineDirection&
+                                                direction_of_first_end,
+                                                LineDirection&
+                                                direction_of_second_end,
+                                                bool start_of_recursion)
 const
 {
-  TilePtr next_tile;
+  std::vector<TilePtr> next_tiles;
   x_values_of_line.insert(current_tile->getPosition().getX());
   y_values_of_line.insert(current_tile->getPosition().getY());
 
-  try
-  {
-    next_tile = determineNextTile(player_color, previous_tile, current_tile,
+  next_tiles = determineNextTiles(player_color, previous_tile, current_tile,
                                   game);
-  }
-  catch(NoSuitableSurroundingTileFoundException)
+
+  if((next_tiles.size() == 2 && !start_of_recursion) ||
+     next_tiles.size() > 2)
   {
-    try
-    {
-      return determineDirectionOfFreeEdge(player_color, current_tile, game);
-    }
-    catch(TooLessFreeEdgesException)
-    {
-      return LineDirection::NONE;
-    }
-    catch(TooManyFreeEdgesException)
-    {
-      return LineDirection::NONE;
-    }
-    catch(NoSuitableLineDirectionException)
-    {
-      return LineDirection::NONE;
-    }
+    throw InappropriateNumberOfNextTilesException
+        ("the number of next tiles is inappropriate here");
   }
 
-  return isLineLongEnough(player_color, current_tile, next_tile, game,
-                          x_values_of_line, y_values_of_line);
+  if(next_tiles.size() == 0 || (next_tiles.size() == 1 && start_of_recursion))
+  {
+    determineDirectionOfLineEnds(direction_of_first_end,
+                                 direction_of_second_end, player_color,
+                                 current_tile, game);
+  }
+
+  for(TilePtr next_tile : next_tiles)
+  {
+    isLineLongEnough(player_color, current_tile, next_tile, game,
+                     x_values_of_line, y_values_of_line, direction_of_first_end,
+                     direction_of_second_end, false);
+  }
 }
 
-TilePtr GameBoard::WinnerChecker::determineNextTile(Color player_color,
-                                                    TilePtr previous_tile,
-                                                    TilePtr current_tile,
-                                                    const GameLib::Game& game)
+std::vector<TilePtr> GameBoard::WinnerChecker::determineNextTiles(
+    Color player_color,
+    TilePtr previous_tile,
+    TilePtr current_tile,
+    const GameLib::Game& game)
 const
 {
+  std::vector<TilePtr> next_tiles;
   std::map<TileTypeLib::Edge, TilePtr> touching_tiles =
       game.getTouchingTiles(current_tile->getPosition(), player_color);
 
@@ -278,12 +284,48 @@ const
     TilePtr tile_ptr = touching_tile.second;
 
     if(tile_ptr != previous_tile)
-      return tile_ptr;
+      next_tiles.push_back(tile_ptr);
   }
 
-  std::string error_msg =
-      "There has not been found a suitable surrounding tile";
-  throw NoSuitableSurroundingTileFoundException(error_msg);
+  return next_tiles;
+}
+
+void GameBoard::WinnerChecker::determineDirectionOfLineEnds(
+    LineDirection& direction_of_first_end,
+    LineDirection& direction_of_second_end,
+    Color color, TilePtr tile,
+    const GameLib::Game& game) const
+{
+  LineDirection line_direction = LineDirection::NONE;
+
+  try
+  {
+    line_direction = determineDirectionOfFreeEdge(color, tile, game);
+  }
+  catch(TooLessFreeEdgesException)
+  {
+    line_direction = LineDirection::NONE;
+  }
+  catch(TooManyFreeEdgesException)
+  {
+    line_direction = LineDirection::NONE;
+  }
+  catch(NoSuitableLineDirectionException)
+  {
+    line_direction = LineDirection::NONE;
+  }
+
+  if(direction_of_first_end != LineDirection::NONE &&
+     direction_of_second_end != LineDirection::NONE)
+  {
+    throw BothLineDirectionAlreadySetException
+        ("Both line directions has already been set");
+  }
+
+  if(direction_of_first_end == LineDirection::NONE)
+    direction_of_first_end = line_direction;
+  else
+    direction_of_second_end = line_direction;
 }
 
 GameBoard::WinnerChecker::LineDirection

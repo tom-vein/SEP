@@ -35,19 +35,27 @@ private:
     bool hasPlayerWon(const Player& player,
                       const GameLib::Game& game) const;
     bool isLoop(Color player_color, TilePtr start_tile, TilePtr previous_tile,
-                TilePtr current_tile, const GameLib::Game& game) const;
+                TilePtr current_tile, const GameLib::Game& game,
+                bool start_of_recursion = true) const;
     bool isLineLongEnough(Color player_color, TilePtr start_tile,
                           const GameLib::Game& game) const;
-    LineDirection isLineLongEnough(Color player_color, TilePtr previous_tile,
-                                   TilePtr current_tile,
-                                   const GameLib::Game& game,
-                                   std::set<int>& x_values_of_line,
-                                   std::set<int>& y_values_of_line) const;
+    void isLineLongEnough(Color player_color, TilePtr previous_tile,
+                          TilePtr current_tile, const GameLib::Game& game,
+                          std::set<int>& x_values_of_line,
+                          std::set<int>& y_values_of_line,
+                          LineDirection& direction_of_first_end,
+                          LineDirection& direction_of_second_end,
+                          bool start_of_recursion = true) const;
+    void determineDirectionOfLineEnds(LineDirection& direction_of_first_end,
+                                      LineDirection& direction_of_second_end,
+                                      Color color, TilePtr tile,
+                                      const GameLib::Game& game) const;
     LineDirection determineDirectionOfFreeEdge(Color color, TilePtr tile,
                                                const GameLib::Game& game) const;
-    TilePtr determineNextTile(Color player_color, TilePtr previous_tile,
-                              TilePtr current_tile,
-                              const GameLib::Game& game) const;
+    std::vector<TilePtr> determineNextTiles(Color player_color,
+                                            TilePtr previous_tile,
+                                            TilePtr current_tile,
+                                            const GameLib::Game& game) const;
   };
 
 public:

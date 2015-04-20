@@ -69,14 +69,6 @@ public:
   virtual ~NoPlayerWinsException() {}
 };
 
-class NoSuitableSurroundingTileFoundException : public MessageException
-{
-public:
-  NoSuitableSurroundingTileFoundException(std::string message) :
-    MessageException(message) {}
-  virtual ~NoSuitableSurroundingTileFoundException() {}
-};
-
 class TooLessFreeEdgesException : public MessageException
 {
 public:
@@ -98,6 +90,43 @@ public:
   NoSuitableLineDirectionException(std::string message) :
     MessageException(message) {}
   virtual ~NoSuitableLineDirectionException() {}
+};
+
+class BothLineDirectionAlreadySetException : public MessageException
+{
+public:
+  BothLineDirectionAlreadySetException(std::string message) :
+    MessageException(message) {}
+  virtual ~BothLineDirectionAlreadySetException() {}
+};
+
+class InappropriateNumberOfNextTilesException : public MessageException
+{
+public:
+  InappropriateNumberOfNextTilesException(std::string message) :
+    MessageException(message) {}
+  virtual ~InappropriateNumberOfNextTilesException() {}
+};
+
+class NoTilesException : public MessageException
+{
+public:
+  NoTilesException(std::string message) : MessageException(message) {}
+  virtual ~NoTilesException() {}
+};
+
+class AxisTypeNotAllowed : public MessageException
+{
+public:
+  AxisTypeNotAllowed(std::string message) : MessageException(message) {}
+  virtual ~AxisTypeNotAllowed() {}
+};
+
+class ExtremTypeNotAllowed : public MessageException
+{
+public:
+  ExtremTypeNotAllowed(std::string message) : MessageException(message) {}
+  virtual ~ExtremTypeNotAllowed() {}
 };
 
 #endif // EXCEPTIONS
