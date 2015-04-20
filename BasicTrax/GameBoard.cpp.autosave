@@ -53,6 +53,7 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
   // Get all empty positions around the last placed tile
   std::vector<Position> empty_positions = game_.getEmptyPositionsAround(last_placed->getPosition());
   std::vector<TileTypeLib::TileType> tile_types = TileTypeLib::TileType::getAllTileTypes();
+  
 
   // for all empty positions
   for(std::vector<Position>::iterator it = empty_positions.begin(); it != empty_positions.end(); it++)

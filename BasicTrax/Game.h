@@ -49,6 +49,7 @@ namespace GameLib
     std::vector<Position> getEmptyPositionsAround(const Position& position, int offset_x = 0, int offset_y = 0);
     void addTile(TilePtr toAdd)
       throw(NoTilesLeftException);
+    int getTileCount() {return tiles_.size();}
   };
 }
 
