@@ -11,10 +11,10 @@ TilePtr GameLib::Game::getTileByPosition(const Position& position, int offset_x,
 throw(InvalidPositionException)
 {
   Position position_to_return(position.getX() + offset_x, position.getY() + offset_y);
-  for(TilePtr tile_ptr : tiles_)
+  for(TilePtr tile : tiles_)
   {
-    if(tile_ptr->getPosition() == position_to_return)
-      return tile_ptr;
+    if(tile->getPosition() == position_to_return)
+      return tile;
   }
 
   return nullptr;
@@ -152,14 +152,14 @@ std::vector<Position> GameLib::Game::getEmptyPositionsAround(const Position& pos
 std::vector<TilePtr> GameLib::Game::getLastPlacedTiles() const
 {
   std::vector<TilePtr> last_placed_tiles;
-  TilePtr tile_ptr;
+  TilePtr tile;
   unsigned int pos;
 
   for(unsigned int i = 0; i < num_of_placed_tiles_in_current_turn_; i++)
   {
     pos = tiles_.size() - 1 - i;
-    tile_ptr = tiles_.at(pos);
-    last_placed_tiles.push_back(tile_ptr);
+    tile = tiles_.at(pos);
+    last_placed_tiles.push_back(tile);
   }
 
   return last_placed_tiles;

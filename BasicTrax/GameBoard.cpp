@@ -153,10 +153,10 @@ bool GameBoard::WinnerChecker::hasPlayerWon(const Player& player,
 {
   std::vector<TilePtr> last_placed_tiles = game.getLastPlacedTiles();
 
-  for(TilePtr tile_ptr : last_placed_tiles)
+  for(TilePtr tile : last_placed_tiles)
   {
-    if(isLoop(player.getColor(), tile_ptr, nullptr, tile_ptr, game) ||
-       doesLineWin(player.getColor(), tile_ptr, game))
+    if(isLoop(player.getColor(), tile, nullptr, tile, game) ||
+       doesLineWin(player.getColor(), tile, game))
       return true;
   }
 
@@ -252,10 +252,10 @@ const
 
   for(auto& touching_tile : touching_tiles)
   {
-    TilePtr tile_ptr = touching_tile.second;
+    TilePtr tile = touching_tile.second;
 
-    if(tile_ptr != previous_tile)
-      next_tiles.push_back(tile_ptr);
+    if(tile != previous_tile)
+      next_tiles.push_back(tile);
   }
 
   return next_tiles;
