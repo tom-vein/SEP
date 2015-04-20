@@ -20,12 +20,13 @@ int main(int argc, char* argv[])
   arguments = Parser::parseArguments(argc, argv);
   command = Parser::parseCommand(arguments, game);
 
+
   //Check if this comparison works
   if(typeid(command) != typeid(CommandLib::StartGameCommand))
     std::cout << "throw an appropriate exception here" << std::endl;
 
   start_game_command =
-      std::dynamic_pointer_cast<CommandLib::StartGameCommand>(command);
+     std::dynamic_pointer_cast<CommandLib::StartGameCommand>(command);
 
   TileTypeLib::TileType::initTileTypes();
 
@@ -35,6 +36,7 @@ int main(int argc, char* argv[])
   {
     command = CommandLib::readCommand(game);
   }
+
 
   return 0;
 }
