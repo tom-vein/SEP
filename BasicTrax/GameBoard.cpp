@@ -200,13 +200,10 @@ bool GameBoard::WinnerChecker::doesLineWin(Color player_color,
 {
   LineWinningCriteria line_winning_criteria;
 
-  checkIfLineWins(player_color, nullptr, start_tile, game, x_values_of_line,
-                  y_values_of_line, direction_of_first_end,
-                  direction_of_second_end);
+  checkIfLineWins(player_color, nullptr, start_tile, game,
+                  line_winning_criteria);
 
-  //line_winning_criteria method call
-
-  return false;
+  return line_winning_criteria.allWinningCriteriaFulfilled(game);
 }
 
 void GameBoard::WinnerChecker::checkIfLineWins(Color player_color,
@@ -233,10 +230,7 @@ const
   }
 
   if(next_tiles.size() == 0 || (next_tiles.size() == 1 && start_of_recursion))
-  {
-    analyseLineEnd(direction_of_first_end, direction_of_second_end,
-                    player_color, current_tile, game);
-  }
+    line_winning_criteria.analyseLineEnd(player_color, current_tile, game);
 
   for(TilePtr next_tile : next_tiles)
   {
@@ -267,10 +261,8 @@ const
   return next_tiles;
 }
 
-void GameBoard::WinnerChecker::analyseLineEnd(
-    LineWinningCriteria& line_winning_criteria,
-    Color color, TilePtr tile,
-    const GameLib::Game& game) const
+void GameBoard::WinnerChecker::LineWinningCriteria::analyseLineEnd(
+    Color color, TilePtr tile, const GameLib::Game& game)
 {
   LineDirection line_direction = LineDirection::NONE;
 
@@ -291,26 +283,31 @@ void GameBoard::WinnerChecker::analyseLineEnd(
     line_direction = LineDirection::NONE;
   }
 
-  //continue here
-
-  if(direction_of_first_end != LineDirection::NONE &&
-     direction_of_second_end != LineDirection::NONE)
+  if(direction_of_first_end_ != LineDirection::NONE &&
+     direction_of_second_end_ != LineDirection::NONE)
   {
     throw BothLineDirectionAlreadySetException
         ("Both line directions has already been set");
   }
 
-  if(direction_of_first_end == LineDirection::NONE)
-    direction_of_first_end = line_direction;
-  else
-    direction_of_second_end = line_direction;
+  if(direction_of_first_end_ == LineDirection::NONE &&
+     line_direction != LineDirection::NONE)
+  {
+    direction_of_first_end_ = line_direction;
+    position_of_first_end_ = tile->getPosition();
+  }
+  else if(direction_of_second_end_ == LineDirection::NONE &&
+          line_direction != LineDirection::NONE)
+  {
+    direction_of_second_end_ = line_direction;
+    position_of_second_end_ = tile->getPosition();
+  }
 }
 
-GameBoard::WinnerChecker::LineDirection
-GameBoard::WinnerChecker::determineDirectionOfFreeEdge(Color color,
-                                                       TilePtr tile,
-                                                       const
-                                                       GameLib::Game& game)
+GameBoard::WinnerChecker::LineWinningCriteria::LineDirection
+GameBoard::WinnerChecker::LineWinningCriteria::
+determineDirectionOfFreeEdge(Color color, TilePtr tile, const
+                             GameLib::Game& game)
 const
 {
   std::map<TileTypeLib::Edge, Color> touching_colors =
@@ -356,49 +353,31 @@ void GameBoard::WinnerChecker::LineWinningCriteria::addYValue(int y)
   y_values_of_line_.insert(y);
 }
 
-void GameBoard::WinnerChecker::LineWinningCriteria::
-setDirectionOfFirstEnd(LineDirection direction_of_first_end)
-{
-  direction_of_first_end_ = direction_of_first_end;
-}
-
-void GameBoard::WinnerChecker::LineWinningCriteria::
-setDirectionOfSecondEnd(LineDirection direction_of_second_end)
-{
-  direction_of_second_end_ = direction_of_second_end;
-}
-
-void GameBoard::WinnerChecker::LineWinningCriteria::
-setFirstEndOutmostEdge(bool first_end_outmost_edge)
-{
-  first_end_outmost_edge_ = first_end_outmost_edge;
-}
-
-void GameBoard::WinnerChecker::LineWinningCriteria::
-setSecondEndOtherOutmostEdge(bool second_end_other_outmost_edge)
-{
-  second_end_other_outmost_edge_ = second_end_other_outmost_edge;
-}
-
 bool GameBoard::WinnerChecker::LineWinningCriteria::
-allWinningCriteriaFulfilled() const
+allWinningCriteriaFulfilled(const GameLib::Game& game) const
 {
   if(x_values_of_line_.size() >= MIN_LENGTH_OF_WINNING_LINE &&
-     (direction_of_first_end_ == LineDirection::RIGHT ||
-      direction_of_first_end_ == LineDirection::LEFT) &&
-     (direction_of_second_end_ == LineDirection::RIGHT ||
-      direction_of_second_end_ == LineDirection::LEFT) &&
-     direction_of_first_end_ != direction_of_second_end_ &&
-     first_end_outmost_edge_ && second_end_other_outmost_edge_)
+     ((direction_of_first_end_ == LineDirection::RIGHT &&
+       position_of_first_end_.getX() == game.getMaxXValue()) ||
+      (direction_of_first_end_ == LineDirection::LEFT &&
+       position_of_first_end_.getX() == game.getMinXValue())) &&
+     ((direction_of_second_end_ == LineDirection::RIGHT &&
+       position_of_second_end_.getX() == game.getMaxXValue()) ||
+      (direction_of_second_end_ == LineDirection::LEFT &&
+       position_of_second_end_.getX() == game.getMinXValue())) &&
+     direction_of_first_end_ != direction_of_second_end_)
     return true;
 
   if(y_values_of_line_.size() >= MIN_LENGTH_OF_WINNING_LINE &&
-     (direction_of_first_end_ == LineDirection::UP ||
-      direction_of_first_end_ == LineDirection::DOWN) &&
-     (direction_of_second_end_ == LineDirection::UP ||
-      direction_of_second_end_ == LineDirection::DOWN) &&
-     direction_of_first_end_ != direction_of_second_end_ &&
-     first_end_outmost_edge_ && second_end_other_outmost_edge_)
+     ((direction_of_first_end_ == LineDirection::DOWN &&
+       position_of_first_end_.getY() == game.getMaxYValue()) ||
+      (direction_of_first_end_ == LineDirection::UP &&
+       position_of_first_end_.getY() == game.getMinYValue())) &&
+     ((direction_of_second_end_ == LineDirection::DOWN &&
+       position_of_second_end_.getY() == game.getMaxYValue()) ||
+      (direction_of_second_end_ == LineDirection::UP &&
+       position_of_second_end_.getY() == game.getMinYValue())) &&
+     direction_of_first_end_ != direction_of_second_end_)
     return true;
 
   return false;

@@ -36,9 +36,6 @@ namespace GameLib
     State state_ = State::NOTHING;
     Player& active_player_;
   public:
-    enum ExtremType {MAX, MIN};
-    enum AxisType {X, Y};
-
     Game(const std::array<Player, 2>& players);
     void tooglePlayer(); //reset num_of_placed_tiles_in_current_turn_ to 0
     State getState() const;
@@ -56,7 +53,10 @@ namespace GameLib
     std::vector<TilePtr> getLastPlacedTiles() const;
     const Player& getActivePlayer() const;
     const Player& getPausedPlayer() const;
-    int getExtremValue(ExtremType extrem_type, AxisType axis_type) const;
+    int getMaxXValue() const;
+    int getMinXValue() const;
+    int getMaxYValue() const;
+    int getMinYValue() const;
   };
 }
 

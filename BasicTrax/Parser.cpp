@@ -1,7 +1,7 @@
 #include "Parser.h"
 #include "Position.h"
 
-static Position Parser::parsePosition(const std::string& input) //parse '(' usw. for addtile
+Position Parser::parsePosition(const std::string& input) //parse '(' usw. for addtile
 {
   char none;
   std::istringstream istr;
@@ -15,7 +15,7 @@ static Position Parser::parsePosition(const std::string& input) //parse '(' usw.
   {
     x = 0;
     y = 0;
-    throw exception;
+    throw std::exception();
   }
 
   istr >> x;
@@ -25,7 +25,7 @@ static Position Parser::parsePosition(const std::string& input) //parse '(' usw.
   {
     x = 0;
     y = 0;
-    throw exception;
+    throw std::exception();
   }
 
   istr >> y;
@@ -35,7 +35,7 @@ static Position Parser::parsePosition(const std::string& input) //parse '(' usw.
   {
     x = 0;
     y = 0;
-    throw exception;
+    throw std::exception();
   }
 
   istr >> none;
@@ -44,13 +44,13 @@ static Position Parser::parsePosition(const std::string& input) //parse '(' usw.
   {
     x = 0;
     y = 0;
-    throw exception;
+    throw std::exception();
   }
 
-  return Position::Position(x, y);
+  return Position(x, y);
 }
 
-static TileTypeLib::TileType Parser::parseTileType(const std::string& input)
+TileTypeLib::TileType Parser::parseTileType(const std::string& input)
 {
 
 }
@@ -59,46 +59,46 @@ static TileTypeLib::TileType Parser::parseTileType(const std::string& input)
 std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     const std::string& command_string, const GameLib::Game& game)
 {
-  int commandsize = command_string.size();
+//  int commandsize = command_string.size();
 
-  if(command_string.at(5) == '-' && command_string.at(6) == 'g') //parse "-g"
-  {
-    std::string filename;
-    for(unsigned int i = 9; i <= commandsize; i++)
-    {
-      filename.push_back(command_string.at(i));
-    }
-    CommandLib::StartGameCommand(filename); //create StartGameCommand w. filename
-    return filename; //return korrekt?
-  }
+//  if(command_string.at(5) == '-' && command_string.at(6) == 'g') //parse "-g"
+//  {
+//    std::string filename;
+//    for(unsigned int i = 9; i <= commandsize; i++)
+//    {
+//      filename.push_back(command_string.at(i));
+//    }
+//    CommandLib::StartGameCommand(filename); //create StartGameCommand w. filename
+//    return filename; //return korrekt?
+//  }
 
-  if(commandsize == 3) //parse "quit"
-  {
-    std::string quit = 'quit';
-    for (unsigned int i = 0; i <= commandsize; i++)
-        if (tolower(command_string.at(i)) != quit.at(i))
-          throw exception;
-    CommandLib::QuitCommand(command_string); //create QuitCommand
-    return command_string;
-  }
+//  if(commandsize == 3) //parse "quit"
+//  {
+//    std::string quit = 'quit';
+//    for (unsigned int i = 0; i <= commandsize; i++)
+//        if (tolower(command_string.at(i)) != quit.at(i))
+//          throw exception;
+//    CommandLib::QuitCommand(command_string); //create QuitCommand
+//    return command_string;
+//  }
 
-  if(commandsize == 6) //parse "addtile"
-  {
-    std::string addtile = 'addtile';
-    for (unsigned int i = 0; i <= commandsize; i++)
-        if (tolower(command_string.at(i)) != addtile.at(i))
-          throw exception;
-    std::istringstream iss(command_string);
-    std::vector<string> tokens;
-    copy(istream_iterator<string>(iss), istream_iterator<string>(),
-         back_inserter(tokens)); //saves param to own vector
-    Position = Parser::parsePosition(tokens.at(1)); //to check (x,y) ret. position
-    TileTypeLib::TileType = Parser::parseTileType(tokens.at(2));
+//  if(commandsize == 6) //parse "addtile"
+//  {
+//    std::string addtile = 'addtile';
+//    for (unsigned int i = 0; i <= commandsize; i++)
+//        if (tolower(command_string.at(i)) != addtile.at(i))
+//          throw exception;
+//    std::istringstream iss(command_string);
+//    std::vector<string> tokens;
+//    copy(istream_iterator<string>(iss), istream_iterator<string>(),
+//         back_inserter(tokens)); //saves param to own vector
+//    Position = Parser::parsePosition(tokens.at(1)); //to check (x,y) ret. position
+//    TileTypeLib::TileType = Parser::parseTileType(tokens.at(2));
 
-  }
+//  }
 
 
-  throw exception;
+//  throw exception;
 }
 
 

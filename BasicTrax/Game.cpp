@@ -181,56 +181,82 @@ const Player& GameLib::Game::getPausedPlayer() const
   throw MessageException("No suitable paused player found!!!");
 }
 
-int GameLib::Game::getExtremValue(ExtremType extrem_type, AxisType axis_type)
-const
+int GameLib::Game::getMaxXValue() const
 {
-  int extrem_value;
+  int max_x_value;
 
   if(tiles_.empty())
-    throw NoTilesException("There are no tiles in game");
+    throw NoTilesLeftException("there are no tiles");
 
-  if(extrem_type != ExtremType::MAX || extrem_type != ExtremType::MIN)
-  {
-    throw ExtremTypeNotAllowed
-      ("The extrem type you want to use is not supported here");
-  }
+  max_x_value = tiles_.at(0)->getPosition().getX();
 
-  if(axis_type != AxisType::X || axis_type != AxisType::Y)
-  {
-    throw AxisTypeNotAllowed
-        ("The axis type you want to use is not supported here");
-  }
-
-  if(axis_type == AxisType::X)
-    extrem_value = tiles_.at(0)->getPosition().getX();
-  else if(axis_type == AxisType::Y)
-    extrem_value = tiles_.at(0)->getPosition().getY();
-
-  for(int i = 1; i < tiles_.size(); i++)
+  for(unsigned int i = 1; i < tiles_.size(); i++)
   {
     TilePtr tile = tiles_.at(i);
 
-    if(extrem_type == ExtremType::MAX && axis_type == AxisType::X)
-    {
-      if(tile->getPosition().getX() > extrem_value)
-        extrem_value = tile->getPosition().getX();
-    }
-    else if(extrem_type == ExtremType::MIN && axis_type == AxisType::X)
-    {
-      if(tile->getPosition().getX() < extrem_value)
-        extrem_value = tile->getPosition().getX();
-    }
-    else if(extrem_type == ExtremType::MAX && axis_type == AxisType::Y)
-    {
-      if(tile->getPosition().getY() > extrem_value)
-        extrem_value = tile->getPosition().getX();
-    }
-    else if(extrem_type == ExtremType::MIN && axis_type == AxisType::Y)
-    {
-      if(tile->getPosition().getY() < extrem_value)
-        extrem_value = tile->getPosition().getX();
-    }
+    if(tile->getPosition().getX() > max_x_value)
+      max_x_value = tile->getPosition().getX();
   }
 
-  return extrem_value;
+  return max_x_value;
+}
+
+int GameLib::Game::getMinXValue() const
+{
+  int min_x_value;
+
+  if(tiles_.empty())
+    throw NoTilesLeftException("there are no tiles");
+
+  min_x_value = tiles_.at(0)->getPosition().getX();
+
+  for(unsigned int i = 1; i < tiles_.size(); i++)
+  {
+    TilePtr tile = tiles_.at(i);
+
+    if(tile->getPosition().getX() < min_x_value)
+      min_x_value = tile->getPosition().getX();
+  }
+
+  return min_x_value;
+}
+
+int GameLib::Game::getMaxYValue() const
+{
+  int max_y_value;
+
+  if(tiles_.empty())
+    throw NoTilesLeftException("there are no tiles");
+
+  max_y_value = tiles_.at(0)->getPosition().getY();
+
+  for(unsigned int i = 1; i < tiles_.size(); i++)
+  {
+    TilePtr tile = tiles_.at(i);
+
+    if(tile->getPosition().getY() > max_y_value)
+      max_y_value = tile->getPosition().getX();
+  }
+
+  return max_y_value;
+}
+
+int GameLib::Game::getMinYValue() const
+{
+  int min_y_value;
+
+  if(tiles_.empty())
+    throw NoTilesLeftException("there are no tiles");
+
+  min_y_value = tiles_.at(0)->getPosition().getY();
+
+  for(unsigned int i = 1; i < tiles_.size(); i++)
+  {
+    TilePtr tile = tiles_.at(i);
+
+    if(tile->getPosition().getY() < min_y_value)
+      min_y_value = tile->getPosition().getX();
+  }
+
+  return min_y_value;
 }

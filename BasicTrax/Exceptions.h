@@ -108,26 +108,5 @@ public:
   virtual ~InappropriateNumberOfNextTilesException() {}
 };
 
-class NoTilesException : public MessageException
-{
-public:
-  NoTilesException(std::string message) : MessageException(message) {}
-  virtual ~NoTilesException() {}
-};
-
-class AxisTypeNotAllowed : public MessageException
-{
-public:
-  AxisTypeNotAllowed(std::string message) : MessageException(message) {}
-  virtual ~AxisTypeNotAllowed() {}
-};
-
-class ExtremTypeNotAllowed : public MessageException
-{
-public:
-  ExtremTypeNotAllowed(std::string message) : MessageException(message) {}
-  virtual ~ExtremTypeNotAllowed() {}
-};
-
 #endif // EXCEPTIONS
 

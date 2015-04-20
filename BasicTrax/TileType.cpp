@@ -11,6 +11,7 @@ TileTypeLib::Edge TileTypeLib::getOppositeEdge(Edge edge)
     case Edge::TOP: return Edge::BOTTOM;
     case Edge::LEFT: return Edge::RIGHT;
     case Edge::RIGHT: return Edge::LEFT;
+    case Edge::NONE: break;
   }
 
   return Edge::NONE;
