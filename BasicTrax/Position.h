@@ -18,6 +18,7 @@ public:
   std::string toString() const;
 
   bool operator==(const Position& other) const;
+  bool operator!=(const Position& other) const;
 };
 
 #endif // POSITION_H

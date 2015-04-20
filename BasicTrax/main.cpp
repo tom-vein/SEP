@@ -31,8 +31,9 @@ int main(int argc, char* argv[])
   TileTypeLib::TileType::initTileTypes();
 
   GameBoard game_board(game, start_game_command->getFileName());
+  CommandLib::Code current_code;
 
-  while(command->execute(game_board) != CommandLib::Code::QUIT)
+  while((current_code = command->execute(game_board)) != CommandLib::Code::QUIT)
   {
     command = CommandLib::readCommand(game);
   }
