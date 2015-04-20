@@ -10,9 +10,15 @@ int main(int argc, char* argv[])
   std::string arguments;
   std::shared_ptr<CommandLib::Command> command;
   std::shared_ptr<CommandLib::StartGameCommand> start_game_command;
+  Player player1(Color::RED);
+  Player player2(Color::WHITE);
+
+  std::array<Player, 2>players{player1, player2};
+
+  GameLib::Game game(players);
 
   arguments = Parser::parseArguments(argc, argv);
-  command = Parser::parseCommand(arguments);
+  command = Parser::parseCommand(arguments, game);
 
   //Check if this comparison works
   if(typeid(command) != typeid(CommandLib::StartGameCommand))
@@ -23,18 +29,11 @@ int main(int argc, char* argv[])
 
   TileTypeLib::TileType::initTileTypes();
 
-  Player player1(Color::RED);
-  Player player2(Color::WHITE);
-
-  std::array<Player, 2>players{player1, player2};
-
-  GameLib::Game game(players);
-
   GameBoard game_board(game, start_game_command->getFileName());
 
   while(command->execute(game_board) != CommandLib::Code::QUIT)
   {
-    command = CommandLib::readCommand();
+    command = CommandLib::readCommand(game);
   }
 
   return 0;

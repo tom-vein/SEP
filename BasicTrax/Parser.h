@@ -16,7 +16,7 @@ public:
   //that the command is and its parameters are valid and do not needed to be
   //checked again
   static std::shared_ptr<CommandLib::Command> parseCommand(
-      const std::string& command_string);
+      const std::string& command_string, const GameLib::Game& game);
   static std::string parseArguments(int argc, char* argv[]);
   static void parsePosition(const std::string& input);
   static void parseTileType(const std::string& input);

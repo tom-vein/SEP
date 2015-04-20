@@ -57,7 +57,7 @@ static TileTypeLib::TileType Parser::parseTileType(const std::string& input)
 
 
 std::shared_ptr<CommandLib::Command> Parser::parseCommand(
-    const std::string& command_string)
+    const std::string& command_string, const GameLib::Game& game)
 {
   int commandsize = command_string.size();
 

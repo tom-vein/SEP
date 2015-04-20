@@ -15,7 +15,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "Command.h"
 #include "GameBoard.h"
 
 namespace CommandLib
@@ -31,7 +30,7 @@ namespace CommandLib
   //Output of sep>
   //Parse the Command with the parser
   //Return command
-  std::shared_ptr<Command> readCommand();
+  std::shared_ptr<Command> readCommand(const GameLib::Game& game);
 
   class Command
   {

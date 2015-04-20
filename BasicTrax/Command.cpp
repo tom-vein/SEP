@@ -10,7 +10,8 @@
 
 #include "Command.h"
 
-std::shared_ptr<CommandLib::Command> CommandLib::readCommand()
+std::shared_ptr<CommandLib::Command> CommandLib::readCommand(
+    const GameLib::Game& game)
 {
 
 }
