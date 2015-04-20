@@ -5,23 +5,32 @@
 std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     const std::string& command_string)
 {
-  if(command_string.at(5) == '-' && command_string.at(6) == 'g')
+  int stringsize = command_string.size();
+
+  if(command_string.at(5) == '-' && command_string.at(6) == 'g') //parse "-g"
   {
-    for(int i=9; i <= command_string.size(); i++) //range based schl?
+    for(unsigned int i = 9; i <= stringsize; i++)
     {
       std::string filename;
       filename.push_back(command_string.at(i));
     }
-   // CommandLib::StartGameCommand(filename);
-    //return command_string;
+    CommandLib::StartGameCommand(filename); //create StartGameCommand w. filename
+    return command_string; //return korrekt?
   }
-  //if(command_string == CommandLib::Code::QUIT)
+
+  if(stringsize == 3) //parse "quit"
   {
-   // CommandLib::QuitCommand::Command(CommandLib::Code::QUIT); // ????
-   // return command_string;
+    std::string quit = 'quit';
+    for (unsigned int i = 0; i <= stringsize; i++)
+        if (tolower(command_string.at(i)) != quit.at(i))
+          throw exception;
+    CommandLib::QuitCommand(command_string); //create QuitCommand
+    return command_string;
   }
-  //throw exception;
+
+  throw exception;
 }
+
 
 std::string Parser::parseArguments(int argc, char* argv[])
 {
