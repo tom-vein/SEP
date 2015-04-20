@@ -15,8 +15,6 @@ public:
   int getX() const;
   int getY() const;
 
-  bool parse(const std::string& input);
-
   std::string toString() const;
 
   bool operator==(const Position& other) const;
