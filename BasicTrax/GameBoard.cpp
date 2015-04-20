@@ -32,7 +32,15 @@ throw(InvalidPositionException)
     game_.addTile(tile_to_add);
 
     // Checken ob weitere tiles platziert werden sollen / müssen
-    doForcedPlay(tile_to_add);
+    try
+    {
+      doForcedPlay(tile_to_add);
+    }
+    catch(ColorMismatchException &e)
+    {
+
+    }
+
   }
   //TODO catch and treat exceptions different
   catch (MessageException &e)
@@ -72,15 +80,25 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     for(std::vector<TileTypeLib::TileType>::iterator types_it = tile_types.begin(); types_it != tile_types.end(); types_it++)
     {
       tile_to_try.reset(new Tile(*types_it, *it));
-      if(canTileBePlaced(touching_tiles, tile_to_try))
+      try
       {
-        counter++;
-        tile = tile_to_try;
+        if(canTileBePlaced(touching_tiles, tile_to_try))
+        {
+          counter++;
+          tile = tile_to_try;
+        }
       }
+      catch(ColorMismatchException& ex)
+      {
+        //nothing to do
+      }
+
     }
 
     if(counter == 1)
       doTurn(tile);
+    if(counter > 1)
+      throw(ColorMismatchException("Invalid move - connected line colors mismatch\n", last_placed->getPosition()));
 
 
   }
@@ -89,9 +107,9 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
 bool GameBoard::canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check)
 {
   // Wenn tile_to_check nachbarn hat
-  if(touching_tiles.empty())
-    //TODO right exception
-    throw(InvalidPositionException("No touching tiles", tile_to_check->getPosition()));
+    if(touching_tiles.empty() && game_.getTileCount() != 0)
+        //TODO right exception
+        throw(InvalidPositionException("No touching tiles", tile_to_check->getPosition()));
 
   // Für jeden nachbarn
   for(std::map<TileTypeLib::Edge, TilePtr>::iterator it = touching_tiles.begin(); it != touching_tiles.end(); it++)
@@ -108,25 +126,30 @@ bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other, TileTypeLib:
 {
   switch(touching_edge_of_first_tile)
   {
+
     case TileTypeLib::Edge::BOTTOM:
     {
-      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::BOTTOM) != other->getColorAtEdge(TileTypeLib::Edge::TOP))
-        return false;
+        if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::BOTTOM) != other->getColorAtEdge(TileTypeLib::Edge::TOP))
+            return false;
+        return true;
     }
     case TileTypeLib::Edge::LEFT:
     {
-      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::LEFT) != other->getColorAtEdge(TileTypeLib::Edge::RIGHT))
-        return false;
+        if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::LEFT) != other->getColorAtEdge(TileTypeLib::Edge::RIGHT))
+            return false;
+        return true;
     }
     case TileTypeLib::Edge::TOP:
     {
-      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::TOP) != other->getColorAtEdge(TileTypeLib::Edge::BOTTOM))
-        return false;
+        if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::TOP) != other->getColorAtEdge(TileTypeLib::Edge::BOTTOM))
+            return false;
+        return true;
     }
     case TileTypeLib::Edge::RIGHT:
     {
-      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::RIGHT) != other->getColorAtEdge(TileTypeLib::Edge::LEFT))
-        return false;
+        if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::RIGHT) != other->getColorAtEdge(TileTypeLib::Edge::LEFT))
+            return false;
+        return true;
     }
     default:
       throw(MessageException("No such edge"));
