@@ -3,6 +3,19 @@
 
 std::vector<TileTypeLib::TileType> TileTypeLib::TileType::tile_types_;
 
+TileTypeLib::Edge TileTypeLib::getOppositeEdge(Edge edge)
+{
+  switch(edge)
+  {
+    case Edge::BOTTOM: return Edge::TOP;
+    case Edge::TOP: return Edge::BOTTOM;
+    case Edge::LEFT: return Edge::RIGHT;
+    case Edge::RIGHT: return Edge::LEFT;
+  }
+
+  return Edge::NONE;
+}
+
 TileTypeLib::TileType::TileType(Shape shape, Color top_color) : shape_(shape),
   top_color_(top_color)
 {

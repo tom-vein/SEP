@@ -16,11 +16,14 @@ namespace TileTypeLib
 
   enum class Edge
   {
+    NONE,
     BOTTOM,
     TOP,
     LEFT,
     RIGHT,
   };
+
+  Edge getOppositeEdge(Edge edge);
 
   class TileType
   {

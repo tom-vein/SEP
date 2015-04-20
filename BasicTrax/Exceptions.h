@@ -18,7 +18,7 @@ class PositionException : public MessageException
 {
 public:
   PositionException(std::string message, Position position) : MessageException(message), position_(position) {}
-  virtual ~PositionException() {}  
+  virtual ~PositionException() {}
   //std::string getMessage() {return message_;}
   Position getPosition() {return position_;}
 
@@ -67,6 +67,37 @@ class NoPlayerWinsException : public MessageException
 public:
   NoPlayerWinsException(std::string message) : MessageException(message) {}
   virtual ~NoPlayerWinsException() {}
+};
+
+class NoSuitableSurroundingTileFoundException : public MessageException
+{
+public:
+  NoSuitableSurroundingTileFoundException(std::string message) :
+    MessageException(message) {}
+  virtual ~NoSuitableSurroundingTileFoundException() {}
+};
+
+class TooLessFreeEdgesException : public MessageException
+{
+public:
+  TooLessFreeEdgesException(std::string message) : MessageException(message) {}
+  virtual ~TooLessFreeEdgesException() {}
+};
+
+class TooManyFreeEdgesException : public MessageException
+{
+public:
+  TooManyFreeEdgesException(std::string message) :
+    MessageException(message) {}
+  virtual ~TooManyFreeEdgesException() {}
+};
+
+class NoSuitableLineDirectionException : public MessageException
+{
+public:
+  NoSuitableLineDirectionException(std::string message) :
+    MessageException(message) {}
+  virtual ~NoSuitableLineDirectionException() {}
 };
 
 #endif // EXCEPTIONS
