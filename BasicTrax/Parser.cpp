@@ -50,55 +50,68 @@ Position Parser::parsePosition(const std::string& input) //parse '(' usw. for ad
   return Position(x, y);
 }
 
-TileTypeLib::TileType Parser::parseTileType(const std::string& input)
-{
+//TileTypeLib::TileType Parser::parseTileType(const std::string& input,
+//                                            const GameLib::Game& game)
+//{
 
-}
+//  if(input == "x")
+//    return TileTypeLib::TileType::getTileType(TileTypeLib::Shape::CROSS, game.getTouchingColors()); ///????
+
+//  if(input == "/")
+//    return 0;
+
+//  if(input == "\"")
+
+//  throw std::exception();
+
+//}
 
 
 std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     const std::string& command_string, const GameLib::Game& game)
 {
-//  int commandsize = command_string.size();
+  int commandsize = command_string.size();
 
-//  if(command_string.at(5) == '-' && command_string.at(6) == 'g') //parse "-g"
-//  {
-//    std::string filename;
-//    for(unsigned int i = 9; i <= commandsize; i++)
-//    {
-//      filename.push_back(command_string.at(i));
-//    }
-//    CommandLib::StartGameCommand(filename); //create StartGameCommand w. filename
-//    return filename; //return korrekt?
-//  }
+  if(command_string.at(5) == '-' && command_string.at(6) == 'g') //parse "-g"
+  {
+    std::string filename;
+    for(int i = 9; i <= commandsize; i++)
+      filename.push_back(command_string.at(i));
 
-//  if(commandsize == 3) //parse "quit"
-//  {
-//    std::string quit = 'quit';
-//    for (unsigned int i = 0; i <= commandsize; i++)
-//        if (tolower(command_string.at(i)) != quit.at(i))
-//          throw exception;
-//    CommandLib::QuitCommand(command_string); //create QuitCommand
-//    return command_string;
-//  }
+    return std::shared_ptr<CommandLib::Command>
+        (new CommandLib::StartGameCommand(filename));
+  }
 
-//  if(commandsize == 6) //parse "addtile"
-//  {
-//    std::string addtile = 'addtile';
-//    for (unsigned int i = 0; i <= commandsize; i++)
-//        if (tolower(command_string.at(i)) != addtile.at(i))
-//          throw exception;
-//    std::istringstream iss(command_string);
-//    std::vector<string> tokens;
-//    copy(istream_iterator<string>(iss), istream_iterator<string>(),
-//         back_inserter(tokens)); //saves param to own vector
-//    Position = Parser::parsePosition(tokens.at(1)); //to check (x,y) ret. position
-//    TileTypeLib::TileType = Parser::parseTileType(tokens.at(2));
+  if(commandsize == 3) //parse "quit"
+  {
+    std::string quit = "quit";
+    for (int i = 0; i <= commandsize; i++)
+        if (tolower(command_string.at(i)) != quit.at(i))
+          throw std::exception();
 
-//  }
+    return std::shared_ptr<CommandLib::Command>(new CommandLib::QuitCommand());
 
+  }
 
-//  throw exception;
+  if(commandsize == 6) //parse "addtile"
+  {
+    std::string addtile = "addtile";
+    for (int i = 0; i <= commandsize; i++)
+        if (tolower(command_string.at(i)) != addtile.at(i))
+          throw std::exception();
+
+    std::istringstream iss(command_string);
+    std::vector<std::string> tokens;
+    copy(std::istream_iterator<std::string>(iss),
+         std::istream_iterator<std::string>(),
+         back_inserter(tokens)); //saves param to own vector
+
+    Position needed_Position = Parser::parsePosition(tokens.at(1)); //to check (x,y) ret. position
+//    TileTypeLib::TileType needed_Tile_Type =
+//        Parser::parseTileType(tokens.at(2), game);
+
+  }
+  throw std::exception();
 }
 
 
@@ -114,5 +127,5 @@ std::string Parser::parseArguments(int argc, char* argv[])
     return ss.str();
   }
 
-//  throw exception();
+  throw std::exception();
 }
