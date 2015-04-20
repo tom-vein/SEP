@@ -87,41 +87,33 @@ std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(const Posit
   return touching_tiles;
 }
 
-std::map<TileTypeLib::Edge, Color> GameLib::Game::getTouchingColors(const Position &position, Color color, int offset_x, int offset_y) const
+std::map<TileTypeLib::Edge, Color> GameLib::Game::getTouchingColors(const Position &position, int offset_x, int offset_y) const
 {
   std::map<TileTypeLib::Edge, Color> touching_colors;
   TilePtr tile;
   //Left
-  if((tile = getTileByPosition(position, offset_x - 1, offset_y)) &&
-     (color == Color::NONE ||
-      tile->getColorAtEdge(TileTypeLib::Edge::RIGHT) == color))
+  if(tile = getTileByPosition(position, offset_x - 1, offset_y))
     touching_colors[TileTypeLib::Edge::LEFT] =
         tile->getColorAtEdge(TileTypeLib::Edge::RIGHT);
   else
     touching_colors[TileTypeLib::Edge::LEFT] = Color::NONE;
 
   //Top
-  if((tile = getTileByPosition(position, offset_x, offset_y - 1)) &&
-     (color == Color::NONE ||
-      tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM) == color))
+  if(tile = getTileByPosition(position, offset_x, offset_y - 1))
     touching_colors[TileTypeLib::Edge::TOP] =
         tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM);
   else
     touching_colors[TileTypeLib::Edge::TOP] = Color::NONE;
 
   //Right
-  if((tile = getTileByPosition(position, offset_x + 1, offset_y)) &&
-     (color == Color::NONE ||
-      tile->getColorAtEdge(TileTypeLib::Edge::LEFT) == color))
+  if(tile = getTileByPosition(position, offset_x + 1, offset_y))
     touching_colors[TileTypeLib::Edge::RIGHT] =
         tile->getColorAtEdge(TileTypeLib::Edge::LEFT);
   else
     touching_colors[TileTypeLib::Edge::RIGHT] = Color::NONE;
 
   //Bottom
-  if((tile = getTileByPosition(position, offset_x, offset_y + 1)) &&
-     (color == Color::NONE ||
-      tile->getColorAtEdge(TileTypeLib::Edge::TOP) == color))
+  if(tile = getTileByPosition(position, offset_x, offset_y + 1))
     touching_colors[TileTypeLib::Edge::BOTTOM] =
         tile->getColorAtEdge(TileTypeLib::Edge::TOP);
   else

@@ -81,8 +81,6 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
 
     if(counter == 1)
       doTurn(tile);
-
-
   }
 }
 
@@ -171,7 +169,6 @@ bool GameBoard::WinnerChecker::isLoop(Color player_color,
                                       bool start_of_recursion) const
 {
   std::vector<TilePtr> next_tiles;
-
 
   next_tiles = determineNextTiles(player_color, previous_tile, current_tile,
                                   game);
@@ -311,15 +308,17 @@ determineDirectionOfFreeEdge(Color color, TilePtr tile, const
 const
 {
   std::map<TileTypeLib::Edge, Color> touching_colors =
-      game.getTouchingColors(tile->getPosition(), color);
+      game.getTouchingColors(tile->getPosition());
 
   //Erasing all touching_colors that are not NONE
+  //and are at an edge that has not the color color
   for(std::map<TileTypeLib::Edge, Color>::iterator it = touching_colors.end();
       it != touching_colors.begin(); it--)
   {
+    TileTypeLib::Edge e = it->first;
     Color c = it->second;
 
-    if(c != Color::NONE)
+    if(c != Color::NONE || tile->getColorAtEdge(e) != color)
       touching_colors.erase(it);
   }
 

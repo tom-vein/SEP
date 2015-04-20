@@ -46,7 +46,7 @@ namespace GameLib
       throw(InvalidPositionException);
     void removeTile(TilePtr tile_to_remove);
     std::map<TileTypeLib::Edge, TilePtr> getTouchingTiles(const Position& position, Color color = Color::NONE, int offset_x = 0, int offset_y = 0) const;
-    std::map<TileTypeLib::Edge, Color> getTouchingColors(const Position& position, Color color = Color::NONE, int offset_x = 0, int offset_y = 0) const;
+    std::map<TileTypeLib::Edge, Color> getTouchingColors(const Position& position, int offset_x = 0, int offset_y = 0) const;
     std::vector<Position> getEmptyPositionsAround(const Position& position, int offset_x = 0, int offset_y = 0) const;
     void addTile(TilePtr toAdd)
       throw(NoTilesLeftException);
