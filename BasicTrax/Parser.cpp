@@ -5,11 +5,11 @@
 std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     const std::string& command_string)
 {
-  int stringsize = command_string.size();
+  int commandsize = command_string.size();
 
   if(command_string.at(5) == '-' && command_string.at(6) == 'g') //parse "-g"
   {
-    for(unsigned int i = 9; i <= stringsize; i++)
+    for(unsigned int i = 9; i <= commandsize; i++)
     {
       std::string filename;
       filename.push_back(command_string.at(i));
@@ -18,10 +18,10 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     return command_string; //return korrekt?
   }
 
-  if(stringsize == 3) //parse "quit"
+  if(commandsize == 3) //parse "quit"
   {
     std::string quit = 'quit';
-    for (unsigned int i = 0; i <= stringsize; i++)
+    for (unsigned int i = 0; i <= commandsize; i++)
         if (tolower(command_string.at(i)) != quit.at(i))
           throw exception;
     CommandLib::QuitCommand(command_string); //create QuitCommand
