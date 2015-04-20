@@ -32,7 +32,15 @@ void GameBoard::doTurn(TilePtr tile_to_add)
     game_.addTile(tile_to_add);
 
     // Checken ob weitere tiles platziert werden sollen / müssen
-    doForcedPlay(tile_to_add);
+    try
+    {
+      doForcedPlay(tile_to_add);
+    }
+    catch(ColorMismatchException &e)
+    {
+
+    }
+
   }
   //TODO catch and treat exceptions different
   catch (MessageException &e)
@@ -72,15 +80,25 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     for(std::vector<TileTypeLib::TileType>::iterator types_it = tile_types.begin(); types_it != tile_types.end(); types_it++)
     {
       tile_to_try.reset(new Tile(*types_it, *it));
-      if(canTileBePlaced(touching_tiles, tile_to_try))
+      try
       {
-        counter++;
-        tile = tile_to_try;
+        if(canTileBePlaced(touching_tiles, tile_to_try))
+        {
+          counter++;
+          tile = tile_to_try;
+        }
       }
+      catch(ColorMismatchException& ex)
+      {
+        //nothing to do
+      }
+
     }
 
     if(counter == 1)
-    doTurn(tile);
+      doTurn(tile);
+    if(counter > 1)
+      throw(ColorMismatchException("Invalid move - connected line colors mismatch\n", last_placed->getPosition()));
 
 
   }
