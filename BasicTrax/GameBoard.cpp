@@ -5,6 +5,8 @@ GameBoard::GameBoard(const GameLib::Game& game, const std::string& file_name) :
 {
   if(!file_name.empty())
     should_write_to_file_ = true;
+  else
+    should_write_to_file_ = false;
 
 }
 
