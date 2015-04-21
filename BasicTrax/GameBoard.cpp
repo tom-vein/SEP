@@ -1,13 +1,11 @@
 #include "GameBoard.h"
 
 GameBoard::GameBoard(const GameLib::Game& game, const std::string& file_name) :
-  game_(game)
+  game_(game), file_manager_(FileManager(file_name))
 {
   if(!file_name.empty())
-  {
-    file_manager_.setFileName(file_name);
     should_write_to_file_ = true;
-  }
+
 }
 
 void GameBoard::startGame()
@@ -36,9 +34,7 @@ void GameBoard::doTurn(TilePtr tile_to_add)
     game_.addTile(tile_to_add);
     doForcedPlay(tile_to_add);
 
-
-    //TODO: push winner to game_!
-    Color winner = result_checker_.determineWinner(game_);
+    winner_ = result_checker_.determineWinner(game_);
   }
   catch (MessageException& e)
   {
@@ -401,4 +397,14 @@ allWinningCriteriaFulfilled(const GameLib::Game& game) const
     return true;
 
   return false;
+}
+
+bool GameBoard::hasWinner() const
+{
+  return winner_ == Color::NONE;
+}
+
+std::string GameBoard::getWinner() const
+{
+  //if()
 }

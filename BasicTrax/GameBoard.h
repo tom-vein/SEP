@@ -60,6 +60,7 @@ private:
   GameLib::Game game_;
   FileManager file_manager_; //Before writing look if should_write_to_file_ is
   ResultChecker result_checker_;
+  Color winner_ = Color::NONE;
 
   std::vector<TilePtr> tried_insertions_; // used for rollback when invalid move would be made
   bool should_write_to_file_;
@@ -70,6 +71,8 @@ private:
   throw(InvalidPositionException);
   bool canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check);
   bool checkTwoTiles(TilePtr first, TilePtr second, TileTypeLib::Edge touching_edge_of_second_tile);
+  bool hasWinner() const;
+  std::string getWinner() const;
 
 public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);

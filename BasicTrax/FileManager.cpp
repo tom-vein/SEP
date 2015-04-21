@@ -1,8 +1,7 @@
 #include "FileManager.h"
 
-void FileManager::setFileName(const std::string& file_name)
+FileManager::FileManager(const std::string& file_name) : file_name_(file_name)
 {
-  file_name_ = file_name;
 }
 
 FileManager::FileHeader::FileHeader(Color active_player, signed char min_x,
@@ -19,19 +18,28 @@ FileManager::Field::Field(TileTypeLib::Shape shape, Color top_color) :
 {
 }
 
-void FileManager::writeToFile(const GameLib::Game& game) const
+void FileManager::writeToFile(const GameLib::Game& game,
+                              const std::string& file_name) const
 {
+  std::string used_file_name;
   std::vector<Field> fields;
-  std::string error_msg = std::string("Cannot write file ") + file_name_ +
-                          std::string("\n");
+  std::string error_msg;
 
   if(game.getTileCount() == 0)
     throw NoTilesLeftException("Board is empty!\n");
 
-  if(file_name_.empty())
+  if(!file_name.empty())
+    used_file_name = file_name;
+  else
+    used_file_name = file_name_;
+
+  if(used_file_name.empty())
     throw NoFileNameException("Their has not been specified a file name");
 
-  std::ofstream output_file(file_name_, std::ios::binary);
+  error_msg = std::string("Cannot write file ") + used_file_name +
+              std::string("\n");
+
+  std::ofstream output_file(used_file_name, std::ios::binary);
 
   if(!output_file)
     throw FileWriteException(error_msg);

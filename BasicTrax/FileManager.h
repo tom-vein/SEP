@@ -36,13 +36,13 @@ private:
   };
 
   std::string file_name_;
-
   FileHeader createFileHeader(const GameLib::Game& game) const;
   Field createField(TilePtr tile) const;
   void initFields(std::vector<Field>& fields, const GameLib::Game& game) const;
 public:
-  void setFileName(const std::string& file_name);
-  void writeToFile(const GameLib::Game& game) const;
+  FileManager(const std::string& file_name);
+  void writeToFile(const GameLib::Game& game,
+                   const std::string& file_name = "") const;
 };
 
 #endif // FILEMANAGER_H
