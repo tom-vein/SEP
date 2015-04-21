@@ -51,6 +51,14 @@ CommandLib::DoTurnCommand::DoTurnCommand(TilePtr tile) : tile_(tile)
 CommandLib::Code CommandLib::DoTurnCommand::execute(GameBoard& game_board) const
 {
   game_board.doTurn(tile_);
+
+  if(game_board.hasWinner())
+    return Code::WIN;
+
+  if(game_board.isDraw())
+    return Code::DRAW;
+
+  return Code::CONTINUE;
 }
 
 CommandLib::DoTurnCommand::~DoTurnCommand()

@@ -35,9 +35,22 @@ int main(int argc, char* argv[])
 
   while((current_code = command->execute(game_board)) != CommandLib::Code::QUIT)
   {
+    if(current_code == CommandLib::Code::DRAW)
+    {
+      std::cout << "No more tiles left. Game ends in a draw!" << std::endl;
+      break;
+    }
+
+    if(current_code == CommandLib::Code::WIN)
+    {
+      std::cout << "Player " << game_board.getWinner() << " wins!" << std::endl;
+      break;
+    }
+
     command = CommandLib::readCommand(game);
   }
 
+  std::cout << "Bye!" << std::endl;
 
   return 0;
 }

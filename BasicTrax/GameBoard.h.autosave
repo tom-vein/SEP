@@ -76,6 +76,7 @@ public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);
   void startGame();
   void doTurn(TilePtr tile);
+  bool isDraw() const;
   bool hasWinner() const;
   std::string getWinner() const;
 };

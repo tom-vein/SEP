@@ -26,7 +26,7 @@ void FileManager::writeToFile(const GameLib::Game& game,
   std::string error_msg;
 
   if(game.getTileCount() == 0)
-    throw NoTilesLeftException("Board is empty!\n");
+    throw NoTilesLeftException("Board is empty!");
 
   if(!file_name.empty())
     used_file_name = file_name;
@@ -36,8 +36,7 @@ void FileManager::writeToFile(const GameLib::Game& game,
   if(used_file_name.empty())
     throw NoFileNameException("Their has not been specified a file name");
 
-  error_msg = std::string("Cannot write file ") + used_file_name +
-              std::string("\n");
+  error_msg = std::string("Cannot write file ") + used_file_name;
 
   std::ofstream output_file(used_file_name, std::ios::binary);
 

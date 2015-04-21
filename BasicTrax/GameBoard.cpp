@@ -19,10 +19,10 @@ void GameBoard::doTurn(TilePtr tile_to_add)
   {
     // If first tile not on (0,0)
     if(game_.getTileCount() == 0 && tile_to_add->getPosition() != Position(0,0))
-      throw(InvalidPositionException("Invalid coordinates - first tile must be set on (0,0)\n",tile_to_add->getPosition()));
+      throw(InvalidPositionException("Invalid coordinates - first tile must be set on (0,0)",tile_to_add->getPosition()));
 
     if(game_.getTileByPosition(tile_to_add->getPosition()))
-      throw(InvalidPositionException("Invalid coordinates - field not empty\n", tile_to_add->getPosition()));
+      throw(InvalidPositionException("Invalid coordinates - field not empty", tile_to_add->getPosition()));
 
     std::map<TileTypeLib::Edge, TilePtr> touching_tiles = game_.getTouchingTiles(tile_to_add->getPosition());
 
@@ -98,14 +98,14 @@ bool GameBoard::canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_ti
 {
   // If tile has touching tiles
   if(touching_tiles.empty() && game_.getTileCount() != 0)
-    throw(InvalidPositionException("Invalid coordinates - field not connected to tile\n", tile_to_check->getPosition()));
+    throw(InvalidPositionException("Invalid coordinates - field not connected to tile", tile_to_check->getPosition()));
 
   // For each touching tile
   for(std::map<TileTypeLib::Edge, TilePtr>::iterator it = touching_tiles.begin(); it != touching_tiles.end(); it++)
   {
 
     if(!checkTwoTiles(tile_to_check, it->second, it->first))
-      throw(ColorMismatchException("Invalid move - connected line colors mismatch\n", tile_to_check->getPosition()));
+      throw(ColorMismatchException("Invalid move - connected line colors mismatch", tile_to_check->getPosition()));
   }
   return true;
 }
@@ -399,12 +399,23 @@ allWinningCriteriaFulfilled(const GameLib::Game& game) const
   return false;
 }
 
+bool GameBoard::isDraw() const
+{
+  return result_checker_.isDraw(game_);
+}
+
 bool GameBoard::hasWinner() const
 {
-  return winner_ == Color::NONE;
+  return winner_ != Color::NONE;
 }
 
 std::string GameBoard::getWinner() const
 {
-  //if()
+  if(winner_ == Color::RED)
+    return "red";
+
+  if(winner_ == Color::WHITE)
+    return "white";
+
+  return "no winner";
 }
