@@ -55,7 +55,7 @@ Position Parser::parsePosition(const std::string& input) //parse '(' usw. for ad
 //{
 
 //  if(input == "x")
-//    return TileTypeLib::TileType::getTileType(TileTypeLib::Shape::CROSS, game.getTouchingColors()); ///????
+//    return TileTypeLib::TileType::getTileType(TileTypeLib::Shape::CROSS, GameLib::Game::); ///????
 
 //  if(input == "/")
 //    return 0;
