@@ -335,8 +335,8 @@ const
     TileTypeLib::Edge e = it->first;
     Color c = it->second;
 
-//    if(c != Color::NONE || tile->getColorAtEdge(e) != color)
-//      touching_colors.erase(it);
+    if(c != Color::NONE || tile->getColorAtEdge(e) != color)
+      touching_colors.erase(it);
   }
 
   if(touching_colors.size() < 1)
