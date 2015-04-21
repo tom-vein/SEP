@@ -63,7 +63,7 @@ TileTypeLib::TileType Parser::parseTileType(const std::string& input,
                                             const GameLib::Game& game)
 {
 
-  if(input == "x")
+  if(input == "+")
     return TileTypeLib::TileType::getTileType(
           TileTypeLib::Shape::CROSS, game.getActivePlayer().getColor());
 
@@ -84,32 +84,12 @@ TileTypeLib::TileType Parser::parseTileType(const std::string& input,
 std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     const std::string& command_string, const GameLib::Game& game)
 {
-
   std::string command;
   std::string param;
   std::string filename_or_tiletype;
   std::string rest;
   std::istringstream full_command(Parser::lowerChars(command_string));
   full_command >> command >> param >> filename_or_tiletype >> rest;
-
-  if(command == "./basic")
-  {
-    if(param == "-g")
-    {
-      if(!filename_or_tiletype.empty() && rest.empty())
-      {
-        return std::shared_ptr<CommandLib::Command>
-            (new CommandLib::StartGameCommand(filename_or_tiletype));
-      }
-      throw std::exception(); //when no filename or unused param at the end
-    }
-    if(param.empty())
-    {
-      return std::shared_ptr<CommandLib::Command>
-          (new CommandLib::StartGameCommand(""));
-    }
-    throw std::exception(); //wrong param not "-g"
-  }
 
   if(command == "quit")
   {
@@ -148,17 +128,20 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
   throw std::exception(); //filename missing or too much params rest
 }
 
-std::string Parser::parseArguments(int argc, char* argv[])
+std::shared_ptr<CommandLib::Command> Parser::parseArguments(
+    int argc, char* argv[])
 {
   if(argc == 1)
-    return std::string(argv[0]);
-
-  if(argc == 3)
   {
-    std::stringstream ss;
-    ss << argv[0] << ' ' << argv[1] << ' ' << argv[2];
-    return ss.str();
+    return std::shared_ptr<CommandLib::Command>(new CommandLib::StartGameCommand(""));
   }
 
-  throw std::exception(); //wrong number of arguments
+  if(argc == 3 && std::string(argv[1]) == "-g" &&
+     !(std::string(argv[2])).empty())
+  {
+    return std::shared_ptr<CommandLib::Command>(new CommandLib::StartGameCommand(argv[2]));
+  }
+
+  std::string error_message = "Usage: " + std::string(argv[0]);
+  throw WrongUsageProgramException(error_message);
 }

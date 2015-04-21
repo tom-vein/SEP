@@ -115,5 +115,21 @@ public:
   virtual ~NoFileNameException() {}
 };
 
+class InappropriateCommandException : public MessageException
+{
+public:
+  InappropriateCommandException(std::string message) :
+    MessageException(message) {}
+  virtual ~InappropriateCommandException() {}
+};
+
+class WrongUsageProgramException : public MessageException
+{
+public:
+  WrongUsageProgramException(std::string message) :
+    MessageException(message) {}
+  virtual ~WrongUsageProgramException() {}
+};
+
 #endif // EXCEPTIONS
 

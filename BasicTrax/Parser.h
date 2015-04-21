@@ -14,7 +14,7 @@ class Parser
 private:
   static Position parsePosition(const std::string& input);
   static TileTypeLib::TileType parseTileType(const std::string& input,
-                                              const GameLib::Game& game);
+                                             const GameLib::Game& game);
   static std::string lowerChars(const std::string& data);
 
 public:
@@ -23,7 +23,8 @@ public:
   //checked again
   static std::shared_ptr<CommandLib::Command> parseCommand(
       const std::string& command_string, const GameLib::Game& game);
-  static std::string parseArguments(int argc, char* argv[]);
+  static std::shared_ptr<CommandLib::Command> parseArguments(
+      int argc, char* argv[]);
 
 };
 

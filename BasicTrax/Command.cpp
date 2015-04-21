@@ -9,11 +9,24 @@
 //------------------------------------------------------------------------------
 
 #include "Command.h"
+#include "Parser.h"
 
 std::shared_ptr<CommandLib::Command> CommandLib::readCommand(
     const GameLib::Game& game)
 {
+  std::string command_str;
+  std::cout << "sep> ";
+  std::getline (std::cin, command_str);
 
+  std::shared_ptr<Command> command = Parser::parseCommand(command_str, game);
+
+//  if(typeid(command) != typeid(CommandLib::DoTurnCommand) ||
+//     typeid(command) != typeid(CommandLib::ErrorCommand) ||
+//     typeid(command) != typeid(CommandLib::QuitCommand) ||
+//     typeid(command) != typeid(CommandLib::WriteCommand))
+//    throw InappropriateCommandException("the command here is inappropriate");
+
+  return command;
 }
 
 //------------------------------------------------------------------------------

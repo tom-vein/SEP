@@ -7,7 +7,6 @@
 
 int main(int argc, char* argv[])
 {
-  std::string arguments;
   std::shared_ptr<CommandLib::Command> command;
   std::shared_ptr<CommandLib::StartGameCommand> start_game_command;
   Player player1(Color::RED);
@@ -17,16 +16,22 @@ int main(int argc, char* argv[])
 
   GameLib::Game game(players);
 
-  arguments = Parser::parseArguments(argc, argv);
-  command = Parser::parseCommand(arguments, game);
-
+  try
+  {
+    command = Parser::parseArguments(argc, argv);
+  }
+  catch(WrongUsageProgramException& ex)
+  {
+    std::cout << ex.what();
+    return 2;
+  }
 
   //Check if this comparison works
-  if(typeid(command) != typeid(CommandLib::StartGameCommand))
-    std::cout << "throw an appropriate exception here" << std::endl;
+//  if(typeid(command) != typeid(CommandLib::StartGameCommand))
+//    throw InappropriateCommandException("the command here is inappropriate");
 
   start_game_command =
-     std::dynamic_pointer_cast<CommandLib::StartGameCommand>(command);
+      std::dynamic_pointer_cast<CommandLib::StartGameCommand>(command);
 
   TileTypeLib::TileType::initTileTypes();
 
