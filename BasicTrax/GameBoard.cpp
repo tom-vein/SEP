@@ -119,7 +119,7 @@ bool GameBoard::canTileBePlaced(
 
   // For each touching tile
   for(std::map<TileTypeLib::Edge, TilePtr>::iterator it =
-      ouching_tiles.begin(); it != touching_tiles.end(); it++)
+      touching_tiles.begin(); it != touching_tiles.end(); it++)
   {
     if(!checkTwoTiles(tile_to_check, it->second, it->first))
       throw(ColorMismatchException("Invalid move - "
@@ -128,19 +128,19 @@ bool GameBoard::canTileBePlaced(
   }
   std::vector<Position> empty_positions =
       game_.getEmptyPositionsAround(tile_to_check->getPosition());
-  for(std::vector<Position>::iterator it = empty_positions.begin();
-      it != empty_positions.end(); it++)
+  for(std::vector<Position>::iterator it_position = empty_positions.begin();
+      it_position != empty_positions.end(); it_position++)
   {
     int counter_red = 0;
     int counter_white = 0;
     std::map<TileTypeLib::Edge, Color> touching_colors =
-        game_.getTouchingColors(*it);
+        game_.getTouchingColors(*it_position);
     for(std::map<TileTypeLib::Edge, Color>::iterator it_color =
-        touching_colors.begin(); it != touching_colors.end(); it++)
+        touching_colors.begin(); it_color != touching_colors.end(); it_color++)
     {
       if(it_color->second == Color::RED)
         counter_red++;
-      else if(it_color->secont == Color::WHITE)
+      else if(it_color->second == Color::WHITE)
         counter_white++;
     }
     if(counter_red > 3 || counter_white > 3)

@@ -148,7 +148,7 @@ std::vector<Position> GameLib::Game::getEmptyPositionsAround(
   //Bottom
   if(!getTileByPosition(position, offset_x, offset_y + 1))
     empty_positions.push_back(Position(position.getX() + offset_x,
-                                       osition.getY() + offset_y + 1));
+                                       position.getY() + offset_y + 1));
 
   return empty_positions;
 }
