@@ -419,3 +419,8 @@ std::string GameBoard::getWinner() const
 
   return "no winner";
 }
+
+void GameBoard::write(const std::string& file_name)
+{
+  file_manager_.writeToFile(game_, file_name);
+}

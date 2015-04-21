@@ -79,6 +79,7 @@ public:
   bool isDraw() const;
   bool hasWinner() const;
   std::string getWinner() const;
+  void write(const std::string& file_name);
 };
 
 #endif // GAMEBOARD_H

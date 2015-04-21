@@ -88,3 +88,14 @@ CommandLib::Code CommandLib::ErrorCommand::execute(GameBoard&) const
 CommandLib::ErrorCommand::~ErrorCommand()
 {
 }
+
+
+CommandLib::WriteCommand::WriteCommand(std::string file_name)
+  : file_name_(file_name)
+{
+}
+
+CommandLib::Code CommandLib::WriteCommand::execute(GameBoard& game_board) const
+{
+  game_board.write(file_name_);
+}

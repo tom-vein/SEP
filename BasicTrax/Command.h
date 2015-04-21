@@ -102,6 +102,16 @@ namespace CommandLib
     virtual Code execute(GameBoard&) const override;
     virtual ~ErrorCommand() override;
   };
+
+  class WriteCommand : public Command
+  {
+  private:
+    std::string file_name_;
+  public:
+    WriteCommand(std::string file_name);
+    virtual Code execute(GameBoard&) const override;
+    virtual ~WriteCommand() override;
+  };
 }
 
 #endif //COMMAND_H_INCLUDED

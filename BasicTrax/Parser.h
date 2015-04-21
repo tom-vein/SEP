@@ -11,6 +11,12 @@
 
 class Parser
 {
+private:
+  static Position parsePosition(const std::string& input);
+  static TileTypeLib::TileType parseTileType(const std::string& input,
+                                              const GameLib::Game& game);
+  static std::string lowerChars(const std::string& data);
+
 public:
   //Here all checks are done and for the further steps it will be determined
   //that the command is and its parameters are valid and do not needed to be
@@ -18,8 +24,7 @@ public:
   static std::shared_ptr<CommandLib::Command> parseCommand(
       const std::string& command_string, const GameLib::Game& game);
   static std::string parseArguments(int argc, char* argv[]);
-  static Position parsePosition(const std::string& input);
-  static TileTypeLib::TileType parseTileType(const std::string& input);
+
 };
 
 #endif // PARSER_H
