@@ -47,8 +47,7 @@ void GameBoard::doTurn(TilePtr tile_to_add)
   }
 
   tried_insertions_.clear();
-  //TODO: implement toggleplayer
-  //game_.tooglePlayer();
+  game_.tooglePlayer();
 }
 
 void GameBoard::doForcedPlay(TilePtr last_placed)
@@ -335,8 +334,8 @@ const
     TileTypeLib::Edge e = it->first;
     Color c = it->second;
 
-    if(c != Color::NONE || tile->getColorAtEdge(e) != color)
-      touching_colors.erase(it);
+//    if(c != Color::NONE || tile->getColorAtEdge(e) != color)
+//      touching_colors.erase(it);
   }
 
   if(touching_colors.size() < 1)

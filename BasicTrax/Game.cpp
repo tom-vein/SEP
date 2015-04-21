@@ -262,3 +262,10 @@ unsigned int GameLib::Game::getMaxOfTiles()
 {
   return MAX_OF_TILES;
 }
+
+void GameLib::Game::tooglePlayer()
+{
+  //const Player& player = active_player_;
+  active_player_ = getPausedPlayer();
+
+}
