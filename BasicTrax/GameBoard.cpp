@@ -45,7 +45,8 @@ void GameBoard::doTurn(TilePtr tile_to_add)
     tried_insertions_.clear();
     std::cout << e.what();
   }
-
+  if(should_write_to_file_)
+    file_manager_.writeToFile(game_);
   tried_insertions_.clear();
   game_.tooglePlayer();
 }
