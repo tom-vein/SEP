@@ -47,7 +47,7 @@ void GameBoard::doTurn(TilePtr tile_to_add)
   }
 
   tried_insertions_.clear();
-  //game_.tooglePlayer();
+  game_.tooglePlayer();
 }
 
 void GameBoard::doForcedPlay(TilePtr last_placed)
