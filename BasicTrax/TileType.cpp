@@ -113,6 +113,8 @@ Color TileTypeLib::TileType::getColorAtEdge(Edge edge)
         else
           return Color::RED;
       }
+      else
+        return top_color_;
     }
   default: throw(MessageException("No such edge"));
   }
