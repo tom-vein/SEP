@@ -24,7 +24,7 @@ void GameLib::Game::addTile(TilePtr to_add)
 throw(NoTilesLeftException)
 {
   if(tiles_.size() >= MAX_OF_TILES)
-    throw NoTilesLeftException("Invalid move - not enough tiles left\n");
+    throw NoTilesLeftException("Invalid move - not enough tiles left");
 
   tiles_.push_back(to_add);
   ++num_of_placed_tiles_in_current_turn_;

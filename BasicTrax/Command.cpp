@@ -31,6 +31,8 @@ CommandLib::Code CommandLib::StartGameCommand::execute(GameBoard& game_board)
 const
 {
   game_board.startGame();
+
+  return Code::START;
 }
 
 CommandLib::StartGameCommand::~StartGameCommand()
@@ -65,9 +67,8 @@ CommandLib::DoTurnCommand::~DoTurnCommand()
 {
 }
 
-CommandLib::Code CommandLib::QuitCommand::execute(GameBoard& game_board) const
+CommandLib::Code CommandLib::QuitCommand::execute(GameBoard&) const
 {
-  //Maybe some quit actions in game_board!!!!!!
   return Code::QUIT;
 }
 
@@ -98,4 +99,10 @@ CommandLib::WriteCommand::WriteCommand(std::string file_name)
 CommandLib::Code CommandLib::WriteCommand::execute(GameBoard& game_board) const
 {
   game_board.write(file_name_);
+
+  return Code::CONTINUE;
+}
+
+CommandLib::WriteCommand::~WriteCommand()
+{
 }

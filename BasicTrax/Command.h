@@ -23,7 +23,7 @@ namespace CommandLib
 
   enum class Code
   {
-    QUIT, WIN, DRAW, CONTINUE
+    START, QUIT, WIN, DRAW, CONTINUE
   };
 
   //Use the parser class for this method
