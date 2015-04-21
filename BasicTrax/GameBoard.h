@@ -53,7 +53,7 @@ private:
                                             TilePtr current_tile,
                                             const GameLib::Game& game) const;
   public:
-    const Player& determineWinner(const GameLib::Game& game) const;
+    Color determineWinner(const GameLib::Game& game) const;
     bool isDraw(const GameLib::Game& game) const;
   };
 
@@ -74,8 +74,7 @@ private:
 public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);
   void startGame();
-  void doTurn(TilePtr tile)
-  throw(InvalidPositionException);
+  void doTurn(TilePtr tile);
 };
 
 #endif // GAMEBOARD_H

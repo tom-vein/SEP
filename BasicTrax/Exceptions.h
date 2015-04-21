@@ -62,13 +62,6 @@ public:
   virtual ~ColorMismatchException() {}
 };
 
-class NoPlayerWinsException : public MessageException
-{
-public:
-  NoPlayerWinsException(std::string message) : MessageException(message) {}
-  virtual ~NoPlayerWinsException() {}
-};
-
 class TooLessFreeEdgesException : public MessageException
 {
 public:
@@ -113,6 +106,13 @@ class FileWriteException : public MessageException
 public:
   FileWriteException(std::string message) : MessageException(message) {}
   virtual ~FileWriteException() {}
+};
+
+class NoFileNameException : public MessageException
+{
+public:
+  NoFileNameException(std::string message) : MessageException(message) {}
+  virtual ~NoFileNameException() {}
 };
 
 #endif // EXCEPTIONS

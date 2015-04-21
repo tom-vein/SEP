@@ -16,7 +16,6 @@ void GameBoard::startGame()
 }
 
 void GameBoard::doTurn(TilePtr tile_to_add)
-throw(InvalidPositionException)
 {
   try
   {
@@ -39,11 +38,7 @@ throw(InvalidPositionException)
 
 
     //TODO: push winner to game_!
-    Player winner = result_checker_.determineWinner(game_);
-  }
-  catch (NoPlayerWinsException& e)
-  {
-    //Nothing to do here
+    Color winner = result_checker_.determineWinner(game_);
   }
   catch (MessageException& e)
   {
@@ -106,8 +101,8 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
 bool GameBoard::canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check)
 {
   // If tile has touching tiles
-    if(touching_tiles.empty() && game_.getTileCount() != 0)
-        throw(InvalidPositionException("Invalid coordinates - field not connected to tile\n", tile_to_check->getPosition()));
+  if(touching_tiles.empty() && game_.getTileCount() != 0)
+    throw(InvalidPositionException("Invalid coordinates - field not connected to tile\n", tile_to_check->getPosition()));
 
   // For each touching tile
   for(std::map<TileTypeLib::Edge, TilePtr>::iterator it = touching_tiles.begin(); it != touching_tiles.end(); it++)
@@ -153,19 +148,18 @@ bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other, TileTypeLib:
   }
 }
 
-const Player& GameBoard::ResultChecker::determineWinner(
-    const GameLib::Game& game) const
+Color GameBoard::ResultChecker::determineWinner(const GameLib::Game& game) const
 {
   const Player& active_player = game.getActivePlayer();
   const Player& paused_player = game.getPausedPlayer();
 
   if(hasPlayerWon(active_player, game))
-    return active_player;
+    return active_player.getColor();
 
   if(hasPlayerWon(paused_player, game))
-    return paused_player;
+    return paused_player.getColor();
 
-  throw NoPlayerWinsException("no player has won");
+  return Color::NONE;
 }
 
 bool GameBoard::ResultChecker::isDraw(const GameLib::Game& game) const

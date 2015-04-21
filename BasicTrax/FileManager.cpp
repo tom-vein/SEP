@@ -28,6 +28,9 @@ void FileManager::writeToFile(const GameLib::Game& game) const
   if(game.getTileCount() == 0)
     throw NoTilesLeftException("Board is empty!\n");
 
+  if(file_name_.empty())
+    throw NoFileNameException("Their has not been specified a file name");
+
   std::ofstream output_file(file_name_, std::ios::binary);
 
   if(!output_file)
