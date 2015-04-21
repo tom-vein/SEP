@@ -329,8 +329,8 @@ const
 
   //Erasing all touching_colors that are not NONE
   //and are at an edge that has not the color color
-  for(std::map<TileTypeLib::Edge, Color>::iterator it = touching_colors.end();
-      it != touching_colors.begin(); it--)
+  for(std::map<TileTypeLib::Edge, Color>::iterator it = touching_colors.begin();
+      it != touching_colors.end(); it++)
   {
     TileTypeLib::Edge e = it->first;
     Color c = it->second;
