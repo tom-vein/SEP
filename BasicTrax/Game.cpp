@@ -7,10 +7,12 @@ GameLib::Game::Game(const std::array<Player, 2>& players) :
 
 }
 
-TilePtr GameLib::Game::getTileByPosition(const Position& position, int offset_x, int offset_y) const
+TilePtr GameLib::Game::getTileByPosition(const Position& position,
+                                         int offset_x, int offset_y) const
 throw(InvalidPositionException)
 {
-  Position position_to_return(position.getX() + offset_x, position.getY() + offset_y);
+  Position position_to_return(position.getX() + offset_x,
+                              position.getY() + offset_y);
   for(TilePtr tile : tiles_)
   {
     if(tile->getPosition() == position_to_return)
@@ -33,7 +35,8 @@ throw(NoTilesLeftException)
 void GameLib::Game::removeTileAtPosition(const Position& position)
 throw(InvalidPositionException)
 {
-  for(std::vector<TilePtr>::iterator it = tiles_.begin(); it != tiles_.end(); it++)
+  for(std::vector<TilePtr>::iterator it = tiles_.begin();
+      it != tiles_.end(); it++)
   {
     if( (*it)->getPosition() == position)
     {
@@ -47,7 +50,8 @@ throw(InvalidPositionException)
 
 void GameLib::Game::removeTile(TilePtr tile_to_remove)
 {
-  for(std::vector<TilePtr>::iterator it = tiles_.begin(); it != tiles_.end(); it++)
+  for(std::vector<TilePtr>::iterator it = tiles_.begin();
+      it != tiles_.end(); it++)
   {
     if( (*it) == tile_to_remove)
     {
@@ -56,10 +60,12 @@ void GameLib::Game::removeTile(TilePtr tile_to_remove)
       return;
     }
   }
-  throw(InvalidPositionException("No Tile with this position.", tile_to_remove->getPosition()));
+  throw(InvalidPositionException("No Tile with this position.",
+                                 tile_to_remove->getPosition()));
 }
 
-std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(const Position &position, Color color, int offset_x, int offset_y) const
+std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(
+    const Position &position, Color color, int offset_x, int offset_y) const
 {
   std::map<TileTypeLib::Edge, TilePtr> touching_tiles;
   TilePtr tile;
@@ -87,7 +93,8 @@ std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(const Posit
   return touching_tiles;
 }
 
-std::map<TileTypeLib::Edge, Color> GameLib::Game::getTouchingColors(const Position &position, int offset_x, int offset_y) const
+std::map<TileTypeLib::Edge, Color> GameLib::Game::getTouchingColors(
+    const Position &position, int offset_x, int offset_y) const
 {
   std::map<TileTypeLib::Edge, Color> touching_colors;
   TilePtr tile;
@@ -122,21 +129,26 @@ std::map<TileTypeLib::Edge, Color> GameLib::Game::getTouchingColors(const Positi
   return touching_colors;
 }
 
-std::vector<Position> GameLib::Game::getEmptyPositionsAround(const Position& position, int offset_x, int offset_y) const
+std::vector<Position> GameLib::Game::getEmptyPositionsAround(
+    const Position& position, int offset_x, int offset_y) const
 {
   std::vector<Position> empty_positions;
   // Left
   if(!getTileByPosition(position, offset_x - 1, offset_y))
-    empty_positions.push_back(Position(position.getX() + offset_x - 1, position.getY() + offset_y));
+    empty_positions.push_back(Position(position.getX() + offset_x - 1,
+                                       position.getY() + offset_y));
   // Top
   if(!getTileByPosition(position, offset_x, offset_y - 1))
-    empty_positions.push_back(Position(position.getX() + offset_x, position.getY() + offset_y - 1));
+    empty_positions.push_back(Position(position.getX() + offset_x,
+                                       position.getY() + offset_y - 1));
   //Right
   if(!getTileByPosition(position, offset_x + 1, offset_y))
-    empty_positions.push_back(Position(position.getX() + offset_x + 1, position.getY() + offset_y));
+    empty_positions.push_back(Position(position.getX() + offset_x + 1,
+                                       position.getY() + offset_y));
   //Bottom
   if(!getTileByPosition(position, offset_x, offset_y + 1))
-    empty_positions.push_back(Position(position.getX() + offset_x, position.getY() + offset_y + 1));
+    empty_positions.push_back(Position(position.getX() + offset_x,
+                                       osition.getY() + offset_y + 1));
 
   return empty_positions;
 }
@@ -265,7 +277,5 @@ unsigned int GameLib::Game::getMaxOfTiles()
 
 void GameLib::Game::tooglePlayer()
 {
-  //const Player& player = active_player_;
   active_player_ = getPausedPlayer();
-
 }

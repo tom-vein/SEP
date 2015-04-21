@@ -21,12 +21,16 @@ void GameBoard::doTurn(TilePtr tile_to_add)
   {
     // If first tile not on (0,0)
     if(game_.getTileCount() == 0 && tile_to_add->getPosition() != Position(0,0))
-      throw(InvalidPositionException("Invalid coordinates - first tile must be set on (0,0)",tile_to_add->getPosition()));
+      throw(InvalidPositionException("Invalid coordinates - "
+                                     "first tile must be set on (0,0)",
+                                     tile_to_add->getPosition()));
 
     if(game_.getTileByPosition(tile_to_add->getPosition()))
-      throw(InvalidPositionException("Invalid coordinates - field not empty", tile_to_add->getPosition()));
+      throw(InvalidPositionException("Invalid coordinates - field not empty",
+                                     tile_to_add->getPosition()));
 
-    std::map<TileTypeLib::Edge, TilePtr> touching_tiles = game_.getTouchingTiles(tile_to_add->getPosition());
+    std::map<TileTypeLib::Edge, TilePtr> touching_tiles =
+        game_.getTouchingTiles(tile_to_add->getPosition());
 
     canTileBePlaced(touching_tiles, tile_to_add);
 
@@ -37,33 +41,40 @@ void GameBoard::doTurn(TilePtr tile_to_add)
     doForcedPlay(tile_to_add);
 
     winner_ = result_checker_.determineWinner(game_);
+
+    if(should_write_to_file_)
+      file_manager_.writeToFile(game_);
+
+    game_.tooglePlayer();
+    tried_insertions_.clear();
   }
   catch (MessageException& e)
   {
-    for(std::vector<TilePtr>::iterator it = tried_insertions_.begin(); it != tried_insertions_.end(); it++)
+    for(std::vector<TilePtr>::iterator it = tried_insertions_.begin();
+        it != tried_insertions_.end(); it++)
     {
       game_.removeTile(*it);
     }
     tried_insertions_.clear();
     std::cout << e.what();
   }
-  if(should_write_to_file_)
-    file_manager_.writeToFile(game_);
-  tried_insertions_.clear();
-  game_.tooglePlayer();
 }
 
 void GameBoard::doForcedPlay(TilePtr last_placed)
 {
   // Get all empty positions around the last placed tile
-  std::vector<Position> empty_positions = game_.getEmptyPositionsAround(last_placed->getPosition());
-  std::vector<TileTypeLib::TileType> tile_types = TileTypeLib::TileType::getAllTileTypes();
+  std::vector<Position> empty_positions =
+      game_.getEmptyPositionsAround(last_placed->getPosition());
+  std::vector<TileTypeLib::TileType> tile_types =
+      TileTypeLib::TileType::getAllTileTypes();
 
   // for all empty positions
-  for(std::vector<Position>::iterator it = empty_positions.begin(); it != empty_positions.end(); it++)
+  for(std::vector<Position>::iterator it = empty_positions.begin();
+      it != empty_positions.end(); it++)
   {
     // Get all touching tiles of this position
-    std::map<TileTypeLib::Edge,TilePtr> touching_tiles = game_.getTouchingTiles(*it);
+    std::map<TileTypeLib::Edge,TilePtr> touching_tiles =
+        game_.getTouchingTiles(*it);
 
     // If only the last_placed tile touches this position
     if(touching_tiles.size() < 2)
@@ -74,7 +85,8 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     TilePtr tile;
     TilePtr tile_to_try;
 
-    for(std::vector<TileTypeLib::TileType>::iterator types_it = tile_types.begin(); types_it != tile_types.end(); types_it++)
+    for(std::vector<TileTypeLib::TileType>::iterator types_it =
+        tile_types.begin(); types_it != tile_types.end(); types_it++)
     {
       tile_to_try.reset(new Tile(*types_it, *it));
       try
@@ -96,48 +108,80 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
   }
 }
 
-bool GameBoard::canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check)
+bool GameBoard::canTileBePlaced(
+    std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check)
 {
   // If tile has touching tiles
   if(touching_tiles.empty() && game_.getTileCount() != 0)
-    throw(InvalidPositionException("Invalid coordinates - field not connected to tile", tile_to_check->getPosition()));
+    throw(InvalidPositionException("Invalid coordinates - "
+                                   "field not connected to tile",
+                                   tile_to_check->getPosition()));
 
   // For each touching tile
-  for(std::map<TileTypeLib::Edge, TilePtr>::iterator it = touching_tiles.begin(); it != touching_tiles.end(); it++)
+  for(std::map<TileTypeLib::Edge, TilePtr>::iterator it =
+      ouching_tiles.begin(); it != touching_tiles.end(); it++)
   {
-
     if(!checkTwoTiles(tile_to_check, it->second, it->first))
-      throw(ColorMismatchException("Invalid move - connected line colors mismatch", tile_to_check->getPosition()));
+      throw(ColorMismatchException("Invalid move - "
+                                   "connected line colors mismatch",
+                                   tile_to_check->getPosition()));
+  }
+  std::vector<Position> empty_positions =
+      game_.getEmptyPositionsAround(tile_to_check->getPosition());
+  for(std::vector<Position>::iterator it = empty_positions.begin();
+      it != empty_positions.end(); it++)
+  {
+    int counter_red = 0;
+    int counter_white = 0;
+    std::map<TileTypeLib::Edge, Color> touching_colors =
+        game_.getTouchingColors(*it);
+    for(std::map<TileTypeLib::Edge, Color>::iterator it_color =
+        touching_colors.begin(); it != touching_colors.end(); it++)
+    {
+      if(it_color->second == Color::RED)
+        counter_red++;
+      else if(it_color->secont == Color::WHITE)
+        counter_white++;
+    }
+    if(counter_red > 3 || counter_white > 3)
+      throw(ColorMismatchException("Invalid move - "
+                                   "connected line colors mismatch",
+                                   tile_to_check->getPosition()));
   }
   return true;
 }
 
-bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other, TileTypeLib::Edge touching_edge_of_first_tile)
+bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other,
+                              TileTypeLib::Edge touching_edge_of_first_tile)
 {
   switch(touching_edge_of_first_tile)
   {
 
     case TileTypeLib::Edge::BOTTOM:
     {
-      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::BOTTOM) != other->getColorAtEdge(TileTypeLib::Edge::TOP))
+      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::BOTTOM) !=
+         other->getColorAtEdge(TileTypeLib::Edge::TOP))
         return false;
       return true;
     }
     case TileTypeLib::Edge::LEFT:
     {
-      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::LEFT) != other->getColorAtEdge(TileTypeLib::Edge::RIGHT))
+      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::LEFT) !=
+         other->getColorAtEdge(TileTypeLib::Edge::RIGHT))
         return false;
       return true;
     }
     case TileTypeLib::Edge::TOP:
     {
-      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::TOP) != other->getColorAtEdge(TileTypeLib::Edge::BOTTOM))
+      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::TOP) !=
+         other->getColorAtEdge(TileTypeLib::Edge::BOTTOM))
         return false;
       return true;
     }
     case TileTypeLib::Edge::RIGHT:
     {
-      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::RIGHT) != other->getColorAtEdge(TileTypeLib::Edge::LEFT))
+      if(tile_to_check->getColorAtEdge(TileTypeLib::Edge::RIGHT) !=
+         other->getColorAtEdge(TileTypeLib::Edge::LEFT))
         return false;
       return true;
     }
