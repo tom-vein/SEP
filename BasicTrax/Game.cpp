@@ -239,7 +239,7 @@ int GameLib::Game::getMaxYValue() const
     TilePtr tile = tiles_.at(i);
 
     if(tile->getPosition().getY() > max_y_value)
-      max_y_value = tile->getPosition().getX();
+      max_y_value = tile->getPosition().getY();
   }
 
   return max_y_value;
@@ -259,7 +259,7 @@ int GameLib::Game::getMinYValue() const
     TilePtr tile = tiles_.at(i);
 
     if(tile->getPosition().getY() < min_y_value)
-      min_y_value = tile->getPosition().getX();
+      min_y_value = tile->getPosition().getY();
   }
 
   return min_y_value;
