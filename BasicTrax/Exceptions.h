@@ -131,5 +131,14 @@ public:
   virtual ~WrongUsageProgramException() {}
 };
 
+class WrongParameterException : public MessageException
+{
+public:
+  WrongParameterException(std::string message) :
+    MessageException(message) {}
+  virtual ~WrongParameterException() {}
+};
+
+
 #endif // EXCEPTIONS
 

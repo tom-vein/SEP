@@ -37,26 +37,43 @@ int main(int argc, char* argv[])
 
   GameBoard game_board(game, start_game_command->getFileName());
   CommandLib::Code current_code;
-
-  while((current_code = command->execute(game_board)) != CommandLib::Code::QUIT)
+  try
   {
-    if(current_code == CommandLib::Code::DRAW)
+    while((current_code = command->execute(game_board)) != CommandLib::Code::QUIT)
     {
-      std::cout << "No more tiles left. Game ends in a draw!" << std::endl;
-      break;
-    }
+      if(current_code == CommandLib::Code::DRAW)
+      {
+        std::cout << "No more tiles left. Game ends in a draw!" << std::endl;
+        break;
+      }
 
-    if(current_code == CommandLib::Code::WIN)
-    {
-      std::cout << "Player " << game_board.getWinner() << " wins!" << std::endl;
-      break;
-    }
+      if(current_code == CommandLib::Code::WIN)
+      {
+        std::cout << "Player " << game_board.getWinner() << " wins!" << std::endl;
+        break;
+      }
 
-    command = CommandLib::readCommand(game);
+      do
+      {
+        try
+        {
+          command = CommandLib::readCommand(game);
+        }
+        catch(WrongParameterException& e)
+        {
+          std::cout << e.what();
+          command = nullptr;
+        }
+
+      }
+      while(!command);
+    }
+    return 0;
   }
-
-  std::cout << "Bye!" << std::endl;
-
-  return 0;
+  catch(std::bad_alloc)
+  {
+    std::cout << "Error: Out of Memory!\n";
+    return 1;
+  }
 }
 

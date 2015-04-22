@@ -20,6 +20,7 @@ std::shared_ptr<CommandLib::Command> CommandLib::readCommand(
 
   std::shared_ptr<Command> command = Parser::parseCommand(command_str, game);
 
+  //TODO: Delete me
 //  if(typeid(command) != typeid(CommandLib::DoTurnCommand) ||
 //     typeid(command) != typeid(CommandLib::ErrorCommand) ||
 //     typeid(command) != typeid(CommandLib::QuitCommand) ||
@@ -82,6 +83,7 @@ CommandLib::DoTurnCommand::~DoTurnCommand()
 
 CommandLib::Code CommandLib::QuitCommand::execute(GameBoard&) const
 {
+  std::cout << "Bye!" << std::endl;
   return Code::QUIT;
 }
 
@@ -111,7 +113,14 @@ CommandLib::WriteCommand::WriteCommand(std::string file_name)
 
 CommandLib::Code CommandLib::WriteCommand::execute(GameBoard& game_board) const
 {
-  game_board.write(file_name_);
+  try
+  {
+    game_board.write(file_name_);
+  }
+  catch(NoTilesLeftException& e)
+  {
+    std::cout << e.what();
+  }
 
   return Code::CONTINUE;
 }

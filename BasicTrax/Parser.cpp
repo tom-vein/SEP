@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Position.h"
+#include "Exceptions.h"
 
 Position Parser::parsePosition(const std::string& input)
 {
@@ -15,7 +16,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-    throw std::exception();
+     throw WrongParameterException("Invalid parameters\n");
   }
 
   istr >> x;
@@ -25,7 +26,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-    throw std::exception();
+     throw WrongParameterException("Invalid parameters\n");
   }
 
   istr >> y;
@@ -35,7 +36,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-    throw std::exception();
+     throw WrongParameterException("Invalid parameters\n");
   }
 
   istr >> none;
@@ -44,7 +45,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-    throw std::exception();
+     throw WrongParameterException("Invalid parameters\n");
   }
 
   return Position(x, y);
@@ -77,13 +78,16 @@ TileTypeLib::TileType Parser::parseTileType(const std::string& input,
           TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER,
           game.getActivePlayer().getColor());
 
-  throw std::exception(); //if not "+, /, \"
+  throw WrongParameterException("Invalid parameters\n"); //if not "+, /, \"
 
 }
 
 std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     const std::string& command_string, const GameLib::Game& game)
 {
+  if(command_string.empty())
+    return nullptr;
+
   std::string command;
   std::string param;
   std::string filename_or_tiletype;
@@ -98,7 +102,7 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
       return std::shared_ptr<CommandLib::Command>
           (new CommandLib::QuitCommand());
     }
-    throw std::exception(); //too much param after quit command
+    throw(WrongParameterException("Error: Wrong parameter count!")); //too much param after quit command
   }
 
   if(command == "addtile")
@@ -113,7 +117,7 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
       return std::shared_ptr<CommandLib::Command>
           (new CommandLib::DoTurnCommand(newTile));
     }
-    throw std::exception(); //when param empty filename empty or too much param rest
+    throw(WrongParameterException("Error: Wrong parameter count!"));
   }
 
 
@@ -125,7 +129,9 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
           (new CommandLib::WriteCommand(param));
     }
   }
-  throw std::exception(); //filename missing or too much params rest
+
+
+  throw(WrongParameterException("Error: Unknown command!"));
 }
 
 std::shared_ptr<CommandLib::Command> Parser::parseArguments(
