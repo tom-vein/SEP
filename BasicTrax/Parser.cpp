@@ -16,7 +16,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-     throw WrongParameterException("Invalid parameters\n");
+     throw WrongParameterException("Invalid parameters");
   }
 
   istr >> x;
@@ -26,7 +26,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-     throw WrongParameterException("Invalid parameters\n");
+     throw WrongParameterException("Invalid parameters");
   }
 
   istr >> y;
@@ -36,7 +36,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-     throw WrongParameterException("Invalid parameters\n");
+     throw WrongParameterException("Invalid parameters");
   }
 
   istr >> none;
@@ -45,7 +45,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-     throw WrongParameterException("Invalid parameters\n");
+     throw WrongParameterException("Invalid parameters");
   }
 
   return Position(x, y);
@@ -72,8 +72,7 @@ TileTypeLib::Shape Parser::parseTileTypeShape(const std::string& input)
   if(input == "\\")
     return TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER;
 
-  throw WrongParameterException("Invalid parameters"); //if not "+, /, \"
-
+  throw WrongParameterException("Invalid parameters");
 }
 
 std::shared_ptr<CommandLib::Command> Parser::parseCommand(
@@ -83,53 +82,44 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     return nullptr;
 
   std::string command;
-  std::string param;
-  std::string filename_or_tiletype;
+  std::string part_2;
+  std::string part_3;
   std::string rest;
   std::istringstream full_command(Parser::lowerChars(command_string));
-  full_command >> command >> param >> filename_or_tiletype >> rest;
+  full_command >> command >> part_2 >> part_3 >> rest;
 
   if(command == "quit")
   {
-    if(param.empty())
+    if(part_2.empty())
     {
       return std::shared_ptr<CommandLib::Command>
           (new CommandLib::QuitCommand());
     }
-    throw(WrongParameterException("Error: Wrong parameter count!")); //too much param after quit command
+    throw(WrongParameterException("Error: Wrong parameter count!"));
   }
 
   if(command == "addtile")
   {
-    if(!param.empty() && !filename_or_tiletype.empty() && (rest.empty()))
+    if(!part_2.empty() && !part_3.empty() && (rest.empty()))
     {
-      Position needed_Position = Parser::parsePosition(param);
+      Position needed_Position = Parser::parsePosition(part_2);
       TileTypeLib::Shape needed_Shape =
-          Parser::parseTileTypeShape(filename_or_tiletype);
-
-//      std::shared_ptr<Tile> newTile
-//          (new Tile(needed_Shape, needed_Position));
-// ///////////// Vali Problem Ausbesserung
-//      return std::shared_ptr<CommandLib::Command>
-//          (new CommandLib::DoTurnCommand(newTile));
-
+          Parser::parseTileTypeShape(part_3);
       return std::shared_ptr<CommandLib::Command>
           (new CommandLib::DoTurnCommand(needed_Position, needed_Shape));
     }
     throw(WrongParameterException("Error: Wrong parameter count!"));
   }
 
-
   if(command == "write")
   {
-    if(!param.empty() && filename_or_tiletype.empty())
+    if(!part_2.empty() && part_3.empty())
     {
       return std::shared_ptr<CommandLib::WriteCommand>
-          (new CommandLib::WriteCommand(param));
+          (new CommandLib::WriteCommand(part_2));
     }
+    throw(WrongParameterException("Error: Wrong parameter count!"));
   }
-
-
   throw(WrongParameterException("Error: Unknown command!"));
 }
 
@@ -138,13 +128,15 @@ std::shared_ptr<CommandLib::Command> Parser::parseArguments(
 {
   if(argc == 1)
   {
-    return std::shared_ptr<CommandLib::Command>(new CommandLib::StartGameCommand(""));
+    return std::shared_ptr<CommandLib::Command>
+        (new CommandLib::StartGameCommand(""));
   }
 
   if(argc == 3 && std::string(argv[1]) == "-g" &&
      !(std::string(argv[2])).empty())
   {
-    return std::shared_ptr<CommandLib::Command>(new CommandLib::StartGameCommand(argv[2]));
+    return std::shared_ptr<CommandLib::Command>
+        (new CommandLib::StartGameCommand(argv[2]));
   }
 
   std::string error_message = "Usage: " + std::string(argv[0]);
