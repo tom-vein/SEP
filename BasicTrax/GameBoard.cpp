@@ -54,6 +54,7 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
      {
        //Nothing to to
      }
+
      if(!tile_to_add)
      {
        canTileBePlaced(touching_tiles, tile_top_white);

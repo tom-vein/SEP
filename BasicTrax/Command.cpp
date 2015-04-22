@@ -67,7 +67,7 @@ CommandLib::DoTurnCommand::DoTurnCommand
 
 CommandLib::Code CommandLib::DoTurnCommand::execute(GameBoard& game_board) const
 {
-//  game_board.doTurn(tile_);
+  game_board.doTurn(position_, shape_);
 
   if(game_board.hasWinner())
     return Code::WIN;
