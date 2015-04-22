@@ -41,8 +41,7 @@ int main(int argc, char* argv[])
   }
   catch(WrongUsageProgramException& ex)
   {
-    std::cout << ex.what();
-    //TODO: Constant
+    std::cout << ex.what() << std::endl;
     return 2;
   }
 
@@ -92,8 +91,8 @@ int main(int argc, char* argv[])
   }
   catch(std::bad_alloc)
   {
-    std::cout << "Error: Out of Memory!\n";
     //TODO: Constant
+    std::cout << "Error: Out of Memory!" << std::endl;
     return 1;
   }
 }

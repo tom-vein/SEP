@@ -20,6 +20,7 @@ std::shared_ptr<CommandLib::Command> CommandLib::readCommand()
   std::getline (std::cin, command_str);
 
   std::shared_ptr<Command> command = Parser::parseCommand(command_str);
+
   return command;
 }
 
