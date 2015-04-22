@@ -16,7 +16,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-     throw WrongParameterException("Invalid parameters\n");
+     throw WrongParameterException("Invalid parameters");
   }
 
   istr >> x;
@@ -26,7 +26,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-     throw WrongParameterException("Invalid parameters\n");
+     throw WrongParameterException("Invalid parameters");
   }
 
   istr >> y;
@@ -36,7 +36,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-     throw WrongParameterException("Invalid parameters\n");
+     throw WrongParameterException("Invalid parameters");
   }
 
   istr >> none;
@@ -45,7 +45,7 @@ Position Parser::parsePosition(const std::string& input)
   {
     x = 0;
     y = 0;
-     throw WrongParameterException("Invalid parameters\n");
+     throw WrongParameterException("Invalid parameters");
   }
 
   return Position(x, y);

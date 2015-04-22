@@ -70,7 +70,7 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
     winner_ = result_checker_.determineWinner(game_);
 
     if(should_write_to_file_)
-      file_manager_.writeToFile(game_);
+      write();
 
     game_.tooglePlayer();
     tried_insertions_.clear();
@@ -497,5 +497,12 @@ std::string GameBoard::getWinner() const
 
 void GameBoard::write(const std::string& file_name)
 {
-  file_manager_.writeToFile(game_, file_name);
+  try
+  {
+    file_manager_.writeToFile(game_, file_name);
+  }
+  catch(MessageException ex)
+  {
+    std::cout << ex.what() << std::endl;
+  }
 }
