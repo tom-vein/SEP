@@ -1,12 +1,14 @@
 //------------------------------------------------------------------------------
-// Filename: Command.cpp
-// Description: Class representing a general command
-// Authors: Tutors
-// Tutor: Tutors
-// Group: 42
-// Created: 02.09.2011
-// Last change: 02.09.2011
+// Command.cpp
+//
+// Group: Group 11599, study assistant Philipp Hafner
+//
+// Authors:
+// Thomas Hoedl 1430320
+// Mario Theuermann 1430751
+// Stephan Valentan 1430529
 //------------------------------------------------------------------------------
+//
 
 #include "Command.h"
 #include "Parser.h"
