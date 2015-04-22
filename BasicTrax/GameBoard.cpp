@@ -61,10 +61,10 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
        tile_to_add = tile_top_white;
      }
 
+    game_.addTile(tile_to_add);
+
     // Save all insertions of this turn
     tried_insertions_.push_back(tile_to_add);
-
-    game_.addTile(tile_to_add);
     doForcedPlay(tile_to_add);
 
     winner_ = result_checker_.determineWinner(game_);

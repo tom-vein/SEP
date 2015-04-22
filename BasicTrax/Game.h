@@ -29,7 +29,7 @@ namespace GameLib
   class Game
   {
   private:
-    static const unsigned int MAX_OF_TILES = 64;
+    static const unsigned int MAX_OF_TILES = 3;
     unsigned int num_of_placed_tiles_in_current_turn_ = 0;
     std::vector<TilePtr> tiles_;
     std::array<Player, 2> players_;
