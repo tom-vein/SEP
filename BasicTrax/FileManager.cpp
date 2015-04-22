@@ -82,9 +82,9 @@ void FileManager::initFields(std::vector<Field>& fields,
   int max_x = game.getMaxXValue();
   int max_y = game.getMaxYValue();
 
-  for(int i = min_x; i <= max_x; i++)
+  for(int j = min_y; j <= max_y; j++)
   {
-    for(int j = min_y; j <= max_y; j++)
+    for(int i = min_x; i <= max_x; i++)
     {
       TilePtr tile = game.getTileByPosition(Position(i, j));
       fields.push_back(createField(tile));
