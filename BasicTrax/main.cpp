@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
   }
   catch(std::bad_alloc)
   {
-    std::cout << "Error: Out of Memory!\n";
+    std::cout << "Error: Out of Memory!" << std::endl;
     return 1;
   }
 }
