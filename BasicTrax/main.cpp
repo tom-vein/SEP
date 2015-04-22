@@ -9,8 +9,8 @@ int main(int argc, char* argv[])
 {
   std::shared_ptr<CommandLib::Command> command;
   std::shared_ptr<CommandLib::StartGameCommand> start_game_command;
-  Player player1(Color::RED);
-  Player player2(Color::WHITE);
+  Player player1(Color::WHITE);
+  Player player2(Color::RED);
 
   std::array<Player, 2>players{player1, player2};
 

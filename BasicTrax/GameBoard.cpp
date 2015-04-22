@@ -69,10 +69,12 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
 
     winner_ = result_checker_.determineWinner(game_);
 
+    game_.tooglePlayer();
+
     if(should_write_to_file_)
       write();
 
-    game_.tooglePlayer();
+
     tried_insertions_.clear();
   }
   catch (MessageException& e)
