@@ -15,24 +15,47 @@ void GameBoard::startGame()
 
 }
 
-void GameBoard::doTurn(TilePtr tile_to_add)
+void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
 {
   try
   {
     // If first tile not on (0,0)
-    if(game_.getTileCount() == 0 && tile_to_add->getPosition() != Position(0,0))
+    if(game_.getTileCount() == 0 && position != Position(0,0))
       throw(InvalidPositionException("Invalid coordinates - "
                                      "first tile must be set on (0,0)",
                                      tile_to_add->getPosition()));
 
-    if(game_.getTileByPosition(tile_to_add->getPosition()))
+    if(game_.getTileByPosition(position))
       throw(InvalidPositionException("Invalid coordinates - field not empty",
                                      tile_to_add->getPosition()));
 
     std::map<TileTypeLib::Edge, TilePtr> touching_tiles =
-        game_.getTouchingTiles(tile_to_add->getPosition());
+        game_.getTouchingTiles(position);
 
-    canTileBePlaced(touching_tiles, tile_to_add);
+    TileTypeLib::TileType type_red =
+       TileTypeLib::TileType::getTileType(shape, Color::RED);
+    TileTypeLib::TileType type_white =
+       TileTypeLib::TileType::getTileType(shape, Color::WHITE);
+
+    TilePtr tile_to_add = nullptr;
+    TilePtr tile_top_red = std::shared_ptr<Tile>(new Tile(type_red, position));
+     TilePtr tile_top_white =
+     std::shared_ptr<Tile>(new Tile(type_white, position));
+
+     try
+     {
+       canTileBePlaced(touching_tiles, tile_top_red);
+       tile_to_add = tile_top_red;
+     }
+     catch(ColorMismatchException& e)
+     {
+       //Nothing to to
+     }
+     if(!tile_to_add)
+     {
+       canTileBePlaced(touching_tiles, tile_top_white);
+       tile_to_add = tile_top_white;
+     }
 
     // Save all insertions of this turn
     tried_insertions_.push_back(tile_to_add);

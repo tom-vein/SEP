@@ -74,7 +74,7 @@ private:
 public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);
   void startGame();
-  void doTurn(TilePtr tile);
+  void doTurn(const Position& position, TileTypeLib::Shape shape);
   bool isDraw() const;
   bool hasWinner() const;
   std::string getWinner() const;
