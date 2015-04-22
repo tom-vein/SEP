@@ -35,7 +35,8 @@ int main(int argc, char* argv[])
   CommandLib::Code current_code;
   try
   {
-    while((current_code = command->execute(game_board)) != CommandLib::Code::QUIT)
+    while((current_code = command->execute(game_board)) !=
+          CommandLib::Code::QUIT)
     {
       if(current_code == CommandLib::Code::DRAW)
       {
@@ -45,7 +46,8 @@ int main(int argc, char* argv[])
 
       if(current_code == CommandLib::Code::WIN)
       {
-        std::cout << "Player " << game_board.getWinner() << " wins!" << std::endl;
+        std::cout << "Player " << game_board.getWinner() << " wins!";
+        std::cout << std::endl;
         break;
       }
 

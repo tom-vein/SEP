@@ -53,14 +53,16 @@ const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Shape shape,
 {   
   for(TileType& tile_type : tile_types_)
   {
-    if(tile_type.getColorAtEdge(Edge::TOP) == top_color && tile_type.getShape() == shape)
+    if(tile_type.getColorAtEdge(Edge::TOP) == top_color &&
+       tile_type.getShape() == shape)
       return tile_type;
   }
 
   throw std::exception(); //Create better exception
 }
-const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Color left_edge_color, Color top_edge_color,
-                                                                Color right_edge_color, Color bottom_edge_color)
+const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(
+    Color left_edge_color, Color top_edge_color,
+    Color right_edge_color, Color bottom_edge_color)
 {
   for(TileType& tile_type : tile_types_)
   {
@@ -94,7 +96,8 @@ Color TileTypeLib::TileType::getColorAtEdge(Edge edge)
     }
     case TileTypeLib::Edge::LEFT:
     {
-      if(shape_ == TileTypeLib::Shape::CROSS || shape_ == TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER)
+      if(shape_ == TileTypeLib::Shape::CROSS ||
+         shape_ == TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER)
       {
         if(top_color_ == Color::RED)
           return Color::WHITE;
@@ -106,7 +109,8 @@ Color TileTypeLib::TileType::getColorAtEdge(Edge edge)
     }
     case TileTypeLib::Edge::RIGHT:
     {
-      if(shape_ == TileTypeLib::Shape::CROSS || shape_ == TileTypeLib::Shape::CURVE_TOP_LEFT_CORNER)
+      if(shape_ == TileTypeLib::Shape::CROSS ||
+         shape_ == TileTypeLib::Shape::CURVE_TOP_LEFT_CORNER)
       {
         if(top_color_ == Color::RED)
           return Color::WHITE;
