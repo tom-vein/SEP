@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
       {
         try
         {
-          command = CommandLib::readCommand(game);
+          command = CommandLib::readCommand();
         }
         catch(WrongParameterException& e)
         {

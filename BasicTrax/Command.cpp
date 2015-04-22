@@ -11,14 +11,13 @@
 #include "Command.h"
 #include "Parser.h"
 
-std::shared_ptr<CommandLib::Command> CommandLib::readCommand(
-    const GameLib::Game& game)
+std::shared_ptr<CommandLib::Command> CommandLib::readCommand()
 {
   std::string command_str;
   std::cout << "sep> ";
   std::getline (std::cin, command_str);
 
-  std::shared_ptr<Command> command = Parser::parseCommand(command_str, game);
+  std::shared_ptr<Command> command = Parser::parseCommand(command_str);
 
   //TODO: Delete me
 //  if(typeid(command) != typeid(CommandLib::DoTurnCommand) ||
