@@ -22,13 +22,9 @@ int main(int argc, char* argv[])
   }
   catch(WrongUsageProgramException& ex)
   {
-    std::cout << ex.what();
+    std::cout << ex.what() << std::endl;
     return 2;
   }
-
-  //Check if this comparison works
-//  if(typeid(command) != typeid(CommandLib::StartGameCommand))
-//    throw InappropriateCommandException("the command here is inappropriate");
 
   start_game_command =
       std::dynamic_pointer_cast<CommandLib::StartGameCommand>(command);
