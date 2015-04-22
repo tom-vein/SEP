@@ -1,3 +1,15 @@
+//------------------------------------------------------------------------------
+// main.cpp
+//
+// Group: Group 11599, study assistant Philipp Hafner
+//
+// Authors:
+// Thomas Hoedl 1430320
+// Mario Theuermann 1430751
+// Stephan Valentan 1430529
+//------------------------------------------------------------------------------
+//
+
 #include <iostream>
 #include "Game.h"
 #include "Player.h"
@@ -5,6 +17,13 @@
 #include "Command.h"
 #include "GameBoard.h"
 
+//------------------------------------------------------------------------------
+// main function
+// entry point for execution
+// @param argc argument count
+// @param **argv argument values
+// @return return value for the OS
+//
 int main(int argc, char* argv[])
 {
   std::shared_ptr<CommandLib::Command> command;
@@ -23,12 +42,9 @@ int main(int argc, char* argv[])
   catch(WrongUsageProgramException& ex)
   {
     std::cout << ex.what();
+    //TODO: Constant
     return 2;
   }
-
-  //Check if this comparison works
-//  if(typeid(command) != typeid(CommandLib::StartGameCommand))
-//    throw InappropriateCommandException("the command here is inappropriate");
 
   start_game_command =
       std::dynamic_pointer_cast<CommandLib::StartGameCommand>(command);
@@ -71,11 +87,13 @@ int main(int argc, char* argv[])
       while(!command);
     }
     std::cout << "Bye!" << std::endl;
+    //TODO: Constant
     return 0;
   }
   catch(std::bad_alloc)
   {
     std::cout << "Error: Out of Memory!\n";
+    //TODO: Constant
     return 1;
   }
 }

@@ -1,3 +1,15 @@
+//------------------------------------------------------------------------------
+// Game.h
+//
+// Group: Group 11599, study assistant Philipp Hafner
+//
+// Authors:
+// Thomas Hoedl 1430320
+// Mario Theuermann 1430751
+// Stephan Valentan 1430529
+//------------------------------------------------------------------------------
+//
+
 #ifndef GAME_H
 #define GAME_H
 
@@ -26,36 +38,138 @@ namespace GameLib
     BOTTOM,
   };
 
+  //----------------------------------------------------------------------------
+  // Game class
+  // Encapsulates all tiles and the players
+  //
   class Game
   {
   private:
+    //----------------------------------------------------------------------------
+    // Constant which indicates the maximum number of tiles
+    //
     static const unsigned int MAX_OF_TILES = 64;
+
+    //TODO
     unsigned int num_of_placed_tiles_in_current_turn_ = 0;
+
+    //----------------------------------------------------------------------------
+    // Vector holding all tiles
+    //
     std::vector<TilePtr> tiles_;
+
+    //----------------------------------------------------------------------------
+    // array with all players
+    //
     std::array<Player, 2> players_;
+
+    //----------------------------------------------------------------------------
+    // Current state of the game
+    //
     State state_ = State::NOTHING;
+
+    //----------------------------------------------------------------------------
+    // Reference to the player whichs turn it is to add a tile
+    //
     Player& active_player_;
+
   public:
+    //----------------------------------------------------------------------------
+    // Constructor
+    //
     Game(const std::array<Player, 2>& players);
-    void tooglePlayer(); //reset num_of_placed_tiles_in_current_turn_ to 0
+
+    //----------------------------------------------------------------------------
+    // Toggles the active player
+    //
+    void tooglePlayer();
+
+    //----------------------------------------------------------------------------
+    // Getter
+    // @return current state of the game
+    //
     State getState() const;
+
+    //----------------------------------------------------------------------------
+    // Setter
+    // @param State which the game should have
+    //
     void setState(State state);
+
+    //----------------------------------------------------------------------------
+    // Method for retrieving a tile whichs position is known
+    // @param const reference to position of the wanted tile
+    // @param offset in x-direction relative to position (default = 0)
+    // @param offset in y-direction relative to position (default = 0)
+    // @return Returns a std::shared_ptr<Tile> pointing to the wanted tile
+    //  or nullptr if no tile is at this position
+    //
     TilePtr getTileByPosition(const Position& position,
-                              int offset_x = 0, int offset_y = 0) const
-      throw(InvalidPositionException);
+                              int offset_x = 0, int offset_y = 0) const;
+
+    //----------------------------------------------------------------------------
+    // Method for deleting a tile at the position
+    // @param Position of tile which should be deleted
+    //
     void removeTileAtPosition(const Position& position)
       throw(InvalidPositionException);
+
+    //----------------------------------------------------------------------------
+    // Method for deleting a certain tile
+    // @param std::shared_ptr<Tile> pointing to Tile which should be deleted
+    //
     void removeTile(TilePtr tile_to_remove);
+
+    //----------------------------------------------------------------------------
+    // Getter for retrieving a map consisting of a edge as key and
+    // shared_ptr<Tile> as value of Tiles which touch the given position
+    // @param Position of which all touching tiles are wanted
+    // TODO: Why Color parameter?
+    // @param offset in x-direction relative to position (default = 0)
+    // @param offset in y-direction relative to position (default = 0)
+    // @return returns map contaning edge and tileptr of touching tiles
+    //
     std::map<TileTypeLib::Edge, TilePtr> getTouchingTiles(
         const Position& position, Color color = Color::NONE,
         int offset_x = 0, int offset_y = 0) const;
+
+    //----------------------------------------------------------------------------
+    // Getter for retrieving a map containing a edge as key and
+    // Color of this edge (seen of perspective of tile as <position> as value
+    // of which touch the given position
+    // @param Position of which all touching colors are wanted
+    // @param offset in x-direction relative to position (default = 0)
+    // @param offset in y-direction relative to position (default = 0)
+    // @return returns map contaning edge and color of touching edges
+    //
     std::map<TileTypeLib::Edge, Color> getTouchingColors(
         const Position& position, int offset_x = 0, int offset_y = 0) const;
+
+    //----------------------------------------------------------------------------
+    // Getter for retrieving a vector of positions, which have no tile but are
+    // next to <postion>
+    // @param Position of which all touching tiles are wanted
+    // @param offset in x-direction relative to position (default = 0)
+    // @param offset in y-direction relative to position (default = 0)
+    // @return returns vector of positions which are empty but touch <position>
+    //
     std::vector<Position> getEmptyPositionsAround(
         const Position& position, int offset_x = 0, int offset_y = 0) const;
+
+
+    //----------------------------------------------------------------------------
+    // Method for adding a tile to the gameboard
+    // @param std::shared_ptr<Tile> pointing to Tile which should be added
+    //
     void addTile(TilePtr toAdd)
       throw(NoTilesLeftException);
+
+    //TODO: header
     std::vector<TilePtr> getLastPlacedTiles() const;
+
+    //----------------------------------------------------------------------------
+    // Getter methods
+    //
     const Player& getActivePlayer() const;
     const Player& getPausedPlayer() const;
     int getMaxXValue() const;

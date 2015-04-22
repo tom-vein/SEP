@@ -12,6 +12,7 @@
 
 #include "GameBoard.h"
 
+//------------------------------------------------------------------------------
 GameBoard::GameBoard(const GameLib::Game& game, const std::string& file_name) :
   game_(game), file_manager_(FileManager(file_name))
 {
@@ -22,6 +23,8 @@ GameBoard::GameBoard(const GameLib::Game& game, const std::string& file_name) :
 
 }
 
+//TODO: erase?
+//------------------------------------------------------------------------------
 void GameBoard::startGame()
 {
 
@@ -29,7 +32,7 @@ void GameBoard::startGame()
 
 
 
-
+//------------------------------------------------------------------------------
 void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
 {
   try
@@ -93,6 +96,7 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
   }
 }
 
+//------------------------------------------------------------------------------
 void GameBoard::doForcedPlay(TilePtr last_placed)
 {
   // Get all empty positions around the last placed tile
@@ -143,6 +147,7 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
   }
 }
 
+//------------------------------------------------------------------------------
 bool GameBoard::canTileBePlaced(
     std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check)
 {
@@ -199,6 +204,7 @@ bool GameBoard::canTileBePlaced(
   return true;
 }
 
+//------------------------------------------------------------------------------
 bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other,
                               TileTypeLib::Edge touching_edge_of_tile_to_check)
 {
@@ -238,6 +244,7 @@ bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other,
   }
 }
 
+//------------------------------------------------------------------------------
 Color GameBoard::ResultChecker::determineWinner(const GameLib::Game& game) const
 {
   const Player& active_player = game.getActivePlayer();
@@ -252,11 +259,13 @@ Color GameBoard::ResultChecker::determineWinner(const GameLib::Game& game) const
   return Color::NONE;
 }
 
+//------------------------------------------------------------------------------
 bool GameBoard::ResultChecker::isDraw(const GameLib::Game& game) const
 {
   return game.getTileCount() >= GameLib::Game::getMaxOfTiles();
 }
 
+//------------------------------------------------------------------------------
 bool GameBoard::ResultChecker::hasPlayerWon(const Player& player,
                                             const GameLib::Game& game) const
 {
@@ -272,6 +281,7 @@ bool GameBoard::ResultChecker::hasPlayerWon(const Player& player,
   return false;
 }
 
+//------------------------------------------------------------------------------
 bool GameBoard::ResultChecker::isLoop(Color player_color,
                                       TilePtr start_tile,
                                       TilePtr previous_tile,
@@ -302,6 +312,7 @@ bool GameBoard::ResultChecker::isLoop(Color player_color,
   return isLoop(player_color, start_tile, current_tile, next_tile, game, false);
 }
 
+//------------------------------------------------------------------------------
 bool GameBoard::ResultChecker::doesLineWin(Color player_color,
                                            TilePtr start_tile,
                                            const GameLib::Game& game) const
@@ -314,6 +325,7 @@ bool GameBoard::ResultChecker::doesLineWin(Color player_color,
   return line_winning_criteria.allWinningCriteriaFulfilled(game);
 }
 
+//------------------------------------------------------------------------------
 void GameBoard::ResultChecker::checkIfLineWins(Color player_color,
                                                TilePtr previous_tile,
                                                TilePtr current_tile,
@@ -347,6 +359,7 @@ const
   }
 }
 
+//------------------------------------------------------------------------------
 std::vector<TilePtr> GameBoard::ResultChecker::determineNextTiles(
     Color player_color,
     TilePtr previous_tile,
@@ -369,6 +382,7 @@ const
   return next_tiles;
 }
 
+//------------------------------------------------------------------------------
 void GameBoard::ResultChecker::LineWinningCriteria::analyseLineEnd(
     Color color, TilePtr tile, const GameLib::Game& game)
 {
@@ -411,7 +425,7 @@ void GameBoard::ResultChecker::LineWinningCriteria::analyseLineEnd(
     position_of_second_end_ = tile->getPosition();
   }
 }
-
+//------------------------------------------------------------------------------
 GameBoard::ResultChecker::LineWinningCriteria::LineDirection
 GameBoard::ResultChecker::LineWinningCriteria::
 determineDirectionOfFreeEdge(Color color, TilePtr tile, const
@@ -455,16 +469,19 @@ const
   throw NoSuitableLineDirectionException("no suitable line direction found");
 }
 
+//------------------------------------------------------------------------------
 void GameBoard::ResultChecker::LineWinningCriteria::addXValue(int x)
 {
   x_values_of_line_.insert(x);
 }
 
+//------------------------------------------------------------------------------
 void GameBoard::ResultChecker::LineWinningCriteria::addYValue(int y)
 {
   y_values_of_line_.insert(y);
 }
 
+//------------------------------------------------------------------------------
 bool GameBoard::ResultChecker::LineWinningCriteria::
 allWinningCriteriaFulfilled(const GameLib::Game& game) const
 {
@@ -495,16 +512,19 @@ allWinningCriteriaFulfilled(const GameLib::Game& game) const
   return false;
 }
 
+//------------------------------------------------------------------------------
 bool GameBoard::isDraw() const
 {
   return result_checker_.isDraw(game_);
 }
 
+//------------------------------------------------------------------------------
 bool GameBoard::hasWinner() const
 {
   return winner_ != Color::NONE;
 }
 
+//------------------------------------------------------------------------------
 std::string GameBoard::getWinner() const
 {
   if(winner_ == Color::RED)
@@ -516,6 +536,7 @@ std::string GameBoard::getWinner() const
   return "no winner";
 }
 
+//------------------------------------------------------------------------------
 void GameBoard::write(const std::string& file_name)
 {
   try

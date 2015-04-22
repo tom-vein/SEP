@@ -28,12 +28,14 @@ CommandLib::Command::~Command()
 {
 }
 
+//------------------------------------------------------------------------------
 CommandLib::StartGameCommand::StartGameCommand(const std::string& file_name) :
   file_name_(file_name)
 {
 
 }
 
+//------------------------------------------------------------------------------
 CommandLib::Code CommandLib::StartGameCommand::execute(GameBoard& game_board)
 const
 {
@@ -42,16 +44,19 @@ const
   return Code::START;
 }
 
+//------------------------------------------------------------------------------
 CommandLib::StartGameCommand::~StartGameCommand()
 {
 
 }
 
+//------------------------------------------------------------------------------
 const std::string& CommandLib::StartGameCommand::getFileName() const
 {
   return file_name_;
 }
 
+//------------------------------------------------------------------------------
 CommandLib::DoTurnCommand::DoTurnCommand
 (const Position& position, TileTypeLib::Shape shape) : position_(position),
   shape_(shape)
@@ -59,6 +64,7 @@ CommandLib::DoTurnCommand::DoTurnCommand
 
 }
 
+//------------------------------------------------------------------------------
 CommandLib::Code CommandLib::DoTurnCommand::execute(GameBoard& game_board) const
 {
   game_board.doTurn(position_, shape_);
@@ -72,39 +78,46 @@ CommandLib::Code CommandLib::DoTurnCommand::execute(GameBoard& game_board) const
   return Code::CONTINUE;
 }
 
+//------------------------------------------------------------------------------
 CommandLib::DoTurnCommand::~DoTurnCommand()
 {
 }
 
+//------------------------------------------------------------------------------
 CommandLib::Code CommandLib::QuitCommand::execute(GameBoard&) const
 {
   return Code::QUIT;
 }
 
+//------------------------------------------------------------------------------
 CommandLib::QuitCommand::~QuitCommand()
 {
 }
 
+//------------------------------------------------------------------------------
 CommandLib::ErrorCommand::ErrorCommand(std::string message) : message_(message)
 {
 }
 
+//------------------------------------------------------------------------------
 CommandLib::Code CommandLib::ErrorCommand::execute(GameBoard&) const
 {
   std::cout << message_ << std::endl;
   return Code::CONTINUE;
 }
 
+//------------------------------------------------------------------------------
 CommandLib::ErrorCommand::~ErrorCommand()
 {
 }
 
-
+//------------------------------------------------------------------------------
 CommandLib::WriteCommand::WriteCommand(std::string file_name)
   : file_name_(file_name)
 {
 }
 
+//------------------------------------------------------------------------------
 CommandLib::Code CommandLib::WriteCommand::execute(GameBoard& game_board) const
 {
   try
@@ -119,6 +132,7 @@ CommandLib::Code CommandLib::WriteCommand::execute(GameBoard& game_board) const
   return Code::CONTINUE;
 }
 
+//------------------------------------------------------------------------------
 CommandLib::WriteCommand::~WriteCommand()
 {
 }

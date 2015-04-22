@@ -1,12 +1,14 @@
 //------------------------------------------------------------------------------
-// Filename: Command.h
-// Description: Class representing a general command
-// Authors: Tutors
-// Tutor: Tutors
-// Group: 42
-// Created: 08.08.2011
-// Last change: 02.09.2011
+// Command.h
+//
+// Group: Group 11599, study assistant Philipp Hafner
+//
+// Authors:
+// Thomas Hoedl 1430320
+// Mario Theuermann 1430751
+// Stephan Valentan 1430529
 //------------------------------------------------------------------------------
+//
 
 #ifndef COMMAND_H_INCLUDED
 #define COMMAND_H_INCLUDED
@@ -54,9 +56,8 @@ namespace CommandLib
 
     //--------------------------------------------------------------------------
     // Executes the command.
-    // @param board The board where action should be performed on
-    // @param params Possible parameters neede for the execution
-    // @return Integer representing the success of the action
+    // @param game_board The board where action should be performed on
+    // @return Code representing the state of the game
 
     virtual Code execute(GameBoard& game_board) const = 0;
 
@@ -68,11 +69,30 @@ namespace CommandLib
   class StartGameCommand : public Command
   {
   private:
+    //--------------------------------------------------------------------------
+    // Name of the file that should be written
+    //
     std::string file_name_;
   public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     StartGameCommand(const std::string& file_name);
+
+    //--------------------------------------------------------------------------
+    // Executes the command.
+    // @param game_board The board where action should be performed on
+    // @return Code representing the state of the game
     virtual Code execute(GameBoard& game_board) const override;
+
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~StartGameCommand() override;
+
+    //--------------------------------------------------------------------------
+    // Getter
+    //
     const std::string& getFileName() const;
   };
 
@@ -82,35 +102,92 @@ namespace CommandLib
     Position position_;
     TileTypeLib::Shape shape_;
   public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     DoTurnCommand(const Position& position, TileTypeLib::Shape shape);
+
+    //--------------------------------------------------------------------------
+    // Executes the command.
+    // @param game_board The board where action should be performed on
+    // @return Code representing the state of the game
     virtual Code execute(GameBoard& game_board) const override;
+
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~DoTurnCommand() override;
   };
 
   class QuitCommand : public Command
   {
   public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    //TODO: Why no constructor?
+    //QuitCommand();
+
+    //--------------------------------------------------------------------------
+    // Executes the command.
+    // @param game_board The board where action should be performed on
+    // @return Code representing the state of the game
     virtual Code execute(GameBoard& game_board) const override;
+
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~QuitCommand() override;
   };
 
+  //TODO: delete?
   class ErrorCommand : public Command
   {
   private:
+    //--------------------------------------------------------------------------
+    // Error message that should be displayed
+    //
     std::string message_;
   public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     ErrorCommand(std::string message);
+
+    //--------------------------------------------------------------------------
+    // Executes the command.
+    // @param game_board The board where action should be performed on
+    // @return Code representing the state of the game
     virtual Code execute(GameBoard&) const override;
+
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~ErrorCommand() override;
   };
 
   class WriteCommand : public Command
   {
   private:
+    //--------------------------------------------------------------------------
+    // Name of the file that should be written
+    //
     std::string file_name_;
   public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
     WriteCommand(std::string file_name);
+
+    //--------------------------------------------------------------------------
+    // Executes the command.
+    // @param game_board The board where action should be performed on
+    // @return Code representing the state of the game
     virtual Code execute(GameBoard&) const override;
+
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
     virtual ~WriteCommand() override;
   };
 }

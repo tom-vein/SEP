@@ -14,6 +14,7 @@
 #include "Position.h"
 #include "Exceptions.h"
 
+//------------------------------------------------------------------------------
 Position Parser::parsePosition(const std::string& input)
 {
   char none;
@@ -63,7 +64,7 @@ Position Parser::parsePosition(const std::string& input)
   return Position(x, y);
 }
 
-
+//------------------------------------------------------------------------------
 std::string Parser::lowerChars(const std::string& data)
 {
   std::string str = data;
@@ -71,7 +72,7 @@ std::string Parser::lowerChars(const std::string& data)
   return str;
 }
 
-
+//------------------------------------------------------------------------------
 TileTypeLib::Shape Parser::parseTileTypeShape(const std::string& input)
 {
 
@@ -87,6 +88,7 @@ TileTypeLib::Shape Parser::parseTileTypeShape(const std::string& input)
   throw WrongParameterException("Invalid parameters");
 }
 
+//------------------------------------------------------------------------------
 std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     const std::string& command_string)
 {
@@ -135,6 +137,7 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
   throw(WrongParameterException("Error: Unknown command!"));
 }
 
+//------------------------------------------------------------------------------
 std::shared_ptr<CommandLib::Command> Parser::parseArguments(
     int argc, char* argv[])
 {

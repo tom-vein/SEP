@@ -13,10 +13,12 @@
 
 #include "FileManager.h"
 
+//------------------------------------------------------------------------------
 FileManager::FileManager(const std::string& file_name) : file_name_(file_name)
 {
 }
 
+//------------------------------------------------------------------------------
 FileManager::FileHeader::FileHeader(Color active_player, signed char min_x,
                                     signed char min_y, signed char max_x,
                                     signed char max_y) :
@@ -25,12 +27,14 @@ FileManager::FileHeader::FileHeader(Color active_player, signed char min_x,
 {
 }
 
+//------------------------------------------------------------------------------
 FileManager::Field::Field(TileTypeLib::Shape shape, Color top_color) :
   shape_(shape),
   top_color_(top_color)
 {
 }
 
+//------------------------------------------------------------------------------
 void FileManager::writeToFile(const GameLib::Game& game,
                               const std::string& file_name) const
 {
@@ -75,6 +79,7 @@ void FileManager::writeToFile(const GameLib::Game& game,
   output_file.close();
 }
 
+//------------------------------------------------------------------------------
 FileManager::FileHeader FileManager::createFileHeader(
     const GameLib::Game& game) const
 {
@@ -105,6 +110,7 @@ void FileManager::initFields(std::vector<Field>& fields,
   }
 }
 
+//------------------------------------------------------------------------------
 FileManager::Field FileManager::createField(TilePtr tile) const
 {
   if(tile)
@@ -117,6 +123,7 @@ FileManager::Field FileManager::createField(TilePtr tile) const
   return Field(TileTypeLib::Shape::NONE, Color::NONE);
 }
 
+//------------------------------------------------------------------------------
 std::ostream& FileManager::FileHeader::write(std::ostream& os)
 {
   os << magic_number_;
@@ -129,6 +136,7 @@ std::ostream& FileManager::FileHeader::write(std::ostream& os)
   return os;
 }
 
+//------------------------------------------------------------------------------
 std::ostream& FileManager::Field::write(std::ostream& os)
 {
   os.write(reinterpret_cast<char*>(&shape_), sizeof(shape_));

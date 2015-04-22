@@ -14,15 +14,16 @@
 #include "Game.h"
 #include <utility>
 
+//------------------------------------------------------------------------------
 GameLib::Game::Game(const std::array<Player, 2>& players) :
   players_(players), active_player_(players_.at(0))
 {
 
 }
 
+//------------------------------------------------------------------------------
 TilePtr GameLib::Game::getTileByPosition(const Position& position,
                                          int offset_x, int offset_y) const
-throw(InvalidPositionException)
 {
   Position position_to_return(position.getX() + offset_x,
                               position.getY() + offset_y);
@@ -35,6 +36,7 @@ throw(InvalidPositionException)
   return nullptr;
 }
 
+//------------------------------------------------------------------------------
 void GameLib::Game::addTile(TilePtr to_add)
 throw(NoTilesLeftException)
 {
@@ -45,6 +47,7 @@ throw(NoTilesLeftException)
   ++num_of_placed_tiles_in_current_turn_;
 }
 
+//------------------------------------------------------------------------------
 void GameLib::Game::removeTileAtPosition(const Position& position)
 throw(InvalidPositionException)
 {
@@ -61,6 +64,7 @@ throw(InvalidPositionException)
   throw(InvalidPositionException("No Tile with this position.", position));
 }
 
+//------------------------------------------------------------------------------
 void GameLib::Game::removeTile(TilePtr tile_to_remove)
 {
   for(std::vector<TilePtr>::iterator it = tiles_.begin();
@@ -77,6 +81,7 @@ void GameLib::Game::removeTile(TilePtr tile_to_remove)
                                  tile_to_remove->getPosition()));
 }
 
+//------------------------------------------------------------------------------
 std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(
     const Position &position, Color color, int offset_x, int offset_y) const
 {
@@ -106,6 +111,7 @@ std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(
   return touching_tiles;
 }
 
+//------------------------------------------------------------------------------
 std::map<TileTypeLib::Edge, Color> GameLib::Game::getTouchingColors(
     const Position &position, int offset_x, int offset_y) const
 {
@@ -142,6 +148,7 @@ std::map<TileTypeLib::Edge, Color> GameLib::Game::getTouchingColors(
   return touching_colors;
 }
 
+//------------------------------------------------------------------------------
 std::vector<Position> GameLib::Game::getEmptyPositionsAround(
     const Position& position, int offset_x, int offset_y) const
 {
@@ -166,6 +173,7 @@ std::vector<Position> GameLib::Game::getEmptyPositionsAround(
   return empty_positions;
 }
 
+//------------------------------------------------------------------------------
 std::vector<TilePtr> GameLib::Game::getLastPlacedTiles() const
 {
   std::vector<TilePtr> last_placed_tiles;
@@ -182,11 +190,13 @@ std::vector<TilePtr> GameLib::Game::getLastPlacedTiles() const
   return last_placed_tiles;
 }
 
+//------------------------------------------------------------------------------
 const Player& GameLib::Game::getActivePlayer() const
 {
   return active_player_;
 }
 
+//------------------------------------------------------------------------------
 const Player& GameLib::Game::getPausedPlayer() const
 {
   if(active_player_ == players_.at(0))
@@ -198,6 +208,7 @@ const Player& GameLib::Game::getPausedPlayer() const
   throw MessageException("No suitable paused player found!!!");
 }
 
+//------------------------------------------------------------------------------
 int GameLib::Game::getMaxXValue() const
 {
   int max_x_value;
@@ -218,6 +229,7 @@ int GameLib::Game::getMaxXValue() const
   return max_x_value;
 }
 
+//------------------------------------------------------------------------------
 int GameLib::Game::getMinXValue() const
 {
   int min_x_value;
@@ -238,6 +250,7 @@ int GameLib::Game::getMinXValue() const
   return min_x_value;
 }
 
+//------------------------------------------------------------------------------
 int GameLib::Game::getMaxYValue() const
 {
   int max_y_value;
@@ -258,6 +271,7 @@ int GameLib::Game::getMaxYValue() const
   return max_y_value;
 }
 
+//------------------------------------------------------------------------------
 int GameLib::Game::getMinYValue() const
 {
   int min_y_value;
@@ -278,16 +292,19 @@ int GameLib::Game::getMinYValue() const
   return min_y_value;
 }
 
+//------------------------------------------------------------------------------
 unsigned int GameLib::Game::getTileCount() const
 {
   return tiles_.size();
 }
 
+//------------------------------------------------------------------------------
 unsigned int GameLib::Game::getMaxOfTiles()
 {
   return MAX_OF_TILES;
 }
 
+//------------------------------------------------------------------------------
 void GameLib::Game::tooglePlayer()
 {
   active_player_ = getPausedPlayer();

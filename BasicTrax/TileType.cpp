@@ -15,6 +15,7 @@
 
 std::vector<TileTypeLib::TileType> TileTypeLib::TileType::tile_types_;
 
+//------------------------------------------------------------------------------
 TileTypeLib::Edge TileTypeLib::getOppositeEdge(Edge edge)
 {
   switch(edge)
@@ -29,17 +30,20 @@ TileTypeLib::Edge TileTypeLib::getOppositeEdge(Edge edge)
   return Edge::NONE;
 }
 
+//------------------------------------------------------------------------------
 TileTypeLib::TileType::TileType(Shape shape, Color top_color) : shape_(shape),
   top_color_(top_color)
 {
 
 }
 
+//------------------------------------------------------------------------------
 TileTypeLib::Shape TileTypeLib::TileType::getShape() const
 {
   return shape_;
 }
 
+//------------------------------------------------------------------------------
 void TileTypeLib::TileType::initTileTypes()
 {
   TileType cross_top_white(Shape::CROSS, Color::WHITE);
@@ -60,6 +64,7 @@ void TileTypeLib::TileType::initTileTypes()
   tile_types_.push_back(curve_top_right_corner_top_red);
 }
 
+//------------------------------------------------------------------------------
 const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Shape shape,
                                                                 Color top_color)
 {   
@@ -72,6 +77,8 @@ const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Shape shape,
 
   throw std::exception(); //Create better exception
 }
+
+//------------------------------------------------------------------------------
 const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(
     Color left_edge_color, Color top_edge_color,
     Color right_edge_color, Color bottom_edge_color)
@@ -88,6 +95,7 @@ const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(
   throw(MessageException("No such tiletype"));
 }
 
+//------------------------------------------------------------------------------
 Color TileTypeLib::TileType::getColorAtEdge(Edge edge)
 {
   switch(edge)
