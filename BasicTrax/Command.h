@@ -79,9 +79,10 @@ namespace CommandLib
   class DoTurnCommand : public Command
   {
   private:
-    TilePtr tile_;
+    Position position_;
+    TileTypeLib::Shape shape_;
   public:
-    DoTurnCommand(TilePtr tile);
+    DoTurnCommand(const Position& position, TileTypeLib::Shape shape);
     virtual Code execute(GameBoard& game_board) const override;
     virtual ~DoTurnCommand() override;
   };

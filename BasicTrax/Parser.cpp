@@ -60,30 +60,24 @@ std::string Parser::lowerChars(const std::string& data)
 }
 
 
-TileTypeLib::TileType Parser::parseTileType(const std::string& input,
-                                            const GameLib::Game& game)
+TileTypeLib::Shape Parser::parseTileTypeShape(const std::string& input)
 {
 
   if(input == "+")
-    return TileTypeLib::TileType::getTileType(
-          TileTypeLib::Shape::CROSS, game.getActivePlayer().getColor());
+    return TileTypeLib::Shape::CROSS;
 
   if(input == "/")
-    return TileTypeLib::TileType::getTileType(
-          TileTypeLib::Shape::CURVE_TOP_LEFT_CORNER,
-          game.getActivePlayer().getColor());
+    return TileTypeLib::Shape::CURVE_TOP_LEFT_CORNER;
 
   if(input == "\\")
-    return TileTypeLib::TileType::getTileType(
-          TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER,
-          game.getActivePlayer().getColor());
+    return TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER;
 
-  throw WrongParameterException("Invalid parameters\n"); //if not "+, /, \"
+  throw WrongParameterException("Invalid parameters"); //if not "+, /, \"
 
 }
 
 std::shared_ptr<CommandLib::Command> Parser::parseCommand(
-    const std::string& command_string, const GameLib::Game& game)
+    const std::string& command_string)
 {
   if(command_string.empty())
     return nullptr;
@@ -110,12 +104,17 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     if(!param.empty() && !filename_or_tiletype.empty() && (rest.empty()))
     {
       Position needed_Position = Parser::parsePosition(param);
-      TileTypeLib::TileType needed_Tile_Type =
-          Parser::parseTileType(filename_or_tiletype, game);
-      std::shared_ptr<Tile> newTile
-          (new Tile(needed_Tile_Type, needed_Position));
+      TileTypeLib::Shape needed_Shape =
+          Parser::parseTileTypeShape(filename_or_tiletype);
+
+//      std::shared_ptr<Tile> newTile
+//          (new Tile(needed_Shape, needed_Position));
+// ///////////// Vali Problem Ausbesserung
+//      return std::shared_ptr<CommandLib::Command>
+//          (new CommandLib::DoTurnCommand(newTile));
+
       return std::shared_ptr<CommandLib::Command>
-          (new CommandLib::DoTurnCommand(newTile));
+          (new CommandLib::DoTurnCommand(needed_Position, needed_Shape));
     }
     throw(WrongParameterException("Error: Wrong parameter count!"));
   }

@@ -59,14 +59,16 @@ const std::string& CommandLib::StartGameCommand::getFileName() const
   return file_name_;
 }
 
-CommandLib::DoTurnCommand::DoTurnCommand(TilePtr tile) : tile_(tile)
+CommandLib::DoTurnCommand::DoTurnCommand
+(const Position& position, TileTypeLib::Shape shape) : position_(position),
+  shape_(shape)
 {
 
 }
 
 CommandLib::Code CommandLib::DoTurnCommand::execute(GameBoard& game_board) const
 {
-  game_board.doTurn(tile_);
+//  game_board.doTurn(tile_);
 
   if(game_board.hasWinner())
     return Code::WIN;
