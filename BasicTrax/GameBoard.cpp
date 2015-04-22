@@ -83,7 +83,7 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
       game_.removeTile(*it);
     }
     tried_insertions_.clear();
-    std::cout << e.what();
+    std::cout << e.what() << std::endl;
   }
 }
 

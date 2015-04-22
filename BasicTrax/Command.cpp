@@ -119,7 +119,7 @@ CommandLib::Code CommandLib::WriteCommand::execute(GameBoard& game_board) const
   }
   catch(NoTilesLeftException& e)
   {
-    std::cout << e.what();
+    std::cout << e.what() << std::endl;
   }
 
   return Code::CONTINUE;
