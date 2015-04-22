@@ -15,6 +15,9 @@ void GameBoard::startGame()
 
 }
 
+
+
+
 void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
 {
   try
@@ -23,11 +26,11 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
     if(game_.getTileCount() == 0 && position != Position(0,0))
       throw(InvalidPositionException("Invalid coordinates - "
                                      "first tile must be set on (0,0)",
-                                     tile_to_add->getPosition()));
+                                     position));
 
     if(game_.getTileByPosition(position))
       throw(InvalidPositionException("Invalid coordinates - field not empty",
-                                     tile_to_add->getPosition()));
+                                     position));
 
     std::map<TileTypeLib::Edge, TilePtr> touching_tiles =
         game_.getTouchingTiles(position);
@@ -127,7 +130,7 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     }
 
     if(counter == 1)
-      doTurn(tile);
+      doTurn(tile->getPosition(), tile->getShape());
   }
 }
 
