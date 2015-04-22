@@ -30,7 +30,7 @@ namespace CommandLib
   //Output of sep>
   //Parse the Command with the parser
   //Return command
-  std::shared_ptr<Command> readCommand(const GameLib::Game& game);
+  std::shared_ptr<Command> readCommand();
 
   class Command
   {
