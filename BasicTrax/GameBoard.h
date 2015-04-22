@@ -57,19 +57,20 @@ private:
   };
 
   GameLib::Game game_;
-  FileManager file_manager_; //Before writing look if should_write_to_file_ is
+  FileManager file_manager_;
   ResultChecker result_checker_;
   Color winner_ = Color::NONE;
 
-  std::vector<TilePtr> tried_insertions_; // used for rollback when invalid move would be made
+  std::vector<TilePtr> tried_insertions_;
   bool should_write_to_file_;
 
   void doForcedPlay(TilePtr last_placed);
   bool checkWin();
-  bool canTileBePlaced(TilePtr tile_to_check) //are colors of edges correct
+  bool canTileBePlaced(TilePtr tile_to_check)
   throw(InvalidPositionException);
   bool canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check);
-  bool checkTwoTiles(TilePtr first, TilePtr second, TileTypeLib::Edge touching_edge_of_second_tile);
+  bool checkTwoTiles(TilePtr tile_to_check, TilePtr other,
+                     TileTypeLib::Edge touching_edge_of_tile_to_check);
 
 public:
   GameBoard(const GameLib::Game& game, const std::string& file_name);

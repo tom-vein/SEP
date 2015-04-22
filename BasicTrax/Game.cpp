@@ -35,12 +35,12 @@ throw(NoTilesLeftException)
 void GameLib::Game::removeTileAtPosition(const Position& position)
 throw(InvalidPositionException)
 {
-  for(std::vector<TilePtr>::iterator it = tiles_.begin();
-      it != tiles_.end(); it++)
+  for(std::vector<TilePtr>::iterator tiles_iterator = tiles_.begin();
+      tiles_iterator != tiles_.end(); tiles_iterator++)
   {
-    if( (*it)->getPosition() == position)
+    if( (*tiles_iterator)->getPosition() == position)
     {
-      tiles_.erase(it);
+      tiles_.erase(tiles_iterator);
       --num_of_placed_tiles_in_current_turn_;
       return;
     }
@@ -194,9 +194,9 @@ int GameLib::Game::getMaxXValue() const
 
   max_x_value = tiles_.at(0)->getPosition().getX();
 
-  for(unsigned int i = 1; i < tiles_.size(); i++)
+  for(unsigned int tile_index = 1; tile_index < tiles_.size(); tile_index++)
   {
-    TilePtr tile = tiles_.at(i);
+    TilePtr tile = tiles_.at(tile_index);
 
     if(tile->getPosition().getX() > max_x_value)
       max_x_value = tile->getPosition().getX();
@@ -214,9 +214,9 @@ int GameLib::Game::getMinXValue() const
 
   min_x_value = tiles_.at(0)->getPosition().getX();
 
-  for(unsigned int i = 1; i < tiles_.size(); i++)
+  for(unsigned int tiles_index = 1; tiles_index < tiles_.size(); tiles_index++)
   {
-    TilePtr tile = tiles_.at(i);
+    TilePtr tile = tiles_.at(tiles_index);
 
     if(tile->getPosition().getX() < min_x_value)
       min_x_value = tile->getPosition().getX();
@@ -234,9 +234,9 @@ int GameLib::Game::getMaxYValue() const
 
   max_y_value = tiles_.at(0)->getPosition().getY();
 
-  for(unsigned int i = 1; i < tiles_.size(); i++)
+  for(unsigned int tiles_index = 1; tiles_index < tiles_.size(); tiles_index++)
   {
-    TilePtr tile = tiles_.at(i);
+    TilePtr tile = tiles_.at(tiles_index);
 
     if(tile->getPosition().getY() > max_y_value)
       max_y_value = tile->getPosition().getY();
@@ -254,9 +254,9 @@ int GameLib::Game::getMinYValue() const
 
   min_y_value = tiles_.at(0)->getPosition().getY();
 
-  for(unsigned int i = 1; i < tiles_.size(); i++)
+  for(unsigned int tiles_index = 1; tiles_index < tiles_.size(); tiles_index++)
   {
-    TilePtr tile = tiles_.at(i);
+    TilePtr tile = tiles_.at(tiles_index);
 
     if(tile->getPosition().getY() < min_y_value)
       min_y_value = tile->getPosition().getY();
