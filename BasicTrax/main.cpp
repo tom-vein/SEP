@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
         }
         catch(WrongParameterException& e)
         {
-          std::cout << e.what();
+          std::cout << e.what() << std::endl;
           command = nullptr;
         }
 
