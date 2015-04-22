@@ -17,7 +17,8 @@ protected:
 class PositionException : public MessageException
 {
 public:
-  PositionException(std::string message, Position position) : MessageException(message), position_(position) {}
+  PositionException(std::string message, Position position) :
+    MessageException(message), position_(position) {}
   virtual ~PositionException() {}
   //std::string getMessage() {return message_;}
   Position getPosition() {return position_;}
@@ -30,7 +31,8 @@ protected:
 class InvalidPositionException : public PositionException
 {
 public:
-  InvalidPositionException(std::string message, Position position) : PositionException(message, position) {}
+  InvalidPositionException(std::string message, Position position) :
+    PositionException(message, position) {}
   virtual ~InvalidPositionException() {}
 };
 
@@ -51,14 +53,16 @@ public:
 class NotEmptyException : public PositionException
 {
 public:
-  NotEmptyException(std::string message, Position position) : PositionException(message, position) {}
+  NotEmptyException(std::string message, Position position) :
+    PositionException(message, position) {}
   virtual ~NotEmptyException() {}
 };
 
 class ColorMismatchException : public PositionException
 {
 public:
-  ColorMismatchException(std::string message, Position position) : PositionException(message, position) {}
+  ColorMismatchException(std::string message, Position position) :
+    PositionException(message, position) {}
   virtual ~ColorMismatchException() {}
 };
 

@@ -69,8 +69,10 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
   }
   catch (MessageException& e)
   {
-    for(std::vector<TilePtr>::iterator tried_insertions_iterator = tried_insertions_.begin();
-        tried_insertions_iterator != tried_insertions_.end(); tried_insertions_iterator++)
+    for(std::vector<TilePtr>::iterator tried_insertions_iterator =
+        tried_insertions_.begin();
+        tried_insertions_iterator != tried_insertions_.end();
+        tried_insertions_iterator++)
     {
       game_.removeTile(*tried_insertions_iterator);
     }
@@ -88,8 +90,9 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
       TileTypeLib::TileType::getAllTileTypes();
 
   // for all empty positions
-  for(std::vector<Position>::iterator position_iterator = empty_positions.begin();
-      position_iterator != empty_positions.end(); position_iterator++)
+  for(std::vector<Position>::iterator position_iterator =
+      empty_positions.begin(); position_iterator != empty_positions.end();
+      position_iterator++)
   {
     // Get all touching tiles of this position
     std::map<TileTypeLib::Edge,TilePtr> touching_tiles =
@@ -105,7 +108,8 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     TilePtr tile_to_try;
 
     for(std::vector<TileTypeLib::TileType>::iterator types_iterator =
-        all_tile_types.begin(); types_iterator != all_tile_types.end(); types_iterator++)
+        all_tile_types.begin(); types_iterator != all_tile_types.end();
+        types_iterator++)
     {
       tile_to_try.reset(new Tile(*types_iterator, *position_iterator));
       try
@@ -113,7 +117,7 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
         if(canTileBePlaced(touching_tiles, tile_to_try))
         {
           number_of_placeable_tiles++;
-          tile = tile_to_try;
+          placeable_tile = tile_to_try;
         }
       }
       catch(ColorMismatchException& ex)
@@ -123,7 +127,7 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     }
 
     if(number_of_placeable_tiles == 1)
-      doTurn(tile->getPosition(), tile->getShape());
+      doTurn(placeable_tile->getPosition(), placeable_tile->getShape());
   }
 }
 
@@ -148,19 +152,22 @@ bool GameBoard::canTileBePlaced(
 
   // For each touching tile
   for(std::map<TileTypeLib::Edge, TilePtr>::iterator touching_tile_iterator =
-      touching_tiles.begin(); touching_tile_iterator != touching_tiles.end(); touching_tile_iterator++)
+      touching_tiles.begin(); touching_tile_iterator != touching_tiles.end();
+      touching_tile_iterator++)
   {
-    if(!checkTwoTiles(tile_to_check, touching_tile_iterator->second, touching_tile_iterator->first))
+    if(!checkTwoTiles(tile_to_check, touching_tile_iterator->second,
+                      touching_tile_iterator->first))
       throw(ColorMismatchException("Invalid move - "
                                    "connected line colors mismatch",
                                    tile_to_check->getPosition()));
   }
   std::vector<Position> empty_positions =
       game_.getEmptyPositionsAround(tile_to_check->getPosition());
-  for(std::vector<Position>::iterator position_iterator = empty_positions.begin();
+  for(std::vector<Position>::iterator position_iterator =
+      empty_positions.begin();
       position_iterator != empty_positions.end(); position_iterator++)
   {
-    int counter_red = 0;
+    int counter_red_edges = 0;
     int counter_white_edges = 0;
     std::map<TileTypeLib::Edge, Color> touching_colors =
         game_.getTouchingColors(*position_iterator);
@@ -168,7 +175,7 @@ bool GameBoard::canTileBePlaced(
         touching_colors.begin(); it_color != touching_colors.end(); it_color++)
     {
       if(it_color->second == Color::RED)
-        counter_red++;
+        counter_red_edges++;
       else if(it_color->second == Color::WHITE)
         counter_white_edges++;
     }

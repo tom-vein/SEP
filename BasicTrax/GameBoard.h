@@ -28,7 +28,8 @@ private:
       Position position_of_second_end_{0, 0};
 
       LineDirection determineDirectionOfFreeEdge(Color color, TilePtr tile,
-                                                 const GameLib::Game& game) const;
+                                                 const GameLib::Game& game)
+                                                 const;
     public:
       void addXValue(int x);
       void addYValue(int y);
@@ -68,7 +69,8 @@ private:
   bool checkWin();
   bool canTileBePlaced(TilePtr tile_to_check)
   throw(InvalidPositionException);
-  bool canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check);
+  bool canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles,
+                       TilePtr tile_to_check);
   bool checkTwoTiles(TilePtr tile_to_check, TilePtr other,
                      TileTypeLib::Edge touching_edge_of_tile_to_check);
 

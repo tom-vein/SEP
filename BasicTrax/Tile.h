@@ -24,7 +24,8 @@ public:
   TilePtr getConnectedTileByLine(TilePtr requester);
 
   const Position& getPosition() const {return position_;}
-  Color getColorAtEdge(TileTypeLib::Edge edge)  {return type_.getColorAtEdge(edge);}
+  Color getColorAtEdge(TileTypeLib::Edge edge)
+        { return type_.getColorAtEdge(edge); }
   TileTypeLib::Shape getShape() const;
 
 };

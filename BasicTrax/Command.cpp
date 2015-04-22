@@ -18,14 +18,6 @@ std::shared_ptr<CommandLib::Command> CommandLib::readCommand()
   std::getline (std::cin, command_str);
 
   std::shared_ptr<Command> command = Parser::parseCommand(command_str);
-
-  //TODO: Delete me
-//  if(typeid(command) != typeid(CommandLib::DoTurnCommand) ||
-//     typeid(command) != typeid(CommandLib::ErrorCommand) ||
-//     typeid(command) != typeid(CommandLib::QuitCommand) ||
-//     typeid(command) != typeid(CommandLib::WriteCommand))
-//    throw InappropriateCommandException("the command here is inappropriate");
-
   return command;
 }
 
