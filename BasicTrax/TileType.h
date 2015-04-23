@@ -19,6 +19,10 @@
 
 namespace TileTypeLib
 {
+  //----------------------------------------------------------------------------
+  // Shape Class
+  // list of Enums to distinguish different Tile Type Shapes
+  //
   enum class Shape : char
   {
     NONE = 0,
@@ -27,6 +31,10 @@ namespace TileTypeLib
     CURVE_TOP_RIGHT_CORNER,
   };
 
+  //----------------------------------------------------------------------------
+  // Edge Class
+  // list of Enums to define all Edges of a Tile
+  //
   enum class Edge
   {
     NONE,
@@ -50,6 +58,7 @@ namespace TileTypeLib
   class TileType
   {
   private:
+
     //--------------------------------------------------------------------------
     // Shape of the tile
     //
@@ -71,6 +80,7 @@ namespace TileTypeLib
     TileType(Shape shape, Color top_color);
 
   public:
+
     //--------------------------------------------------------------------------
     // Getter Methods
     //
