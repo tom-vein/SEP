@@ -28,4 +28,5 @@ HEADERS += \
     FileManager.h \
     Exceptions.h \
     Exceptions.h \
-    Color.h
+    Color.h \
+    Exit.h

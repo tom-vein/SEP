@@ -16,6 +16,7 @@
 #include "Parser.h"
 #include "Command.h"
 #include "GameBoard.h"
+#include "Exit.h"
 
 //------------------------------------------------------------------------------
 // main function
@@ -42,7 +43,7 @@ int main(int argc, char* argv[])
   catch(WrongUsageProgramException& ex)
   {
     std::cout << ex.what() << std::endl;
-    return 2;
+    return static_cast<int>(Exit::Code::WRONG_USAGE);
   }
 
   start_game_command =
@@ -86,14 +87,13 @@ int main(int argc, char* argv[])
       while(!command);
     }
     std::cout << "Bye!" << std::endl;
-    //TODO: Constant
-    return 0;
+    return static_cast<int>(Exit::Code::SUCCESS);
   }
   catch(std::bad_alloc)
   {
     //TODO: Constant
     std::cout << "Error: Out of Memory!" << std::endl;
-    return 1;
+    return static_cast<int>(Exit::Code::OUT_OF_MEMORY);
   }
 }
 

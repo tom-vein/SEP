@@ -48,7 +48,7 @@ private:
       //----------------------------------------------------------------------------
       // Constant indicating how long a line has to be in order to win the game
       //
-      const unsigned int MIN_LENGTH_OF_WINNING_LINE = 8;
+      static const unsigned int MIN_LENGTH_OF_WINNING_LINE;
 
       //TODO: comment
       std::set<int> x_values_of_line_;
