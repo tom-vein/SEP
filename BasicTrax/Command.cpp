@@ -37,11 +37,9 @@ CommandLib::StartGameCommand::StartGameCommand(const std::string& file_name) :
 }
 
 //------------------------------------------------------------------------------
-CommandLib::Code CommandLib::StartGameCommand::execute(GameBoard& game_board)
+CommandLib::Code CommandLib::StartGameCommand::execute(GameBoard&)
 const
 {
-  game_board.startGame();
-
   return Code::START;
 }
 

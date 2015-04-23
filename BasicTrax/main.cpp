@@ -91,7 +91,6 @@ int main(int argc, char* argv[])
   }
   catch(std::bad_alloc)
   {
-    //TODO: Constant
     std::cout << "Error: Out of Memory!" << std::endl;
     return static_cast<int>(Exit::Code::OUT_OF_MEMORY);
   }

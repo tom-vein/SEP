@@ -26,14 +26,6 @@ GameBoard::GameBoard(const GameLib::Game& game, const std::string& file_name) :
 
 }
 
-//TODO: erase?
-//------------------------------------------------------------------------------
-void GameBoard::startGame()
-{
-
-}
-
-
 
 //------------------------------------------------------------------------------
 void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)

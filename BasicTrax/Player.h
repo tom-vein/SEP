@@ -15,17 +15,34 @@
 
 #include "Color.h"
 
+//------------------------------------------------------------------------------
+// Forward declarations
+//
 class Player;
-
 bool operator==(const Player& player01, const Player& player02);
 
 class Player
 {
 private:
+  //----------------------------------------------------------------------------
+  // Color of the player
+  //
   Color color_;
+
 public:
+  //----------------------------------------------------------------------------
+  // constructor
+  //
   Player(Color color);
+
+  //----------------------------------------------------------------------------
+  // Getter
+  //
   Color getColor() const;
+
+  //----------------------------------------------------------------------------
+  // Implementation of operator ==
+  //
   friend bool operator==(const Player& player01, const Player& player02);
 };
 

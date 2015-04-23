@@ -175,9 +175,6 @@ public:
   //
   GameBoard(const GameLib::Game& game, const std::string& file_name);
 
-  //TODO: delete?
-  void startGame();
-
   //----------------------------------------------------------------------------
   // Method used for trying to add a tile to the gameboard
   // @param Position on which the tile should be placed

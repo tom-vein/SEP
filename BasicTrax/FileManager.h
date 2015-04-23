@@ -74,7 +74,7 @@ private:
 
     //--------------------------------------------------------------------------
     // Method to retrieve outputstream for fileheader
-    // @param outputstream in which the header should be written
+    // @param os outputstream in which the header should be written
     // @return reference of the used outputstream
     //
     std::ostream& write(std::ostream& os);
@@ -104,7 +104,7 @@ private:
 
     //--------------------------------------------------------------------------
     // Method to retrieve outputstream for this tile
-    // @param outputstream in which the filed should be written
+    // @param os outputstream in which the filed should be written
     // @return reference of the used outputstream
     //
     std::ostream& write(std::ostream& os);
@@ -117,14 +117,14 @@ private:
 
   //--------------------------------------------------------------------------
   // Method for creating the Fileheader
-  // @param const Reference to instance of game
+  // @param game const Reference to instance of game
   // @return instance of a fileheader-class
   //
   FileHeader createFileHeader(const GameLib::Game& game) const;
 
   //--------------------------------------------------------------------------
   // Method for creating a field
-  // @param std::shared_ptr<Tile> of the tile of which a Field should be
+  // @param tile std::shared_ptr<Tile> of the tile of which a Field should be
   // created
   // @return instance of a field-class
   //
@@ -133,8 +133,9 @@ private:
   //--------------------------------------------------------------------------
   // Method which creates a vector containing all fields which should be
   // written and initializes them
-  // @param Reference to empty vector of Field, which gets filled in this method
-  // @param const Reference to instance of game
+  // @param fields Reference to empty vector of Field, which gets filled in this
+  //  method
+  // @param game const Reference to instance of game
   //
   void initFields(std::vector<Field>& fields, const GameLib::Game& game) const;
 
@@ -146,8 +147,8 @@ public:
 
   //--------------------------------------------------------------------------
   // Method used for writing the gameboard to a file
-  // @param Reference to the game-instance
-  // @param const Reference to the file-name
+  // @param game Reference to the game-instance
+  // @param file_name const Reference to the file-name
   //
   void writeToFile(const GameLib::Game& game,
                    const std::string& file_name = "") const;
