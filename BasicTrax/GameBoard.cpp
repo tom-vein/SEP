@@ -178,6 +178,16 @@ bool GameBoard::canTileBePlaced(
                                    "connected line colors mismatch",
                                    tile_to_check->getPosition()));
   }
+
+
+  // IMPORTANT
+  // This is known to be not working. It will be fixed in the next assignment
+  // Problem: The current Tile is *not* in the vector of game at this point.
+  // Although I want to check the touching colors of the edges of every
+  // Position around. So the color of the edge of the current tile is
+  // NONE, which leads to a not working check here.
+  //
+
   std::vector<Position> empty_positions =
       game_.getEmptyPositionsAround(tile_to_check->getPosition());
   for(std::vector<Position>::iterator position_iterator =
