@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
   catch(WrongUsageProgramException& ex)
   {
     std::cout << ex.what() << std::endl;
-    return static_cast<int>(Exit::Code::WRONG_USAGE);
+    return Exit::WRONG_USAGE;
   }
 
   start_game_command =
@@ -87,12 +87,12 @@ int main(int argc, char* argv[])
       while(!command);
     }
     std::cout << "Bye!" << std::endl;
-    return static_cast<int>(Exit::Code::SUCCESS);
+    return Exit::SUCCESS;
   }
   catch(std::bad_alloc)
   {
     std::cout << "Error: Out of Memory!" << std::endl;
-    return static_cast<int>(Exit::Code::OUT_OF_MEMORY);
+    return Exit::OUT_OF_MEMORY;
   }
 }
 

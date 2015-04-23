@@ -16,15 +16,19 @@
 namespace Exit
 {
   //----------------------------------------------------------------------------
-  // CODE Class
-  // list of Enums to distinguish different Exit Code Returns
+  // Exit code succes
   //
-  enum class Code
-  {
-    SUCCESS = 0,
-    OUT_OF_MEMORY = 1,
-    WRONG_USAGE = 2
-  };
+  const int SUCCESS = 0;
+
+  //----------------------------------------------------------------------------
+  // Exit code succes out of memory
+  //
+  const int OUT_OF_MEMORY = 1;
+
+  //----------------------------------------------------------------------------
+  // Exit code wrong usage
+  //
+  const int WRONG_USAGE = 2;
 }
 
 #endif // EXIT
