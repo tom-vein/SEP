@@ -64,9 +64,9 @@ Position Parser::parsePosition(const std::string& input)
 }
 
 //------------------------------------------------------------------------------
-std::string Parser::lowerChars(const std::string& data)
+std::string Parser::lowerChars(const std::string& input)
 {
-  std::string str = data;
+  std::string str = input;
   std::transform(str.begin(), str.end(), str.begin(), ::tolower);
   return str;
 }
