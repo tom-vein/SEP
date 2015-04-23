@@ -94,23 +94,6 @@ CommandLib::QuitCommand::~QuitCommand()
 }
 
 //------------------------------------------------------------------------------
-CommandLib::ErrorCommand::ErrorCommand(std::string message) : message_(message)
-{
-}
-
-//------------------------------------------------------------------------------
-CommandLib::Code CommandLib::ErrorCommand::execute(GameBoard&) const
-{
-  std::cout << message_ << std::endl;
-  return Code::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
-CommandLib::ErrorCommand::~ErrorCommand()
-{
-}
-
-//------------------------------------------------------------------------------
 CommandLib::WriteCommand::WriteCommand(std::string file_name)
   : file_name_(file_name)
 {

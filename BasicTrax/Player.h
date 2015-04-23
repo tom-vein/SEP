@@ -19,7 +19,7 @@
 // Forward declarations
 //
 class Player;
-bool operator==(const Player& player01, const Player& player02);
+bool operator==(const Player& first_player, const Player& second_player);
 
 class Player
 {
@@ -43,7 +43,8 @@ public:
   //----------------------------------------------------------------------------
   // Implementation of operator ==
   //
-  friend bool operator==(const Player& player01, const Player& player02);
+  friend bool operator==(const Player& first_player,
+                         const Player& second_player);
 };
 
 #endif // PLAYER_H

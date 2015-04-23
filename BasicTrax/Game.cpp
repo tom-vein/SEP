@@ -66,12 +66,12 @@ throw(InvalidPositionException)
 //------------------------------------------------------------------------------
 void GameLib::Game::removeTile(TilePtr tile_to_remove)
 {
-  for(std::vector<TilePtr>::iterator it = tiles_.begin();
-      it != tiles_.end(); it++)
+  for(std::vector<TilePtr>::iterator tiles_iterator = tiles_.begin();
+      tiles_iterator != tiles_.end(); tiles_iterator++)
   {
-    if( (*it) == tile_to_remove)
+    if( (*tiles_iterator) == tile_to_remove)
     {
-      tiles_.erase(it);
+      tiles_.erase(tiles_iterator);
       --num_of_placed_tiles_in_current_turn_;
       return;
     }
@@ -86,21 +86,25 @@ std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(
 {
   std::map<TileTypeLib::Edge, TilePtr> touching_tiles;
   TilePtr tile;
+
   // Left
   if((tile = getTileByPosition(position, offset_x - 1, offset_y)) &&
      (color == Color::NONE ||
      tile->getColorAtEdge(TileTypeLib::Edge::RIGHT) == color))
     touching_tiles[TileTypeLib::Edge::LEFT] = tile;
+
   // Top
   if((tile = getTileByPosition(position, offset_x, offset_y -1)) &&
      (color == Color::NONE ||
      tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM) == color))
     touching_tiles[TileTypeLib::Edge::TOP] = tile;
+
   //Right
   if((tile = getTileByPosition(position, offset_x + 1, offset_y)) &&
      (color == Color::NONE ||
      tile->getColorAtEdge(TileTypeLib::Edge::LEFT) == color))
     touching_tiles[TileTypeLib::Edge::RIGHT] = tile;
+
   //Bottom
   if((tile = getTileByPosition(position, offset_x, offset_y + 1)) &&
      (color == Color::NONE ||
