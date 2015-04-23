@@ -24,10 +24,11 @@ Color Player::getColor() const
   return color_;
 }
 
+
 //------------------------------------------------------------------------------
-bool operator==(const Player& player01, const Player& player02)
+bool operator==(const Player& first_player, const Player& second_player)
 {
-  if(player01.color_ == player02.color_)
+  if(first_player.color_ == second_player.color_)
     return true;
 
   return false;

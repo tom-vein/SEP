@@ -25,18 +25,31 @@ namespace CommandLib
 
   enum class Code
   {
-    START, QUIT, WIN, DRAW, CONTINUE
+    START,
+    QUIT,
+    WIN,
+    DRAW,
+    CONTINUE
   };
 
-  //Use the parser class for this method
-  //Output of sep>
-  //Parse the Command with the parser
-  //Return command
+
+  //--------------------------------------------------------------------------
+  // Method reads command from commandline and generates a pointer to a
+  // Command object
+  // @return returns shared_ptr to a command-object
+  //
   std::shared_ptr<Command> readCommand();
 
+  //--------------------------------------------------------------------------
+  // Class Command
+  // Represents a single comman
+  //
   class Command
   {
   public:
+    //--------------------------------------------------------------------------
+    // deleted constructor
+    //
     Command() = default;
 
     //--------------------------------------------------------------------------
@@ -96,11 +109,21 @@ namespace CommandLib
     const std::string& getFileName() const;
   };
 
+  //--------------------------------------------------------------------------
+  // Command used for starting adding a tile to a gameboard
+  //
   class DoTurnCommand : public Command
   {
   private:
+    //--------------------------------------------------------------------------
+    // Position of the tile that should be placed
+    //
     Position position_;
+
+    //--------------------------------------------------------------------------
+    // Shape of the tile which should be placed
     TileTypeLib::Shape shape_;
+
   public:
     //--------------------------------------------------------------------------
     // Constructor
@@ -119,11 +142,12 @@ namespace CommandLib
     virtual ~DoTurnCommand() override;
   };
 
+  //--------------------------------------------------------------------------
+  // Command used for quitting the game
+  //
   class QuitCommand : public Command
   {
   public:
-    //QuitCommand();
-
     //--------------------------------------------------------------------------
     // Executes the command.
     // @param game_board The board where action should be performed on
@@ -136,31 +160,10 @@ namespace CommandLib
     virtual ~QuitCommand() override;
   };
 
-  class ErrorCommand : public Command
-  {
-  private:
-    //--------------------------------------------------------------------------
-    // Error message that should be displayed
-    //
-    std::string message_;
-  public:
-    //--------------------------------------------------------------------------
-    // Constructor
-    //
-    ErrorCommand(std::string message);
 
-    //--------------------------------------------------------------------------
-    // Executes the command.
-    // @param game_board The board where action should be performed on
-    // @return Code representing the state of the game
-    virtual Code execute(GameBoard&) const override;
-
-    //--------------------------------------------------------------------------
-    // Destructor
-    //
-    virtual ~ErrorCommand() override;
-  };
-
+  //--------------------------------------------------------------------------
+  // Command used for writing the gameboard to a file
+  //
   class WriteCommand : public Command
   {
   private:
