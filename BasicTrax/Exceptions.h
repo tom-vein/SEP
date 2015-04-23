@@ -166,7 +166,10 @@ public:
   virtual ~ColorMismatchException() {}
 };
 
-//TODO: add header
+//----------------------------------------------------------------------------
+// This exception is used to determine if there are too less free edges
+// around a tile
+//
 class TooLessFreeEdgesException : public MessageException
 {
 public:
@@ -181,7 +184,10 @@ public:
   virtual ~TooLessFreeEdgesException() {}
 };
 
-//TODO: add header
+//----------------------------------------------------------------------------
+// This exception is used to determine if there are too many free edges
+// around a tile
+//
 class TooManyFreeEdgesException : public MessageException
 {
 public:
@@ -197,7 +203,9 @@ public:
   virtual ~TooManyFreeEdgesException() {}
 };
 
-//TODO: add header
+//----------------------------------------------------------------------------
+// This exception says that there are no suitable line directions
+//
 class NoSuitableLineDirectionException : public MessageException
 {
 public:
@@ -213,7 +221,9 @@ public:
   virtual ~NoSuitableLineDirectionException() {}
 };
 
-//TODO: add header
+//----------------------------------------------------------------------------
+// This exception is used to inform if both line direction are already set
+//
 class BothLineDirectionAlreadySetException : public MessageException
 {
 public:
@@ -229,7 +239,10 @@ public:
   virtual ~BothLineDirectionAlreadySetException() {}
 };
 
-//TODO: add header
+//----------------------------------------------------------------------------
+// This exception is used to inform if the number of tiles in for example
+// vector is inappropriate
+//
 class InappropriateNumberOfNextTilesException : public MessageException
 {
 public:
@@ -245,7 +258,10 @@ public:
   virtual ~InappropriateNumberOfNextTilesException() {}
 };
 
-//TODO: add header
+//----------------------------------------------------------------------------
+// This excetpion is used to inform that an error occured during writing to
+// file
+//
 class FileWriteException : public MessageException
 {
 public:
@@ -260,7 +276,10 @@ public:
   virtual ~FileWriteException() {}
 };
 
-//TODO: add header
+//----------------------------------------------------------------------------
+// This exception informs that no file name has specified and so no writing
+// to file can be carried out
+//
 class NoFileNameException : public MessageException
 {
 public:
@@ -275,23 +294,10 @@ public:
   virtual ~NoFileNameException() {}
 };
 
-//TODO: add header
-class InappropriateCommandException : public MessageException
-{
-public:
-  //--------------------------------------------------------------------------
-  // Constructor
-  //
-  InappropriateCommandException(std::string message) :
-    MessageException(message) {}
-
-  //--------------------------------------------------------------------------
-  // Destructor
-  //
-  virtual ~InappropriateCommandException() {}
-};
-
-//TODO: add header
+//----------------------------------------------------------------------------
+// This exception informs that the usage of the program is wrong because
+// for example the user entered wrong parameters when he started the program
+//
 class WrongUsageProgramException : public MessageException
 {
 public:
@@ -307,7 +313,9 @@ public:
   virtual ~WrongUsageProgramException() {}
 };
 
-//TODO: add header
+//----------------------------------------------------------------------------
+// This exception informs that the parameters to a command are wrong
+//
 class WrongParameterException : public MessageException
 {
 public:

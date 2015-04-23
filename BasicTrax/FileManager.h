@@ -26,7 +26,6 @@
 class FileManager
 {
 private:
-  //TODO; header OK?
   //----------------------------------------------------------------------------
   // Fileheader Class
   // encapsulates the header of the file which should be written
