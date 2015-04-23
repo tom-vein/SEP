@@ -188,6 +188,7 @@ bool GameBoard::canTileBePlaced(
     int counter_white_edges = 0;
     std::map<TileTypeLib::Edge, Color> touching_colors =
         game_.getTouchingColors(*position_iterator);
+
     for(std::map<TileTypeLib::Edge, Color>::iterator it_color =
         touching_colors.begin(); it_color != touching_colors.end(); it_color++)
     {
@@ -196,9 +197,7 @@ bool GameBoard::canTileBePlaced(
       else if(it_color->second == Color::WHITE)
         counter_white_edges++;
     }
-    if(counter_red_edges > 2 || counter_white_edges > 2 ||
-       (counter_red_edges > 1 && counter_white_edges > 0) ||
-       (counter_white_edges > 1 && counter_red_edges > 0))
+    if(counter_red_edges > 2 || counter_white_edges > 2)
       throw(InvalidPositionException("Invalid move - "
                                    "connected line colors mismatch",
                                    tile_to_check->getPosition()));
