@@ -100,7 +100,7 @@ namespace GameLib
     // @param offset_x offset in x-direction relative to position (default = 0)
     // @param offset_y offset in y-direction relative to position (default = 0)
     // @return Returns a std::shared_ptr<Tile> pointing to the wanted tile
-    //  or nullptr if no tile is at this position
+    //         or nullptr if no tile is at this position
     //
     TilePtr getTileByPosition(const Position& position,
                               int offset_x = 0, int offset_y = 0) const;
@@ -115,7 +115,7 @@ namespace GameLib
     //--------------------------------------------------------------------------
     // Method for deleting a certain tile
     // @param tile_to_remove std::shared_ptr<Tile> pointing to Tile which should
-    //  be deleted
+    //                       be deleted
     //
     void removeTile(TilePtr tile_to_remove);
 
@@ -159,7 +159,7 @@ namespace GameLib
     //--------------------------------------------------------------------------
     // Method for adding a tile to the gameboard
     // @param tile_to_add std::shared_ptr<Tile> pointing to Tile which should be
-    //  added
+    //                    added
     //
     void addTile(TilePtr tile_to_add);
 
