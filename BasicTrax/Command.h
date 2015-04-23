@@ -23,6 +23,10 @@ namespace CommandLib
 {
   class Command;
 
+  //----------------------------------------------------------------------------
+  // Color Class
+  // list of Enums to set the correct Program State
+  //
   enum class Code
   {
     START, QUIT, WIN, DRAW, CONTINUE

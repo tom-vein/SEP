@@ -19,7 +19,7 @@
 #include <set>
 #include <iostream>
 
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Gameboard Class
 // used for checking if any player has won, writing to files and checking if a
 // tile addtile-command is correct
@@ -36,7 +36,7 @@ private:
   {
   private:
 
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // Class for encapsulating checks regarding winning criterias
     //
     class LineWinningCriteria
@@ -45,7 +45,7 @@ private:
       //TODO: enum comment?
       enum class LineDirection {UP, DOWN, LEFT, RIGHT, NONE};
 
-      //----------------------------------------------------------------------------
+      //------------------------------------------------------------------------
       // Constant indicating how long a line has to be in order to win the game
       //
       static const unsigned int MIN_LENGTH_OF_WINNING_LINE;
@@ -69,7 +69,7 @@ private:
       bool allWinningCriteriaFulfilled(const GameLib::Game& game) const;
     };
 
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // method used for checking if the given player has won
     // @param Player which should be checked
     // @param reference to instance of game
@@ -93,7 +93,7 @@ private:
                                             TilePtr current_tile,
                                             const GameLib::Game& game) const;
   public:
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // method used for retrieving the color of the player which has won
     // @param reference to instance of game
     // @return returns the color of a player, if a player has won. otherwise
@@ -101,7 +101,7 @@ private:
     //
     Color determineWinner(const GameLib::Game& game) const;
 
-    //----------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     // method used for checking if the current situation is a draw
     // @param reference to instance of game
     // @return true game situation is a draw, otherwise false
