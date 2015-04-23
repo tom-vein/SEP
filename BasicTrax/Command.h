@@ -122,10 +122,6 @@ namespace CommandLib
   class QuitCommand : public Command
   {
   public:
-    //--------------------------------------------------------------------------
-    // Constructor
-    //
-    //TODO: Why no constructor?
     //QuitCommand();
 
     //--------------------------------------------------------------------------
@@ -140,7 +136,6 @@ namespace CommandLib
     virtual ~QuitCommand() override;
   };
 
-  //TODO: delete?
   class ErrorCommand : public Command
   {
   private:
