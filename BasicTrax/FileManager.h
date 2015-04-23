@@ -125,7 +125,7 @@ private:
   //--------------------------------------------------------------------------
   // Method for creating a field
   // @param tile std::shared_ptr<Tile> of the tile of which a Field should be
-  // created
+  //             created
   // @return instance of a field-class
   //
   Field createField(TilePtr tile) const;
@@ -134,7 +134,7 @@ private:
   // Method which creates a vector containing all fields which should be
   // written and initializes them
   // @param fields Reference to empty vector of Field, which gets filled in this
-  //  method
+  //               method
   // @param game const Reference to instance of game
   //
   void initFields(std::vector<Field>& fields, const GameLib::Game& game) const;

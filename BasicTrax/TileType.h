@@ -61,7 +61,7 @@ namespace TileTypeLib
     Color top_color_;
 
     //--------------------------------------------------------------------------
-    // *static* vector with all known tiletypes
+    // vector with all known tiletypes
     //
     static std::vector<TileType> tile_types_;
 
@@ -78,8 +78,7 @@ namespace TileTypeLib
     Color getColorAtEdge(Edge edge);
 
     //--------------------------------------------------------------------------
-    // *static* method used before using this class to initialize
-    // all known tile types
+    // method used before using this class to initialize all known tile types
     //
     static void initTileTypes();
 
