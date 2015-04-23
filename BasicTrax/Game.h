@@ -47,7 +47,11 @@ namespace GameLib
     //
     static const unsigned int MAX_OF_TILES = 64;
 
-    //TODO
+    //--------------------------------------------------------------------------
+    // Logs the number of all placed tiles in the current turn. This includes
+    // the tile that the active player places and the tiles that are placed
+    // by forced play
+    //
     unsigned int num_of_placed_tiles_in_current_turn_ = 0;
 
     //--------------------------------------------------------------------------
@@ -123,7 +127,9 @@ namespace GameLib
     // Getter for retrieving a map consisting of a edge as key and
     // shared_ptr<Tile> as value of Tiles which touch the given position
     // @param position Position of which all touching tiles are wanted
-    // TODO: Why Color parameter?
+    // @param color Returns only touching tiles that are next to the edge
+    //              of the passed color. If the passed color is NONE
+    //              all touching tiles will be returned (default = NONE)
     // @param offset_x offset in x-direction relative to position (default = 0)
     // @param offset_y offset in y-direction relative to position (default = 0)
     // @return returns map contaning edge and tileptr of touching tiles
@@ -163,7 +169,9 @@ namespace GameLib
     //
     void addTile(TilePtr tile_to_add);
 
-    //TODO: header
+    //--------------------------------------------------------------------------
+    // Returns all tiles that have been placed during the current turn
+    // (including them who where placed by forced play)
     std::vector<TilePtr> getLastPlacedTiles() const;
 
     //--------------------------------------------------------------------------
