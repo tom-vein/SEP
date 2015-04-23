@@ -60,7 +60,6 @@ Position Parser::parsePosition(const std::string& input)
     y = 0;
      throw WrongParameterException("Invalid parameters");
   }
-
   return Position(x, y);
 }
 
@@ -75,7 +74,6 @@ std::string Parser::lowerChars(const std::string& data)
 //------------------------------------------------------------------------------
 TileTypeLib::Shape Parser::parseTileTypeShape(const std::string& input)
 {
-
   if(input == "+")
     return TileTypeLib::Shape::CROSS;
 
@@ -153,7 +151,6 @@ std::shared_ptr<CommandLib::Command> Parser::parseArguments(
     return std::shared_ptr<CommandLib::Command>
         (new CommandLib::StartGameCommand(argv[2]));
   }
-
   std::string error_message = "Usage: " + std::string(argv[0]);
   throw WrongUsageProgramException(error_message);
 }
