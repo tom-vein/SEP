@@ -58,28 +58,29 @@ namespace CommandLib
 
     //--------------------------------------------------------------------------
     // Deleted copy constructor
-
+    //
     Command(const Command& original) = delete;
 
     //--------------------------------------------------------------------------
     // Deleted assignment operator
-
+    //
     Command& operator=(const Command& original) = delete;
 
     //--------------------------------------------------------------------------
     // Destructor
-
+    //
     virtual ~Command();
 
     //--------------------------------------------------------------------------
     // Executes the command.
     // @param game_board The board where action should be performed on
     // @return Code representing the state of the game
-
+    //
     virtual Code execute(GameBoard& game_board) const = 0;
 
     //--------------------------------------------------------------------------
-    // Getter Methods
+    // Getter Method
+    //
     const std::vector<std::string>& getParams() const;
   };
 
@@ -100,6 +101,7 @@ namespace CommandLib
     // Executes the command.
     // @param game_board The board where action should be performed on
     // @return Code representing the state of the game
+    //
     virtual Code execute(GameBoard& game_board) const override;
 
     //--------------------------------------------------------------------------
