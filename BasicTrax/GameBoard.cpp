@@ -12,9 +12,6 @@
 
 #include "GameBoard.h"
 
-const unsigned int
-GameBoard::ResultChecker::LineWinningCriteria::MIN_LENGTH_OF_WINNING_LINE = 8;
-
 //------------------------------------------------------------------------------
 GameBoard::GameBoard(const GameLib::Game& game, const std::string& file_name) :
   game_(game), file_manager_(FileManager(file_name))
