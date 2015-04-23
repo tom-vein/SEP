@@ -54,7 +54,7 @@ public:
   //
   const Position& getPosition() const {return position_;}
   Color getColorAtEdge(TileTypeLib::Edge edge)
-        { return type_.getColorAtEdge(edge); }
+  { return type_.getColorAtEdge(edge); }
   TileTypeLib::Shape getShape() const;
 
 };

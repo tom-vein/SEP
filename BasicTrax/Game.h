@@ -110,7 +110,7 @@ namespace GameLib
     // @param position Position of tile which should be deleted
     //
     void removeTileAtPosition(const Position& position)
-      throw(InvalidPositionException);
+    throw(InvalidPositionException);
 
     //--------------------------------------------------------------------------
     // Method for deleting a certain tile
