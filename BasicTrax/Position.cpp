@@ -30,14 +30,6 @@ int Position::getY() const
 }
 
 //------------------------------------------------------------------------------
-std::string Position::toString() const
-{
-  std::ostringstream ostr;
-  ostr << "(" << x_ << "," << y_ << ")";
-  return ostr.str();
-}
-
-//------------------------------------------------------------------------------
 bool Position::operator ==(const Position& other) const
 {
   if(other.getX() == x_ && other.getY() == y_)

@@ -16,20 +16,43 @@
 #include <string>
 #include <sstream>
 
+//----------------------------------------------------------------------------
+// Class Position representing a 2-D position
+//
 class Position
 {
 private:
+  //----------------------------------------------------------------------------
+  // X-Coordinate
+  //
   int x_;
+
+  //----------------------------------------------------------------------------
+  // Y-Coordinates
+  //
   int y_;
+
 public:
+
+  //----------------------------------------------------------------------------
+  // Constructor
+  //
   Position(int x, int y);
 
+  //----------------------------------------------------------------------------
+  // Getter
+  //
   int getX() const;
   int getY() const;
 
-  std::string toString() const;
-
+  //----------------------------------------------------------------------------
+  // Method prooves if the other Position has the same x *and* y coordinate
+  //
   bool operator==(const Position& other) const;
+
+  //----------------------------------------------------------------------------
+  // Method checks if the other Position has a different x *or* y coordinate
+  //
   bool operator!=(const Position& other) const;
 };
 

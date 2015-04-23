@@ -18,23 +18,40 @@
 #include "TileType.h"
 #include "Position.h"
 
+//----------------------------------------------------------------------------
+// Forward declaration
+//
 class Tile;
 
 using TilePtr = std::shared_ptr<Tile>;
 
 
+//----------------------------------------------------------------------------
+// Class represents a specific single Tile
+//
 class Tile
 {
 private:
+  //----------------------------------------------------------------------------
+  // tiletype of this specific tile
+  //
   TileTypeLib::TileType type_;
+
+  //----------------------------------------------------------------------------
+  // Position in the gameboard of this tile
+  //
   Position position_;
+
 public:
+  //----------------------------------------------------------------------------
+  // constructor
+  //
   Tile(const TileTypeLib::TileType& type,
        const Position& position) : type_(type), position_(position) {}
 
-  TilePtr getConnectedTileAtPosition(TileTypeLib::Edge edge);
-  TilePtr getConnectedTileByLine(TilePtr requester);
-
+  //----------------------------------------------------------------------------
+  // Getter
+  //
   const Position& getPosition() const {return position_;}
   Color getColorAtEdge(TileTypeLib::Edge edge)
         { return type_.getColorAtEdge(edge); }
