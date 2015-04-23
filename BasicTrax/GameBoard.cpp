@@ -196,8 +196,10 @@ bool GameBoard::canTileBePlaced(
       else if(it_color->second == Color::WHITE)
         counter_white_edges++;
     }
-    if(counter_red_edges > 2 || counter_white_edges > 2)
-      throw(ColorMismatchException("Invalid move - "
+    if(counter_red_edges > 2 || counter_white_edges > 2 ||
+       (counter_red_edges > 1 && counter_white_edges > 0) ||
+       (counter_white_edges > 1 && counter_red_edges > 0))
+      throw(InvalidPositionException("Invalid move - "
                                    "connected line colors mismatch",
                                    tile_to_check->getPosition()));
   }

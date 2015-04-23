@@ -3,6 +3,7 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += C++11
+QMAKE_CXXFLAGS += "-g -Wall"
 
 SOURCES += ./main.cpp \
     Position.cpp \
