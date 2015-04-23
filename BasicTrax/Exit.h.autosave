@@ -4,7 +4,7 @@
 namespace Exit
 {
   //----------------------------------------------------------------------------
-  // CODE Class
+  // Code Class
   // list of Enums to distinguish different Exit Code Returns
   //
   enum class Code

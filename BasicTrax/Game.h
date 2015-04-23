@@ -20,22 +20,18 @@
 #include "Player.h"
 #include "Exceptions.h"
 
-
 namespace GameLib
 {
+  //----------------------------------------------------------------------------
+  // State Class
+  // list of Enums to track the Program State
+  //
   enum class State
   {
     NOTHING,
     RUNNING,
     DRAW,
     WIN
-  };
-  enum class RelativePosition
-  {
-    LEFT,
-    TOP,
-    RIGHT,
-    BOTTOM,
   };
 
   //----------------------------------------------------------------------------
@@ -45,6 +41,7 @@ namespace GameLib
   class Game
   {
   private:
+
     //--------------------------------------------------------------------------
     // Constant which indicates the maximum number of tiles
     //
@@ -74,6 +71,7 @@ namespace GameLib
     Player& active_player_;
 
   public:
+
     //--------------------------------------------------------------------------
     // Constructor
     //

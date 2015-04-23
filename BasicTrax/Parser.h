@@ -31,21 +31,21 @@ private:
 
   //--------------------------------------------------------------------------
   // Private Method that is used when parsing addtile Command
-  // @param second Parameter which includes Coordinates
+  // @param input is second Parameter of a Command which includes Coordinates
   // @return Position Object with Coordinates when Parse is sucessfull
   //
   static Position parsePosition(const std::string& input);
 
   //--------------------------------------------------------------------------
   // Private Method that is used when parsing addtile Command
-  // @param third Parameter which includes requested Shape
+  // @param input is third Parameter of a Command which includes requested Shape
   // @return Returns requied Enum Shape when Parse is sucessfull
   //
   static TileTypeLib::Shape parseTileTypeShape(const std::string& input);
 
   //--------------------------------------------------------------------------
   // Private Method that is used when parsing any Command
-  // @param unmodified Command Input String
+  // @param input is the unmodified Command Input String
   // @return Returns modified Command Input String in lowercase only
   //
   static std::string lowerChars(const std::string& input);
@@ -54,7 +54,7 @@ public:
 
   //--------------------------------------------------------------------------
   // Public Method responsible to parse all kind of Commands
-  // @param pure Command Input String
+  // @param command_string is the pure Command Input String
   // @return Returns different Shared Pointer depends on Command
   //
   static std::shared_ptr<CommandLib::Command> parseCommand(
@@ -62,7 +62,8 @@ public:
 
   //--------------------------------------------------------------------------
   // Public Method responsible to parse number of Arguments and Correctness
-  // @param Number of Arguments, Char Pointer Array to Argument Strings
+  // @param int argc is Number of Arguments
+  // @param char* argv [] is a Char Pointer Array to Argument Strings
   // @return Shared Pointer of created StartGameCommand Object
   //
   static std::shared_ptr<CommandLib::Command> parseArguments(
