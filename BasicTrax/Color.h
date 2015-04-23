@@ -10,10 +10,13 @@
 //------------------------------------------------------------------------------
 //
 
-
 #ifndef COLOR_H
 #define COLOR_H
 
+//--------------------------------------------------------------------------
+// Color Class
+// list of Enums to determine Active Player
+//
 enum class Color : char
 {
   NONE = 0,
