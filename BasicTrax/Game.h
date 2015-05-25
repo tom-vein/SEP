@@ -175,6 +175,10 @@ namespace GameLib
     std::vector<TilePtr> getLastPlacedTiles() const;
 
     //--------------------------------------------------------------------------
+    // This method returns the touching edge between two Tiles
+    TileTypeLib::Edge getTouchingEdge (Position first, Position second) const;
+
+    //--------------------------------------------------------------------------
     // Getter methods
     //
     const Player& getActivePlayer() const;
