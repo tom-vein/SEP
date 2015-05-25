@@ -193,7 +193,7 @@ const
         game_.getTouchingEdge(*position_iterator, tile_to_check->getPosition());
 
     touching_colors[touching_edge] = tile_to_check->getColorAtEdge(
-                             TileTypeLib::getOppositeEdge(touching_edge));
+                                       TileTypeLib::getOppositeEdge(touching_edge));
 
     for(std::map<TileTypeLib::Edge, Color>::iterator it_color =
         touching_colors.begin(); it_color != touching_colors.end(); it_color++)
@@ -605,13 +605,29 @@ void GameBoard::ArtificialIntelligence::determinePlaceableTiles(
   determineAllTiles(edge, placeable_tiles);
 
   placeable_tiles.erase(
-      std::remove_if(placeable_tiles.begin(), placeable_tiles.end(),
-          canTileBePlaced), placeable_tiles.end());
+        std::remove_if(placeable_tiles.begin(), placeable_tiles.end(),
+                       [this](TilePtr tile)
+  { try
+    {
+      std::map<TileTypeLib::Edge, TilePtr> touching_tiles =
+      game_board_.getGame().getTouchingTiles(tile->getPosition());
+      return !game_board_.canTileBePlaced(touching_tiles, tile);
+    }
+    catch(InvalidPositionException e)
+    {
+      //Nothing to do
+    }
+    catch(ColorMismatchException e)
+    {
+      //Nothing to do
+    }
+
+    return true; }), placeable_tiles.end());
 }
 
 //------------------------------------------------------------------------------
 void GameBoard::ArtificialIntelligence::determineAllTiles(TilePtr edge,
-                       std::vector<TilePtr>& all_tiles) const
+                                                          std::vector<TilePtr>& all_tiles) const
 {
   const Position& position = edge->getPosition(); //TODO look if works
 
@@ -637,27 +653,6 @@ void GameBoard::ArtificialIntelligence::determineAllTilesAtPosition(
   {
     all_tiles.push_back(std::shared_ptr<Tile>(new Tile(tile_type, position)));
   }
-}
-
-//------------------------------------------------------------------------------
-bool GameBoard::ArtificialIntelligence::canTileBePlaced(const TilePtr& tile) const
-{
-  try
-  {
-    std::map<TileTypeLib::Edge, TilePtr> touching_tiles =
-        game_board_.getGame().getTouchingTiles(tile->getPosition());
-    return game_board_.canTileBePlaced(touching_tiles, tile);
-  }
-  catch(InvalidPositionException e)
-  {
-    //Nothing to do
-  }
-  catch(ColorMismatchException e)
-  {
-    //Nothing to do
-  }
-
-  return true;
 }
 
 //------------------------------------------------------------------------------

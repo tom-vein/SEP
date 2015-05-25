@@ -242,7 +242,6 @@ private:
                             std::vector<TilePtr>& all_tiles) const;
      void determineAllTilesAtPosition(const Position& position,
                                       std::vector<TilePtr>& all_tiles) const;
-     bool canTileBePlaced(const TilePtr& tile) const;
   public:
      ArtificialIntelligence(const GameBoard& game_board) :
        game_board_(game_board) {}
