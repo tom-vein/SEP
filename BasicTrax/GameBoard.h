@@ -229,6 +229,22 @@ private:
     bool isDraw(const GameLib::Game& game) const;
   };
 
+  class ArtificialIntelligence
+  {
+  private:
+     std::vector<TilePtr> getAllEdges() const;
+     TilePtr determineWinningTile(TilePtr edge, Color player) const;
+     void determinePlaceableTiles(TilePtr edge,
+                                  std::vector<TilePtr>& placeable_tiles) const;
+     void determineAllTiles(TilePtr edge,
+                            std::vector<TilePtr>& all_tiles) const;
+     void determineAllTilesAtPosition(const Position& position,
+                                      std::vector<TilePtr>& all_tiles) const;
+  public:
+     TilePtr determineNextTile(Color player) const;
+
+  };
+
   //----------------------------------------------------------------------------
   // Instance of game for adding tiles ect
   //
