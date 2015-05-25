@@ -37,7 +37,7 @@ public:
   // usally called if reason of exception should be displayed
   // @return Returns message of exception
   //
-  virtual const char* what() const throw() {return message_.c_str();}
+  virtual const char* what() const noexcept {return message_.c_str();}
 
 protected:
   //--------------------------------------------------------------------------
