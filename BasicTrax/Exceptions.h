@@ -25,7 +25,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  MessageException(std::string message) : message_(message) {}
+  MessageException(const char* message) : message_(message) {}
 
   //--------------------------------------------------------------------------
   // Destructor
@@ -37,13 +37,13 @@ public:
   // usally called if reason of exception should be displayed
   // @return Returns message of exception
   //
-  virtual const char* what() const noexcept {return message_.c_str();}
+  virtual const char* what() const noexcept {return message_;}
 
 protected:
   //--------------------------------------------------------------------------
   // Error message
   //
-  std::string message_;
+  const char* message_;
 };
 
 //----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  PositionException(std::string message, Position position) :
+  PositionException(const char* message, Position position) :
     MessageException(message), position_(position) {}
 
   //--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  InvalidPositionException(std::string message, Position position) :
+  InvalidPositionException(const char* message, Position position) :
     PositionException(message, position) {}
 
   //--------------------------------------------------------------------------
@@ -104,7 +104,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  OutOfMemoryException(std::string message) : MessageException(message) {}
+  OutOfMemoryException(const char* message) : MessageException(message) {}
 
   //--------------------------------------------------------------------------
   // Destructor
@@ -121,7 +121,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  NoTilesLeftException(std::string message) : MessageException(message) {}
+  NoTilesLeftException(const char* message) : MessageException(message) {}
 
   //--------------------------------------------------------------------------
   // Destructor
@@ -138,7 +138,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  NotEmptyException(std::string message, Position position) :
+  NotEmptyException(const char* message, Position position) :
     PositionException(message, position) {}
 
   //--------------------------------------------------------------------------
@@ -157,7 +157,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  ColorMismatchException(std::string message, Position position) :
+  ColorMismatchException(const char* message, Position position) :
     PositionException(message, position) {}
 
   //--------------------------------------------------------------------------
@@ -176,7 +176,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  TooLessFreeEdgesException(std::string message) : MessageException(message) {}
+  TooLessFreeEdgesException(const char* message) : MessageException(message) {}
 
   //--------------------------------------------------------------------------
   // Destructor
@@ -194,7 +194,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  TooManyFreeEdgesException(std::string message) :
+  TooManyFreeEdgesException(const char* message) :
     MessageException(message) {}
 
   //--------------------------------------------------------------------------
@@ -212,7 +212,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  NoSuitableLineDirectionException(std::string message) :
+  NoSuitableLineDirectionException(const char* message) :
     MessageException(message) {}
 
   //--------------------------------------------------------------------------
@@ -230,7 +230,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  BothLineDirectionAlreadySetException(std::string message) :
+  BothLineDirectionAlreadySetException(const char* message) :
     MessageException(message) {}
 
   //--------------------------------------------------------------------------
@@ -249,7 +249,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  InappropriateNumberOfNextTilesException(std::string message) :
+  InappropriateNumberOfNextTilesException(const char* message) :
     MessageException(message) {}
 
   //--------------------------------------------------------------------------
@@ -268,7 +268,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  FileWriteException(std::string message) : MessageException(message) {}
+  FileWriteException(const char* message) : MessageException(message) {}
 
   //--------------------------------------------------------------------------
   // Destructor
@@ -286,7 +286,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  NoFileNameException(std::string message) : MessageException(message) {}
+  NoFileNameException(const char* message) : MessageException(message) {}
 
   //--------------------------------------------------------------------------
   // Destructor
@@ -304,7 +304,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  WrongUsageProgramException(std::string message) :
+  WrongUsageProgramException(const char* message) :
     MessageException(message) {}
 
   //--------------------------------------------------------------------------
@@ -322,7 +322,7 @@ public:
   //--------------------------------------------------------------------------
   // Constructor
   //
-  WrongParameterException(std::string message) :
+  WrongParameterException(const char* message) :
     MessageException(message) {}
 
   //--------------------------------------------------------------------------

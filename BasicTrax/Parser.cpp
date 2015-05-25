@@ -152,5 +152,5 @@ std::shared_ptr<CommandLib::Command> Parser::parseArguments(
         (new CommandLib::StartGameCommand(argv[2]));
   }
   std::string error_message = "Usage: " + std::string(argv[0]);
-  throw WrongUsageProgramException(error_message);
+  throw WrongUsageProgramException(error_message.c_str());
 }

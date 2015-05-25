@@ -58,7 +58,7 @@ void FileManager::writeToFile(const GameLib::Game& game,
   std::ofstream output_file(used_file_name, std::ios::binary);
 
   if(!output_file)
-    throw FileWriteException(error_msg);
+    throw FileWriteException(error_msg.c_str());
 
   FileHeader file_header = createFileHeader(game);
   initFields(fields, game);
@@ -66,14 +66,14 @@ void FileManager::writeToFile(const GameLib::Game& game,
   file_header.write(output_file);
 
   if(!output_file)
-    throw FileWriteException(error_msg);
+    throw FileWriteException(error_msg.c_str());
 
   for(Field field : fields)
   {
     field.write(output_file);
 
     if(!output_file)
-      throw FileWriteException(error_msg);
+      throw FileWriteException(error_msg.c_str());
   }
 
   output_file.close();
