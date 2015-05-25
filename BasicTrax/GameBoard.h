@@ -18,6 +18,7 @@
 #include "Exceptions.h"
 #include <set>
 #include <iostream>
+#include <algorithm>
 
 //------------------------------------------------------------------------------
 // Gameboard Class
@@ -232,6 +233,7 @@ private:
   class ArtificialIntelligence
   {
   private:
+     const GameBoard& game_board_;
      std::vector<TilePtr> getAllEdges() const;
      TilePtr determineWinningTile(TilePtr edge, Color player) const;
      void determinePlaceableTiles(TilePtr edge,
@@ -240,7 +242,10 @@ private:
                             std::vector<TilePtr>& all_tiles) const;
      void determineAllTilesAtPosition(const Position& position,
                                       std::vector<TilePtr>& all_tiles) const;
+     bool canTileBePlaced(TilePtr tile) const;
   public:
+     ArtificialIntelligence(const GameBoard& game_board) :
+       game_board_(game_board) {}
      TilePtr determineNextTile(Color player) const;
 
   };
@@ -297,7 +302,7 @@ private:
   // @return returns true if tile can be placed, otherwise exception is thrown
   //
   bool canTileBePlaced(std::map<TileTypeLib::Edge, TilePtr> touching_tiles,
-                       TilePtr tile_to_check);
+                       TilePtr tile_to_check) const;
   //----------------------------------------------------------------------------
   // Method used for checking if the edges of two touching tiles match
   // @param tile_to_check pointer to tile which should be checked
@@ -307,7 +312,7 @@ private:
   // @return returns true if colors match, otherwise returns flase
   //
   bool checkTwoTiles(TilePtr tile_to_check, TilePtr other,
-                     TileTypeLib::Edge touching_edge_of_tile_to_check);
+                     TileTypeLib::Edge touching_edge_of_tile_to_check) const;
 
 public:
   //----------------------------------------------------------------------------
@@ -346,6 +351,9 @@ public:
   // @param file_name Filename (default is no filename)
   //
   void write(const std::string& file_name = "");
+
+  //TODO
+  const GameLib::Game& getGame() const;
 };
 
 #endif // GAMEBOARD_H

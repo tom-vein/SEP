@@ -143,6 +143,7 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
 //------------------------------------------------------------------------------
 bool GameBoard::canTileBePlaced(
     std::map<TileTypeLib::Edge, TilePtr> touching_tiles, TilePtr tile_to_check)
+const
 {
   // If first tile not on (0,0)
   if(game_.getTileCount() == 0 && tile_to_check->getPosition() != Position(0,0))
@@ -211,6 +212,7 @@ bool GameBoard::canTileBePlaced(
 //------------------------------------------------------------------------------
 bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other,
                               TileTypeLib::Edge touching_edge_of_tile_to_check)
+const
 {
   switch(touching_edge_of_tile_to_check)
   {
@@ -587,6 +589,8 @@ const
 
   determinePlaceableTiles(edge, placeable_tiles);
 
+  //TODO with each placeable tile do forced play and check if someone wins
+
   return nullptr;
 }
 
@@ -596,7 +600,9 @@ void GameBoard::ArtificialIntelligence::determinePlaceableTiles(
 {
   determineAllTiles(edge, placeable_tiles);
 
-
+//  placeable_tiles.erase(
+//      std::remove_if(placeable_tiles.begin(), placeable_tiles.end(),
+//          canTileBePlaced), placeable_tiles.end());
 }
 
 //------------------------------------------------------------------------------
@@ -627,4 +633,31 @@ void GameBoard::ArtificialIntelligence::determineAllTilesAtPosition(
   {
     all_tiles.push_back(std::shared_ptr<Tile>(new Tile(tile_type, position)));
   }
+}
+
+//------------------------------------------------------------------------------
+bool GameBoard::ArtificialIntelligence::canTileBePlaced(TilePtr tile) const
+{
+  try
+  {
+    std::map<TileTypeLib::Edge, TilePtr> touching_tiles =
+        game_board_.getGame().getTouchingTiles(tile->getPosition());
+    return !game_board_.canTileBePlaced(touching_tiles, tile);
+  }
+  catch(InvalidPositionException e)
+  {
+    //Nothing to do
+  }
+  catch(ColorMismatchException e)
+  {
+    //Nothing to do
+  }
+
+  return true;
+}
+
+//------------------------------------------------------------------------------
+const GameLib::Game& GameBoard::getGame() const
+{
+  return game_;
 }
