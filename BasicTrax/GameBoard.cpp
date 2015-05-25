@@ -136,7 +136,12 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     }
 
     if(number_of_placeable_tiles == 1)
-      doTurn(placeable_tile->getPosition(), placeable_tile->getShape());
+    {
+      game_.addTile(placeable_tile);
+      tried_insertions_.push_back(placeable_tile);
+      winner_ = result_checker_.determineWinner(game_);
+      doForcedPlay(placeable_tile);
+    }
   }
 }
 
@@ -173,15 +178,6 @@ const
                                    tile_to_check->getPosition()));
   }
 
-
-  // IMPORTANT
-  // This is known to be not working. It will be fixed in the next assignment
-  // Problem: The current Tile is *not* in the vector of game at this point.
-  // Although I want to check the touching colors of the edges of every
-  // Position around. So the color of the edge of the current tile is
-  // NONE, which leads to a not working check here.
-  //
-
   std::vector<Position> empty_positions =
       game_.getEmptyPositionsAround(tile_to_check->getPosition());
   for(std::vector<Position>::iterator position_iterator =
@@ -192,6 +188,12 @@ const
     int counter_white_edges = 0;
     std::map<TileTypeLib::Edge, Color> touching_colors =
         game_.getTouchingColors(*position_iterator);
+
+    TileTypeLib::Edge touching_edge =
+        game_.getTouchingEdge(*position_iterator, tile_to_check->getPosition());
+
+    touching_colors[touching_edge] = tile_to_check->getColorAtEdge(
+                             TileTypeLib::getOppositeEdge(touching_edge));
 
     for(std::map<TileTypeLib::Edge, Color>::iterator it_color =
         touching_colors.begin(); it_color != touching_colors.end(); it_color++)
@@ -208,6 +210,8 @@ const
   }
   return true;
 }
+
+
 
 //------------------------------------------------------------------------------
 bool GameBoard::checkTwoTiles(TilePtr tile_to_check, TilePtr other,

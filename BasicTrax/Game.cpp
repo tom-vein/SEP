@@ -312,3 +312,20 @@ void GameLib::Game::tooglePlayer()
 {
   active_player_ = getPausedPlayer();
 }
+
+//------------------------------------------------------------------------------
+TileTypeLib::Edge GameLib::Game::getTouchingEdge(Position first, Position second)
+const
+{
+  int offset_x = first.getX() - second.getX();
+  int offset_y = first.getY() - second.getY();
+
+  if(abs(offset_x) > 0 && offset_x > 0)
+    return TileTypeLib::Edge::LEFT;
+  if(abs(offset_x) > 0 && offset_x < 0)
+    return TileTypeLib::Edge::RIGHT;
+  if(abs(offset_y) > 0 && offset_y > 0)
+    return TileTypeLib::Edge::BOTTOM;
+
+  return TileTypeLib::Edge::TOP;
+}
