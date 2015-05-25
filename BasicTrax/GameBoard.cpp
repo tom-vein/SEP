@@ -82,6 +82,7 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
         tried_insertions_iterator++)
     {
       game_.removeTile(*tried_insertions_iterator);
+      game_.tooglePlayer();
     }
     tried_insertions_.clear();
     std::cout << e.what() << std::endl;
