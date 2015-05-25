@@ -556,7 +556,7 @@ void GameBoard::write(const std::string& file_name)
 //------------------------------------------------------------------------------
 TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player) const
 {
-  std::vector<TilePtr> edges = getAllEdges();
+  std::vector<TilePtr> edges = game_.getAllEdges();
 
   for(std::vector<TilePtr>::iterator it_edges = edges.begin();
       it_edges != edges.end(); ++it_edges)
@@ -572,11 +572,6 @@ TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player) const
   return nullptr;
 }
 
-//------------------------------------------------------------------------------
-std::vector<TilePtr> GameBoard::ArtificialIntelligence::getAllEdges() const
-{
-
-}
 
 //------------------------------------------------------------------------------
 TilePtr GameBoard::ArtificialIntelligence::determineWinningTile(TilePtr edge,

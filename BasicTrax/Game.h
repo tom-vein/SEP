@@ -74,6 +74,11 @@ namespace GameLib
     //
     Player& active_player_;
 
+    //--------------------------------------------------------------------------
+    // Checks if there are empty places around this tile
+    //
+    bool hasEmptyPositions(Position position) const;
+
   public:
 
     //--------------------------------------------------------------------------
@@ -173,6 +178,10 @@ namespace GameLib
     // Returns all tiles that have been placed during the current turn
     // (including them who where placed by forced play)
     std::vector<TilePtr> getLastPlacedTiles() const;
+
+    //--------------------------------------------------------------------------
+    // Returns all Tiles with at least one empty position around
+    std::vector<TilePtr> getAllEdges() const;
 
     //--------------------------------------------------------------------------
     // Getter methods

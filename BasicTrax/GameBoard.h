@@ -28,6 +28,12 @@ class GameBoard
 {
 private:
 
+
+  //----------------------------------------------------------------------------
+  // Instance of game for adding tiles ect
+  //
+  GameLib::Game game_;
+
   //----------------------------------------------------------------------------
   // Result checker Class
   // Used for checking if any player has won
@@ -232,7 +238,6 @@ private:
   class ArtificialIntelligence
   {
   private:
-     std::vector<TilePtr> getAllEdges() const;
      TilePtr determineWinningTile(TilePtr edge, Color player) const;
      void determinePlaceableTiles(TilePtr edge,
                                   std::vector<TilePtr>& placeable_tiles) const;
@@ -245,10 +250,6 @@ private:
 
   };
 
-  //----------------------------------------------------------------------------
-  // Instance of game for adding tiles ect
-  //
-  GameLib::Game game_;
 
   //----------------------------------------------------------------------------
   // Instance of the filemanager for writing to files
@@ -274,6 +275,11 @@ private:
   // member indication if the game was started in the graphical mode
   //
   bool should_write_to_file_;
+
+  //----------------------------------------------------------------------------
+  // member for doing all AI-stuff
+  //
+  ArtificialIntelligence ai;
 
   //----------------------------------------------------------------------------
   // Method for automatically adding all clearly defined tiles
