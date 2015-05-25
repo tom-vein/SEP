@@ -600,9 +600,9 @@ void GameBoard::ArtificialIntelligence::determinePlaceableTiles(
 {
   determineAllTiles(edge, placeable_tiles);
 
-//  placeable_tiles.erase(
-//      std::remove_if(placeable_tiles.begin(), placeable_tiles.end(),
-//          canTileBePlaced), placeable_tiles.end());
+  placeable_tiles.erase(
+      std::remove_if(placeable_tiles.begin(), placeable_tiles.end(),
+          canTileBePlaced), placeable_tiles.end());
 }
 
 //------------------------------------------------------------------------------
@@ -636,13 +636,13 @@ void GameBoard::ArtificialIntelligence::determineAllTilesAtPosition(
 }
 
 //------------------------------------------------------------------------------
-bool GameBoard::ArtificialIntelligence::canTileBePlaced(TilePtr tile) const
+bool GameBoard::ArtificialIntelligence::canTileBePlaced(const TilePtr& tile) const
 {
   try
   {
     std::map<TileTypeLib::Edge, TilePtr> touching_tiles =
         game_board_.getGame().getTouchingTiles(tile->getPosition());
-    return !game_board_.canTileBePlaced(touching_tiles, tile);
+    return game_board_.canTileBePlaced(touching_tiles, tile);
   }
   catch(InvalidPositionException e)
   {
