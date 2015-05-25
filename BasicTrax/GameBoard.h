@@ -235,7 +235,8 @@ private:
   private:
      const GameBoard& game_board_;
      std::vector<TilePtr> getAllEdges() const;
-     TilePtr determineWinningTile(TilePtr edge, Color player) const;
+     std::pair<Color, TilePtr> determineWinningTile(
+         const std::vector<TilePtr>& placeable_tiles) const;
      void determinePlaceableTiles(TilePtr edge,
                                   std::vector<TilePtr>& placeable_tiles) const;
      void determineAllTiles(TilePtr edge,

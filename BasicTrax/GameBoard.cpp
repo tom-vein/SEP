@@ -563,14 +563,23 @@ void GameBoard::write(const std::string& file_name)
 TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player) const
 {
   std::vector<TilePtr> edges = getAllEdges();
+  std::vector<TilePtr> placeable_tiles;
+  std::vector<TilePtr> other_players_winning_tiles;
+
 
   for(std::vector<TilePtr>::iterator it_edges = edges.begin();
       it_edges != edges.end(); ++it_edges)
   {
-    TilePtr winning_tile = determineWinningTile(*it_edges, player);
+    std::vector<TilePtr> placeable_tiles;
+    determinePlaceableTiles(*it_edges, placeable_tiles);
 
-    if(!winning_tile)
-      return winning_tile;
+    std::pair<Color, TilePtr> winning_tile =
+        determineWinningTile(placeable_tiles);
+
+    if(winning_tile.first == player)
+      return winning_tile.second;
+    else if(winning_tile.first != player && winning_tile.first != Color::NONE)
+      other_players_winning_tiles.push_back(winning_tile.second);
   }
 
   //TODO: determine random tile and check if the other player does not win
@@ -585,17 +594,18 @@ std::vector<TilePtr> GameBoard::ArtificialIntelligence::getAllEdges() const
 }
 
 //------------------------------------------------------------------------------
-TilePtr GameBoard::ArtificialIntelligence::determineWinningTile(TilePtr edge,
-                                                                Color player)
+std::pair<Color, TilePtr> GameBoard::ArtificialIntelligence::
+determineWinningTile(const std::vector<TilePtr>& placeable_tiles)
 const
 {
-  std::vector<TilePtr> placeable_tiles;
+  for(TilePtr tile : placeable_tiles)
+  {
 
-  determinePlaceableTiles(edge, placeable_tiles);
+  }
 
   //TODO with each placeable tile do forced play and check if someone wins
 
-  return nullptr;
+
 }
 
 //------------------------------------------------------------------------------
