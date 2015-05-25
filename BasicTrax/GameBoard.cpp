@@ -14,13 +14,12 @@
 
 //------------------------------------------------------------------------------
 GameBoard::GameBoard(const GameLib::Game& game, const std::string& file_name) :
-  game_(game), file_manager_(FileManager(file_name))
+  game_(game), file_manager_(FileManager(file_name)), ai(*this)
 {
   if(!file_name.empty())
     should_write_to_file_ = true;
   else
     should_write_to_file_ = false;
-
 }
 
 
@@ -562,7 +561,7 @@ void GameBoard::write(const std::string& file_name)
 //------------------------------------------------------------------------------
 TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player) const
 {
-  std::vector<TilePtr> edges = getAllEdges();
+  std::vector<TilePtr> edges = game_board_.game_.getAllEdges();
 
   for(std::vector<TilePtr>::iterator it_edges = edges.begin();
       it_edges != edges.end(); ++it_edges)
@@ -578,11 +577,6 @@ TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player) const
   return nullptr;
 }
 
-//------------------------------------------------------------------------------
-std::vector<TilePtr> GameBoard::ArtificialIntelligence::getAllEdges() const
-{
-
-}
 
 //------------------------------------------------------------------------------
 TilePtr GameBoard::ArtificialIntelligence::determineWinningTile(TilePtr edge,

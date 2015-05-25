@@ -74,6 +74,11 @@ namespace GameLib
     //
     Player& active_player_;
 
+    //--------------------------------------------------------------------------
+    // Checks if there are empty places around this tile
+    //
+    bool hasEmptyPositions(Position position) const;
+
   public:
 
     //--------------------------------------------------------------------------
@@ -177,6 +182,9 @@ namespace GameLib
     //--------------------------------------------------------------------------
     // This method returns the touching edge between two Tiles
     TileTypeLib::Edge getTouchingEdge (Position first, Position second) const;
+
+    // Returns all Tiles with at least one empty position around
+    std::vector<TilePtr> getAllEdges() const;
 
     //--------------------------------------------------------------------------
     // Getter methods
