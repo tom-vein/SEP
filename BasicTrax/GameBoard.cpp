@@ -559,11 +559,10 @@ void GameBoard::write(const std::string& file_name)
 }
 
 //------------------------------------------------------------------------------
-TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player) const
+TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player)
 {
   std::vector<TilePtr> edges = game_board_.game_.getAllEdges();
-  std::vector<TilePtr> placeable_tiles;
-  std::vector<TilePtr> other_players_winning_tiles;
+  std::vector<TilePtr> not_other_player_winning_placeable_tiles;
 
   for(std::vector<TilePtr>::iterator it_edges = edges.begin();
       it_edges != edges.end(); ++it_edges)
@@ -576,29 +575,54 @@ TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player) const
 
     if(winning_tile.first == player)
       return winning_tile.second;
-    else if(winning_tile.first != player && winning_tile.first != Color::NONE)
-      other_players_winning_tiles.push_back(winning_tile.second);
+
+    std::copy(placeable_tiles.begin(), placeable_tiles.end(),
+              back_inserter(not_other_player_winning_placeable_tiles));
+
+    if(winning_tile.first != player && winning_tile.first != Color::NONE)
+    {
+      not_other_player_winning_placeable_tiles.erase(
+            std::remove(not_other_player_winning_placeable_tiles.begin(),
+                        not_other_player_winning_placeable_tiles.end(),
+                        winning_tile.second),
+            not_other_player_winning_placeable_tiles.end());
+    }
   }
 
-  //TODO: determine random tile and check if the other player does not win
+  std::random_device rn;
+  std::mt19937 engine(rn());
+  std::uniform_int_distribution<unsigned int> dice(
+        0, not_other_player_winning_placeable_tiles.size() - 1);
+  unsigned int rand_index = dice(engine);
 
-  return nullptr;
+  return not_other_player_winning_placeable_tiles.at(rand_index);
 }
-
 
 //------------------------------------------------------------------------------
 std::pair<Color, TilePtr> GameBoard::ArtificialIntelligence::
 determineWinningTile(const std::vector<TilePtr>& placeable_tiles)
-const
 {
   for(TilePtr tile : placeable_tiles)
   {
+    game_board_.game_.addTile(tile);
+    game_board_.doForcedPlay(tile);
+    Color winner = game_board_.result_checker_.
+                   determineWinner(game_board_.game_);
 
+    //Placed tiles must be removed otherwise the play would not be valid
+    std::vector<TilePtr> tiles_to_remove =
+        game_board_.game_.getLastPlacedTiles();
+
+    for(TilePtr& tile_to_remove : tiles_to_remove)
+    {
+      game_board_.game_.removeTile(tile_to_remove);
+    }
+
+    if(winner != Color::NONE)
+      return make_pair(winner, tile);
   }
 
-  //TODO with each placeable tile do forced play and check if someone wins
-
-
+  return make_pair(Color::NONE, TilePtr());
 }
 
 //------------------------------------------------------------------------------
@@ -613,7 +637,7 @@ void GameBoard::ArtificialIntelligence::determinePlaceableTiles(
   { try
     {
       std::map<TileTypeLib::Edge, TilePtr> touching_tiles =
-      game_board_.getGame().getTouchingTiles(tile->getPosition());
+      game_board_.game_.getTouchingTiles(tile->getPosition());
       return !game_board_.canTileBePlaced(touching_tiles, tile);
     }
     catch(InvalidPositionException e)
@@ -656,10 +680,4 @@ void GameBoard::ArtificialIntelligence::determineAllTilesAtPosition(
   {
     all_tiles.push_back(std::shared_ptr<Tile>(new Tile(tile_type, position)));
   }
-}
-
-//------------------------------------------------------------------------------
-const GameLib::Game& GameBoard::getGame() const
-{
-  return game_;
 }

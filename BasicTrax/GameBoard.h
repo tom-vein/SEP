@@ -239,9 +239,9 @@ private:
   class ArtificialIntelligence
   {
   private:
-     const GameBoard& game_board_;
+     GameBoard& game_board_;
      std::pair<Color, TilePtr> determineWinningTile(
-         const std::vector<TilePtr>& placeable_tiles) const;
+         const std::vector<TilePtr>& placeable_tiles);
      void determinePlaceableTiles(TilePtr edge,
                                   std::vector<TilePtr>& placeable_tiles) const;
      void determineAllTiles(TilePtr edge,
@@ -249,9 +249,9 @@ private:
      void determineAllTilesAtPosition(const Position& position,
                                       std::vector<TilePtr>& all_tiles) const;
   public:
-     ArtificialIntelligence(const GameBoard& game_board) :
+     ArtificialIntelligence(GameBoard& game_board) :
        game_board_(game_board) {}
-     TilePtr determineNextTile(Color player) const;
+     TilePtr determineNextTile(Color player);
 
   };
 
@@ -357,9 +357,6 @@ public:
   // @param file_name Filename (default is no filename)
   //
   void write(const std::string& file_name = "");
-
-  //TODO
-  const GameLib::Game& getGame() const;
 };
 
 #endif // GAMEBOARD_H
