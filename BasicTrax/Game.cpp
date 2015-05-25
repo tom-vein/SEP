@@ -176,6 +176,30 @@ std::vector<Position> GameLib::Game::getEmptyPositionsAround(
   return empty_positions;
 }
 
+bool GameLib::Game::hasEmptyPositions(Position position) const
+{
+  if(getTileByPosition(position, -1, 0) ||
+     getTileByPosition(position, 1, 0) ||
+     getTileByPosition(position, 0, -1) ||
+     getTileByPosition(position, 0, 1))
+    return true;
+  else
+    return false;
+
+}
+
+std::vector<TilePtr> GameLib::Game::getAllEdges() const
+{
+  std::vector<TilePtr> edges;
+  for(std::vector<TilePtr>::const_iterator tiles_iterator = tiles_.begin();
+      tiles_iterator != tiles_.end(); tiles_iterator++)
+  {
+    if(hasEmptyPositions((*tiles_iterator)->getPosition()))
+      edges.push_back(*tiles_iterator);
+  }
+  return edges;
+}
+
 //------------------------------------------------------------------------------
 std::vector<TilePtr> GameLib::Game::getLastPlacedTiles() const
 {
