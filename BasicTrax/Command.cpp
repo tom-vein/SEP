@@ -148,13 +148,18 @@ CommandLib::Code CommandLib::PlayCommand::execute(GameBoard& game_board) const
 {
   try
   {
-    //TODO call method in game_board
-    std::cout << "TODO call method in game_board";
+    game_board.play();
   }
   catch(MessageException& ex)
   {
     std::cout << ex.what();
   }
+
+  if(game_board.hasWinner())
+    return Code::WIN;
+
+  if(game_board.isDraw())
+    return Code::DRAW;
 
   return Code::CONTINUE;
 }
