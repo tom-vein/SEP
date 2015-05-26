@@ -569,7 +569,8 @@ void GameBoard::write(const std::string& file_name)
 TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player)
 {
   std::vector<TilePtr> edges = game_board_.game_.getAllEdges();
-  std::vector<TilePtr> not_other_player_winning_placeable_tiles;
+  std::vector<TilePtr> all_placeable_tiles;
+  std::vector<TilePtr> other_player_winning_tiles;
 
   for(std::vector<TilePtr>::iterator it_edges = edges.begin();
       it_edges != edges.end(); ++it_edges)
@@ -584,23 +585,13 @@ TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player)
       return winning_tile.second;
 
     std::copy(placeable_tiles.begin(), placeable_tiles.end(),
-              back_inserter(not_other_player_winning_placeable_tiles));
+              back_inserter(all_placeable_tiles));
 
-    if(winning_tile.first != player && winning_tile.first != Color::NONE &&
-       //If there can only be placed a tile so that the other player wins
-       //this  tile must be placed.
-       !((it_edges+1) == edges.end() &&
-        not_other_player_winning_placeable_tiles.size() == 1))
-    {
-      not_other_player_winning_placeable_tiles.erase(
-            std::remove(not_other_player_winning_placeable_tiles.begin(),
-                        not_other_player_winning_placeable_tiles.end(),
-                        winning_tile.second),
-            not_other_player_winning_placeable_tiles.end());
-    }
+    if(winning_tile.first != player && winning_tile.first != Color::NONE)
+      other_player_winning_tiles.push_back(winning_tile.second);
   }
 
-  if(not_other_player_winning_placeable_tiles.empty())
+  if(all_placeable_tiles.empty())
   {
     TileTypeLib::TileType tile_type =
         TileTypeLib::TileType::getTileType(TileTypeLib::Shape::CROSS,
@@ -608,13 +599,42 @@ TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player)
     return std::shared_ptr<Tile>(new Tile(tile_type, Position(0, 0)));
   }
 
+  if(!other_player_winning_tiles.empty())
+  {
+    for(TilePtr tile : all_placeable_tiles)
+    {
+      bool prevents_other_players_winning = false;
+
+      for(TilePtr other_player_winning_tile : other_player_winning_tiles)
+      {
+        if (tile->getPosition() == other_player_winning_tile->getPosition() &&
+            tile->getShape() == other_player_winning_tile->getShape())
+        {
+          prevents_other_players_winning = false;
+          break;
+        }
+        else if (tile->getPosition() == other_player_winning_tile->getPosition()
+                 && tile->getShape() != other_player_winning_tile->getShape())
+        {
+          prevents_other_players_winning = true;
+        }
+      }
+
+      if(prevents_other_players_winning)
+        return tile;
+    }
+
+    //TODO if nothing can prevent - remove the other_player_winning_tiles
+    //from all_placeable_tiles
+  }
+
   std::random_device rn;
   std::mt19937 engine(rn());
   std::uniform_int_distribution<unsigned int> dice(
-        0, not_other_player_winning_placeable_tiles.size() - 1);
+        0, all_placeable_tiles.size() - 1);
   unsigned int rand_index = dice(engine);
 
-  return not_other_player_winning_placeable_tiles.at(rand_index);
+  return all_placeable_tiles.at(rand_index);
 }
 
 //------------------------------------------------------------------------------
