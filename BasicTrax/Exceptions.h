@@ -331,6 +331,5 @@ public:
   virtual ~WrongParameterException() {}
 };
 
-
 #endif // EXCEPTIONS
 

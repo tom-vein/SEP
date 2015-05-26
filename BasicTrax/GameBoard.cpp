@@ -72,6 +72,7 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
 
 
     tried_insertions_.clear();
+    game_.resetNumOfPlacedTilesInCurrentTurn();
   }
   catch (MessageException& e)
   {
@@ -85,6 +86,12 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
     }
     tried_insertions_.clear();
     std::cout << e.what() << std::endl;
+    game_.resetNumOfPlacedTilesInCurrentTurn();
+  }
+  catch (std::exception& e)
+  {
+    game_.resetNumOfPlacedTilesInCurrentTurn();
+    throw;
   }
 }
 
@@ -579,7 +586,11 @@ TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player)
     std::copy(placeable_tiles.begin(), placeable_tiles.end(),
               back_inserter(not_other_player_winning_placeable_tiles));
 
-    if(winning_tile.first != player && winning_tile.first != Color::NONE)
+    if(winning_tile.first != player && winning_tile.first != Color::NONE &&
+       //If there can only be placed a tile so that the other player wins
+       //this  tile must be placed.
+       !((it_edges+1) == edges.end() &&
+        not_other_player_winning_placeable_tiles.size() == 1))
     {
       not_other_player_winning_placeable_tiles.erase(
             std::remove(not_other_player_winning_placeable_tiles.begin(),
@@ -587,6 +598,14 @@ TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player)
                         winning_tile.second),
             not_other_player_winning_placeable_tiles.end());
     }
+  }
+
+  if(not_other_player_winning_placeable_tiles.empty())
+  {
+    TileTypeLib::TileType tile_type =
+        TileTypeLib::TileType::getTileType(TileTypeLib::Shape::CROSS,
+                                           Color::RED);
+    return std::shared_ptr<Tile>(new Tile(tile_type, Position(0, 0)));
   }
 
   std::random_device rn;
@@ -653,8 +672,8 @@ void GameBoard::ArtificialIntelligence::determinePlaceableTiles(
 }
 
 //------------------------------------------------------------------------------
-void GameBoard::ArtificialIntelligence::determineAllTiles(TilePtr edge,
-                                                          std::vector<TilePtr>& all_tiles) const
+void GameBoard::ArtificialIntelligence::determineAllTiles(
+    TilePtr edge, std::vector<TilePtr>& all_tiles) const
 {
   const Position& position = edge->getPosition(); //TODO look if works
 

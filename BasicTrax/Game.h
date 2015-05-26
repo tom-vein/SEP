@@ -183,8 +183,16 @@ namespace GameLib
     // This method returns the touching edge between two Tiles
     TileTypeLib::Edge getTouchingEdge (Position first, Position second) const;
 
+    //--------------------------------------------------------------------------
     // Returns all Tiles with at least one empty position around
     std::vector<TilePtr> getAllEdges() const;
+
+    //--------------------------------------------------------------------------
+    // resets num_of_placed_tiles_in_current_turn_ to 0
+    void resetNumOfPlacedTilesInCurrentTurn()
+    {
+      num_of_placed_tiles_in_current_turn_ = 0;
+    }
 
     //--------------------------------------------------------------------------
     // Getter methods

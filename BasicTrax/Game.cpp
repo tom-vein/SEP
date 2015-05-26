@@ -90,19 +90,19 @@ std::map<TileTypeLib::Edge, TilePtr> GameLib::Game::getTouchingTiles(
   // Left
   if((tile = getTileByPosition(position, offset_x - 1, offset_y)) &&
      (color == Color::NONE ||
-     tile->getColorAtEdge(TileTypeLib::Edge::RIGHT) == color))
+      tile->getColorAtEdge(TileTypeLib::Edge::RIGHT) == color))
     touching_tiles[TileTypeLib::Edge::LEFT] = tile;
 
   // Top
   if((tile = getTileByPosition(position, offset_x, offset_y -1)) &&
      (color == Color::NONE ||
-     tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM) == color))
+      tile->getColorAtEdge(TileTypeLib::Edge::BOTTOM) == color))
     touching_tiles[TileTypeLib::Edge::TOP] = tile;
 
   //Right
   if((tile = getTileByPosition(position, offset_x + 1, offset_y)) &&
      (color == Color::NONE ||
-     tile->getColorAtEdge(TileTypeLib::Edge::LEFT) == color))
+      tile->getColorAtEdge(TileTypeLib::Edge::LEFT) == color))
     touching_tiles[TileTypeLib::Edge::RIGHT] = tile;
 
   //Bottom
@@ -178,13 +178,13 @@ std::vector<Position> GameLib::Game::getEmptyPositionsAround(
 
 bool GameLib::Game::hasEmptyPositions(Position position) const
 {
-  if(getTileByPosition(position, -1, 0) ||
-     getTileByPosition(position, 1, 0) ||
-     getTileByPosition(position, 0, -1) ||
-     getTileByPosition(position, 0, 1))
+  if(getTileByPosition(position, -1, 0) == nullptr ||
+     getTileByPosition(position, 1, 0) == nullptr ||
+     getTileByPosition(position, 0, -1) == nullptr ||
+     getTileByPosition(position, 0, 1) == nullptr)
     return true;
-  else
-    return false;
+
+  return false;
 
 }
 
