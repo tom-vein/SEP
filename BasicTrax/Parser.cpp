@@ -132,6 +132,27 @@ std::shared_ptr<CommandLib::Command> Parser::parseCommand(
     }
     throw(WrongParameterException("Error: Wrong parameter count!"));
   }
+
+  if(command == "whoami")
+  {
+    if(part_2.empty())
+    {
+      return std::shared_ptr<CommandLib::Command>
+          (new CommandLib::WhoAmICommand());
+    }
+    throw(WrongParameterException("Error: Wrong parameter count!"));
+  }
+
+  if(command == "play")
+  {
+    if(part_2.empty())
+    {
+      return std::shared_ptr<CommandLib::Command>
+          (new CommandLib::PlayCommand());
+    }
+    throw(WrongParameterException("Error: Wrong parameter count!"));
+  }
+
   throw(WrongParameterException("Error: Unknown command!"));
 }
 

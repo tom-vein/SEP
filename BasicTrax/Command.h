@@ -194,6 +194,54 @@ namespace CommandLib
     //
     virtual ~WriteCommand() override;
   };
+
+  class WhoAmICommand : public Command
+  {
+  private:
+    //--------------------------------------------------------------------------
+    // Name of the ai
+    //
+    static const std::string name_;
+
+  public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    WhoAmICommand();
+
+    //--------------------------------------------------------------------------
+    // Executes the command.
+    // @param game_board The board where action should be performed on
+    // @return Code representing the state of the game
+    virtual Code execute(GameBoard&) const override;
+
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
+    virtual ~WhoAmICommand() override;
+  };
+
+
+  class PlayCommand : public Command
+  {
+  public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    //
+    PlayCommand() {}
+
+    //--------------------------------------------------------------------------
+    // Executes the command.
+    // @param game_board The board where action should be performed on
+    // @return Code representing the state of the game
+    virtual Code execute(GameBoard& game_board) const override;
+
+    //--------------------------------------------------------------------------
+    // Destructor
+    //
+    virtual ~PlayCommand() override;
+  };
+
 }
 
 #endif //COMMAND_H_INCLUDED
