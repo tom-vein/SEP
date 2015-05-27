@@ -150,7 +150,6 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     {
       game_.addTile(placeable_tile);
       tried_insertions_.push_back(placeable_tile);
-      winner_ = result_checker_.determineWinner(game_);
       doForcedPlay(placeable_tile);
     }
   }
@@ -204,7 +203,8 @@ const
         game_.getTouchingEdge(*position_iterator, tile_to_check->getPosition());
 
     touching_colors[touching_edge] = tile_to_check->getColorAtEdge(
-                                       TileTypeLib::getOppositeEdge(touching_edge));
+                                       TileTypeLib::getOppositeEdge(
+                                         touching_edge));
 
     for(std::map<TileTypeLib::Edge, Color>::iterator it_color =
         touching_colors.begin(); it_color != touching_colors.end(); it_color++)
