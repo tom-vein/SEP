@@ -48,12 +48,20 @@ public:
   //----------------------------------------------------------------------------
   // Method prooves if the other Position has the same x *and* y coordinate
   //
-  bool operator==(const Position& other) const;
+  bool operator==(const Position& other) const
+  {
+    return (x_ == other.x_ && y_ == other.y_) ? true : false;
+  }
+    ;
 
   //----------------------------------------------------------------------------
   // Method checks if the other Position has a different x *or* y coordinate
   //
-  bool operator!=(const Position& other) const;
+  bool operator!=(const Position& other) const
+  {
+    return (x_!= other.x_ || y_ != other.y_) ? true : false;
+  }
+    ;
 };
 
 #endif // POSITION_H
