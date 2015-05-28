@@ -729,5 +729,6 @@ void GameBoard::ArtificialIntelligence::determineAllTilesAtPosition(
 //------------------------------------------------------------------------------
 void GameBoard::play()
 {
-  placeTile(ai.determineNextTile(game_.getActivePlayer().getColor()));
+  TilePtr tile = ai.determineNextTile(game_.getActivePlayer().getColor());
+  placeTile(tile);
 }

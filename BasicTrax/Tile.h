@@ -35,7 +35,7 @@ private:
   //----------------------------------------------------------------------------
   // tiletype of this specific tile
   //
-  const TileTypeLib::TileType& type_;
+  TileTypeLib::TileType type_;
 
   //----------------------------------------------------------------------------
   // Position in the gameboard of this tile
