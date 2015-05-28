@@ -13,6 +13,9 @@
 #include "Command.h"
 #include "Parser.h"
 
+// Definition of const static variable for the command
+const std::string CommandLib::WhoAmICommand::name_ = "todo";
+
 std::shared_ptr<CommandLib::Command> CommandLib::readCommand()
 {
   std::string command_str;
@@ -118,3 +121,52 @@ CommandLib::Code CommandLib::WriteCommand::execute(GameBoard& game_board) const
 CommandLib::WriteCommand::~WriteCommand()
 {
 }
+
+//------------------------------------------------------------------------------
+CommandLib::WhoAmICommand::WhoAmICommand()
+{
+
+}
+
+
+//------------------------------------------------------------------------------
+CommandLib::Code CommandLib::WhoAmICommand::execute(GameBoard &) const
+{
+  std::cout << CommandLib::WhoAmICommand::name_;
+  return Code::CONTINUE;
+}
+
+//------------------------------------------------------------------------------
+CommandLib::WhoAmICommand::~WhoAmICommand()
+{
+
+}
+
+
+//------------------------------------------------------------------------------
+CommandLib::Code CommandLib::PlayCommand::execute(GameBoard& game_board) const
+{
+  try
+  {
+    game_board.play();
+  }
+  catch(MessageException& ex)
+  {
+    std::cout << ex.what();
+  }
+
+  if(game_board.hasWinner())
+    return Code::WIN;
+
+  if(game_board.isDraw())
+    return Code::DRAW;
+
+  return Code::CONTINUE;
+}
+
+//------------------------------------------------------------------------------
+CommandLib::PlayCommand::~PlayCommand()
+{
+
+}
+

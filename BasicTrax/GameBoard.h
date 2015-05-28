@@ -357,6 +357,18 @@ public:
   // @param file_name Filename (default is no filename)
   //
   void write(const std::string& file_name = "");
+
+  //----------------------------------------------------------------------------
+  // Method to let the AI do the next turn
+  //
+  void play();
+
+  //----------------------------------------------------------------------------
+  // Method to actually place the tile on the gameboard and toggle player ect
+  //
+  void placeTile(TilePtr tile_to_add);
+
+
 };
 
 #endif // GAMEBOARD_H

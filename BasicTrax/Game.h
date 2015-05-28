@@ -79,6 +79,13 @@ namespace GameLib
     //
     bool hasEmptyPositions(Position position) const;
 
+    //--------------------------------------------------------------------------
+    // Checks if the Tile has this position
+    //
+    //bool hasPosition(TilePtr tile);
+
+    //mutable Position position_to_return;
+
   public:
 
     //--------------------------------------------------------------------------

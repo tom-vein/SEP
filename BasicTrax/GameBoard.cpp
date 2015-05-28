@@ -22,6 +22,26 @@ GameBoard::GameBoard(const GameLib::Game& game, const std::string& file_name) :
     should_write_to_file_ = false;
 }
 
+//------------------------------------------------------------------------------
+void GameBoard::placeTile(TilePtr tile_to_add)
+{
+  game_.addTile(tile_to_add);
+
+  // Save all insertions of this turn
+  tried_insertions_.push_back(tile_to_add);
+  doForcedPlay(tile_to_add);
+
+  winner_ = result_checker_.determineWinner(game_);
+
+  game_.tooglePlayer();
+
+  if(should_write_to_file_)
+    write();
+
+
+  tried_insertions_.clear();
+  game_.resetNumOfPlacedTilesInCurrentTurn();
+}
 
 //------------------------------------------------------------------------------
 void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
@@ -56,24 +76,9 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
       canTileBePlaced(touching_tiles, tile_top_white);
       tile_to_add = tile_top_white;
     }
-
-    game_.addTile(tile_to_add);
-
-    // Save all insertions of this turn
-    tried_insertions_.push_back(tile_to_add);
-    doForcedPlay(tile_to_add);
-
-    winner_ = result_checker_.determineWinner(game_);
-
-    game_.tooglePlayer();
-
-    if(should_write_to_file_)
-      write();
-
-
-    tried_insertions_.clear();
-    game_.resetNumOfPlacedTilesInCurrentTurn();
+    placeTile(tile_to_add);
   }
+
   catch (MessageException& e)
   {
     for(std::vector<TilePtr>::iterator tried_insertions_iterator =
@@ -145,7 +150,6 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
     {
       game_.addTile(placeable_tile);
       tried_insertions_.push_back(placeable_tile);
-      winner_ = result_checker_.determineWinner(game_);
       doForcedPlay(placeable_tile);
     }
   }
@@ -199,7 +203,8 @@ const
         game_.getTouchingEdge(*position_iterator, tile_to_check->getPosition());
 
     touching_colors[touching_edge] = tile_to_check->getColorAtEdge(
-                                       TileTypeLib::getOppositeEdge(touching_edge));
+                                       TileTypeLib::getOppositeEdge(
+                                         touching_edge));
 
     for(std::map<TileTypeLib::Edge, Color>::iterator it_color =
         touching_colors.begin(); it_color != touching_colors.end(); it_color++)
@@ -719,4 +724,10 @@ void GameBoard::ArtificialIntelligence::determineAllTilesAtPosition(
   {
     all_tiles.push_back(std::shared_ptr<Tile>(new Tile(tile_type, position)));
   }
+}
+
+//------------------------------------------------------------------------------
+void GameBoard::play()
+{
+  placeTile(ai.determineNextTile(game_.getActivePlayer().getColor()));
 }
