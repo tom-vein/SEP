@@ -144,6 +144,10 @@ void GameBoard::doForcedPlay(TilePtr last_placed)
       {
         //nothing to do
       }
+      catch(InvalidPositionException& ex)
+      {
+        //nothing to do
+      }
     }
 
     if(number_of_placeable_tiles == 1)

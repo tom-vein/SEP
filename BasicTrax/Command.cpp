@@ -133,7 +133,7 @@ CommandLib::WhoAmICommand::WhoAmICommand()
 //------------------------------------------------------------------------------
 CommandLib::Code CommandLib::WhoAmICommand::execute(GameBoard &) const
 {
-  std::cout << CommandLib::WhoAmICommand::name_;
+  std::cout << CommandLib::WhoAmICommand::name_ << std::endl;
   return Code::CONTINUE;
 }
 
