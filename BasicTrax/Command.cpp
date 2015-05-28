@@ -88,6 +88,7 @@ CommandLib::DoTurnCommand::~DoTurnCommand()
 //------------------------------------------------------------------------------
 CommandLib::Code CommandLib::QuitCommand::execute(GameBoard&) const
 {
+  std::cout << "Bye!" << std::endl;
   return Code::QUIT;
 }
 
@@ -152,7 +153,7 @@ CommandLib::Code CommandLib::PlayCommand::execute(GameBoard& game_board) const
   }
   catch(MessageException& ex)
   {
-    std::cout << ex.what();
+    std::cout << ex.what() << std::endl;
   }
 
   if(game_board.hasWinner())

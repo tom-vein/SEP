@@ -28,3 +28,11 @@ int Position::getY() const
 {
   return y_;
 }
+
+//------------------------------------------------------------------------------
+std::string Position::toString() const
+{
+  std::ostringstream stream;
+      stream << "(" << x_ << "," << y_ << ")";
+      return stream.str();
+}

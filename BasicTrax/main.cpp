@@ -86,7 +86,6 @@ int main(int argc, char* argv[])
       }
       while(!command);
     }
-    std::cout << "Bye!" << std::endl;
     return Exit::SUCCESS;
   }
   catch(std::bad_alloc)

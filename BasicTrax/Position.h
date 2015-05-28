@@ -52,7 +52,6 @@ public:
   {
     return (x_ == other.x_ && y_ == other.y_) ? true : false;
   }
-    ;
 
   //----------------------------------------------------------------------------
   // Method checks if the other Position has a different x *or* y coordinate
@@ -61,7 +60,14 @@ public:
   {
     return (x_!= other.x_ || y_ != other.y_) ? true : false;
   }
-    ;
+
+  std::string toString() const;
+
+  void add(int x = 0, int y = 0)
+  {
+    x_ += x;
+    y_ += y;
+  }
 };
 
 #endif // POSITION_H
