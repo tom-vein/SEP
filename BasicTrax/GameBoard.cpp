@@ -729,5 +729,30 @@ void GameBoard::ArtificialIntelligence::determineAllTilesAtPosition(
 //------------------------------------------------------------------------------
 void GameBoard::play()
 {
-  placeTile(ai.determineNextTile(game_.getActivePlayer().getColor()));
+  TilePtr next_tile = ai.determineNextTile(game_.getActivePlayer().getColor());
+  placeTile(next_tile);
+  char shape;
+  switch(next_tile->getShape())
+  {
+    case TileTypeLib::Shape::CROSS:
+    {
+      shape = '+';
+      break;
+    }
+    case TileTypeLib::Shape::CURVE_TOP_LEFT_CORNER:
+    {
+      shape = '/';
+      break;
+    }
+    case TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER:
+    {
+      shape = '\\';
+      break;
+    }
+    default:
+      throw(MessageException("No such Shape!"));
+  }
+
+  std::cout << next_tile->getPosition().toString() << " " <<
+               shape << std::endl;
 }

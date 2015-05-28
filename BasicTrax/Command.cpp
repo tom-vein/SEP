@@ -152,7 +152,7 @@ CommandLib::Code CommandLib::PlayCommand::execute(GameBoard& game_board) const
   }
   catch(MessageException& ex)
   {
-    std::cout << ex.what();
+    std::cout << ex.what() << std::endl;
   }
 
   if(game_board.hasWinner())

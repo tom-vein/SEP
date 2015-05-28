@@ -58,6 +58,8 @@ throw(InvalidPositionException)
   {return (tile->getPosition() == position) ? true : false;});
   if(tiles_.size() != before)
     --num_of_placed_tiles_in_current_turn_;
+  else
+    throw(MessageException("No Tile with this position!"));
 }
 
 //------------------------------------------------------------------------------
@@ -68,6 +70,8 @@ void GameLib::Game::removeTile(TilePtr tile_to_remove)
   tiles_.erase(std::remove(tiles_.begin(), tiles_.end(), tile_to_remove), tiles_.end());
   if(tiles_.size() != before)
     --num_of_placed_tiles_in_current_turn_;
+  else
+    throw(MessageException("No such Tile!"));
 }
 
 //------------------------------------------------------------------------------
