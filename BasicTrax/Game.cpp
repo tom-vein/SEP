@@ -23,16 +23,15 @@ GameLib::Game::Game(const std::array<Player, 2>& players) :
 }
 
 //------------------------------------------------------------------------------
-TilePtr GameLib::Game::getTileByPosition(const Position& position,
+TilePtr GameLib::Game::getTileByPosition(Position position,
                                          int offset_x, int offset_y) const
 {
-  Position position_to_return(position.getX() + offset_x,
-                              position.getY() + offset_y);
+  position.add(offset_x, offset_y);
 
   std::vector<TilePtr>::const_iterator it = std::find_if(tiles_.begin(),
                                                          tiles_.end(),
                                                          [=](TilePtr tile)
-  {return (tile->getPosition() == position_to_return) ? true : false;});
+  {return (tile->getPosition() == position) ? true : false;});
   if(it != tiles_.end())
     return *it;
   return nullptr;

@@ -118,7 +118,7 @@ namespace GameLib
     // @return Returns a std::shared_ptr<Tile> pointing to the wanted tile
     //         or nullptr if no tile is at this position
     //
-    TilePtr getTileByPosition(const Position& position,
+    TilePtr getTileByPosition(Position position,
                               int offset_x = 0, int offset_y = 0) const;
 
     //--------------------------------------------------------------------------

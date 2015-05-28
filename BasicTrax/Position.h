@@ -62,6 +62,12 @@ public:
   }
 
   std::string toString() const;
+
+  void add(int x = 0, int y = 0)
+  {
+    x_ += x;
+    y_ += y;
+  }
 };
 
 #endif // POSITION_H
