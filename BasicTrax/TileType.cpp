@@ -96,7 +96,7 @@ const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(
 }
 
 //------------------------------------------------------------------------------
-Color TileTypeLib::TileType::getColorAtEdge(Edge edge)
+Color TileTypeLib::TileType::getColorAtEdge(Edge edge) const
 {
   switch(edge)
   {

@@ -85,7 +85,7 @@ namespace TileTypeLib
     // Getter Methods
     //
     Shape getShape() const;
-    Color getColorAtEdge(Edge edge);
+    Color getColorAtEdge(Edge edge) const;
 
     //--------------------------------------------------------------------------
     // method used before using this class to initialize all known tile types
