@@ -35,7 +35,7 @@ private:
   //----------------------------------------------------------------------------
   // tiletype of this specific tile
   //
-  TileTypeLib::TileType type_;
+  const TileTypeLib::TileType& type_;
 
   //----------------------------------------------------------------------------
   // Position in the gameboard of this tile
@@ -53,8 +53,12 @@ public:
   // Getter
   //
   const Position& getPosition() const {return position_;}
-  Color getColorAtEdge(TileTypeLib::Edge edge)
-  { return type_.getColorAtEdge(edge); }
+
+  Color getColorAtEdge(TileTypeLib::Edge edge) const
+  {
+    return type_.getColorAtEdge(edge);
+  }
+
   TileTypeLib::Shape getShape() const;
 
 };
