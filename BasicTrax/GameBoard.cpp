@@ -767,7 +767,8 @@ void GameBoard::play()
 {
   try
   {
-    TilePtr next_tile = ai.determineNextTile(game_.getActivePlayer().getColor());
+    TilePtr next_tile = ai.determineNextTile(
+                          game_.getActivePlayer().getColor());
 
     placeTile(next_tile);
     char shape;

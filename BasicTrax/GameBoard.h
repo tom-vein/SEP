@@ -320,6 +320,13 @@ private:
   bool checkTwoTiles(TilePtr tile_to_check, TilePtr other,
                      TileTypeLib::Edge touching_edge_of_tile_to_check) const;
 
+
+  //----------------------------------------------------------------------------
+  // Method to actually place the tile on the gameboard and toggle player ect
+  // @param tile that should be placed
+  //
+  void placeTile(TilePtr tile_to_add);
+
 public:
   //----------------------------------------------------------------------------
   // Constructor
@@ -363,10 +370,6 @@ public:
   //
   void play();
 
-  //----------------------------------------------------------------------------
-  // Method to actually place the tile on the gameboard and toggle player ect
-  //
-  void placeTile(TilePtr tile_to_add);
 
 
 };
