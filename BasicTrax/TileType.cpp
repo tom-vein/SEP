@@ -75,7 +75,7 @@ const TileTypeLib::TileType& TileTypeLib::TileType::getTileType(Shape shape,
       return tile_type;
   }
 
-  throw std::exception(); //Create better exception
+  throw(MessageException("No such tiletype!"));
 }
 
 //------------------------------------------------------------------------------
