@@ -45,7 +45,7 @@ namespace GameLib
     //--------------------------------------------------------------------------
     // Constant which indicates the maximum number of tiles
     //
-    static const unsigned int MAX_OF_TILES = 5;
+    static const unsigned int MAX_OF_TILES = 64;
 
     //--------------------------------------------------------------------------
     // Logs the number of all placed tiles in the current turn. This includes
