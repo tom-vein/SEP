@@ -25,6 +25,7 @@ GameBoard::GameBoard(const GameLib::Game& game, const std::string& file_name) :
 //------------------------------------------------------------------------------
 void GameBoard::placeTile(TilePtr tile_to_add)
 {
+
     game_.addTile(tile_to_add);
 
     // Save all insertions of this turn
@@ -81,13 +82,9 @@ void GameBoard::doTurn(const Position& position, TileTypeLib::Shape shape)
 
     catch (MessageException& e)
     {
-        for(std::vector<TilePtr>::iterator tried_insertions_iterator =
-            tried_insertions_.begin();
-            tried_insertions_iterator != tried_insertions_.end();
-            tried_insertions_iterator++)
+        for(TilePtr tile : tried_insertions_)
         {
-            game_.removeTile(*tried_insertions_iterator);
-            game_.tooglePlayer();
+            game_.removeTile(tile);
         }
         tried_insertions_.clear();
         std::cout << e.what() << std::endl;
@@ -667,6 +664,10 @@ determineWinningTile(const std::vector<TilePtr>& placeable_tiles)
         {
             //Nothing to do
         }
+        catch(NoTilesLeftException& e)
+        {
+            //Nothing to do
+        }
 
         //Placed tiles must be removed otherwise the play would not be valid
         std::vector<TilePtr> tiles_to_remove =
@@ -744,30 +745,46 @@ void GameBoard::ArtificialIntelligence::determineAllTilesAtPosition(
 //------------------------------------------------------------------------------
 void GameBoard::play()
 {
-    TilePtr next_tile = ai.determineNextTile(game_.getActivePlayer().getColor());
-    placeTile(next_tile);
-    char shape;
-    switch(next_tile->getShape())
+    try
     {
-    case TileTypeLib::Shape::CROSS:
-    {
-        shape = '+';
-        break;
+        TilePtr next_tile = ai.determineNextTile(game_.getActivePlayer().getColor());
+
+        placeTile(next_tile);
+        char shape;
+        switch(next_tile->getShape())
+        {
+        case TileTypeLib::Shape::CROSS:
+        {
+            shape = '+';
+            break;
+        }
+        case TileTypeLib::Shape::CURVE_TOP_LEFT_CORNER:
+        {
+            shape = '/';
+            break;
+        }
+        case TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER:
+        {
+            shape = '\\';
+            break;
+        }
+        default:
+            throw(MessageException("No such Shape!"));
+        }
+
+        std::cout << next_tile->getPosition().toString() << " " <<
+                     shape << std::endl;
+
     }
-    case TileTypeLib::Shape::CURVE_TOP_LEFT_CORNER:
+    catch (MessageException& e)
     {
-        shape = '/';
-        break;
-    }
-    case TileTypeLib::Shape::CURVE_TOP_RIGHT_CORNER:
-    {
-        shape = '\\';
-        break;
-    }
-    default:
-        throw(MessageException("No such Shape!"));
+        for(TilePtr tile : tried_insertions_)
+        {
+            game_.removeTile(tile);
+        }
+        tried_insertions_.clear();
+        std::cout << e.what() << std::endl;
+        game_.resetNumOfPlacedTilesInCurrentTurn();
     }
 
-    std::cout << next_tile->getPosition().toString() << " " <<
-                 shape << std::endl;
 }
