@@ -236,21 +236,67 @@ private:
     bool isDraw(const GameLib::Game& game) const;
   };
 
+  //----------------------------------------------------------------------------
+  // Artificial Intelligence Class
+  // Used for determing next tile
+  //
   class ArtificialIntelligence
   {
   private:
+     //-------------------------------------------------------------------------
+     // game_board_ is needed in this class for determing the next tile
+     //
      GameBoard& game_board_;
+
+     //-------------------------------------------------------------------------
+     // this method determins the winning tile and returns it in association
+     // with the player color that wins. If no one wins Color None is returned
+     // and an null pointer
+     // @param placeable_tiles includes all tiles that can be placed
+     // @return the winning tile in association with the player color
+     //         the color is None if no one wins.
+     //
      std::pair<Color, TilePtr> determineWinningTile(
          const std::vector<TilePtr>& placeable_tiles);
+
+     //-------------------------------------------------------------------------
+     // this method determines all tiles that can be placed around the
+     // passed tile pointer edge
+     // @param edge around here all placeable tiles are determined
+     // @param placeable_tiles the placeable tiles are stored in this vector
+     //
      void determinePlaceableTiles(TilePtr edge,
                                   std::vector<TilePtr>& placeable_tiles) const;
+
+     //-------------------------------------------------------------------------
+     // all tiles around the passed tile pointer edge are determined within this
+     // method
+     // @param edge around here all tiles are determined
+     // @param all_tiles the tiles are stored within this vector
+     //
      void determineAllTiles(TilePtr edge,
                             std::vector<TilePtr>& all_tiles) const;
+
+     //-------------------------------------------------------------------------
+     // all tiles around the passed position are determined within this method
+     // @param position around this position all tiles are gathered
+     // @param all_tiles all tiles are given to this vector
+     //
      void determineAllTilesAtPosition(const Position& position,
                                       std::vector<TilePtr>& all_tiles) const;
   public:
+     //-------------------------------------------------------------------------
+     // Constructor
+     //
      ArtificialIntelligence(GameBoard& game_board) :
        game_board_(game_board) {}
+
+     //-------------------------------------------------------------------------
+     // The next recommended tile will be determined in this method. It will be
+     // recommended for the passed player
+     // @param player the player for whom the next tile should be determined
+     // @return the recommended tile
+     //
      TilePtr determineNextTile(Color player);
 
   };

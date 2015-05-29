@@ -633,9 +633,6 @@ TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player)
       if(prevents_other_players_winning)
         return tile;
     }
-
-    //TODO if nothing can prevent - remove the other_player_winning_tiles
-    //from all_placeable_tiles
   }
 
   std::random_device rn;
@@ -736,7 +733,7 @@ void GameBoard::ArtificialIntelligence::determinePlaceableTiles(
 void GameBoard::ArtificialIntelligence::determineAllTiles(
     TilePtr edge, std::vector<TilePtr>& all_tiles) const
 {
-  const Position& position = edge->getPosition(); //TODO look if works
+  const Position& position = edge->getPosition();
 
   const Position right_pos(position.getX() + 1, position.getY());
   const Position left_pos(position.getX() - 1, position.getY());
