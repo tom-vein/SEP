@@ -85,6 +85,7 @@ CommandLib::DoTurnCommand::~DoTurnCommand()
 //------------------------------------------------------------------------------
 CommandLib::Code CommandLib::QuitCommand::execute(GameBoard&) const
 {
+  std::cout << "Bye!" << std::endl;
   return Code::QUIT;
 }
 
