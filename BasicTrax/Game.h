@@ -212,6 +212,7 @@ namespace GameLib
     int getMinYValue() const;
     unsigned int getTileCount() const;
     static unsigned int getMaxOfTiles();
+    unsigned int getTilesSize() {return tiles_.size();}
   };
 }
 

@@ -331,5 +331,23 @@ public:
   virtual ~WrongParameterException() {}
 };
 
+//----------------------------------------------------------------------------
+// This exception informs that no tile can be placed
+//
+class NoPlaceableTileException : public MessageException
+{
+public:
+  //--------------------------------------------------------------------------
+  // Constructor
+  //
+  NoPlaceableTileException(const char* message) :
+    MessageException(message) {}
+
+  //--------------------------------------------------------------------------
+  // Destructor
+  //
+  virtual ~NoPlaceableTileException() {}
+};
+
 #endif // EXCEPTIONS
 

@@ -579,6 +579,14 @@ TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player)
   std::vector<TilePtr> all_placeable_tiles;
   std::vector<TilePtr> other_player_winning_tiles;
 
+  if(game_board_.game_.getTilesSize() == 0)
+  {
+    TileTypeLib::TileType tile_type =
+        TileTypeLib::TileType::getTileType(TileTypeLib::Shape::CROSS,
+                                           Color::RED);
+    return std::shared_ptr<Tile>(new Tile(tile_type, Position(0, 0)));
+  }
+
   for(std::vector<TilePtr>::iterator it_edges = edges.begin();
       it_edges != edges.end(); ++it_edges)
   {
@@ -599,12 +607,7 @@ TilePtr GameBoard::ArtificialIntelligence::determineNextTile(Color player)
   }
 
   if(all_placeable_tiles.empty())
-  {
-    TileTypeLib::TileType tile_type =
-        TileTypeLib::TileType::getTileType(TileTypeLib::Shape::CROSS,
-                                           Color::RED);
-    return std::shared_ptr<Tile>(new Tile(tile_type, Position(0, 0)));
-  }
+    throw NoPlaceableTileException("no further tile can be placed");
 
   if(!other_player_winning_tiles.empty())
   {
