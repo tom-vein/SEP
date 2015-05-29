@@ -783,8 +783,8 @@ void GameBoard::play()
             game_.removeTile(tile);
         }
         tried_insertions_.clear();
-        std::cout << e.what() << std::endl;
         game_.resetNumOfPlacedTilesInCurrentTurn();
+        play();
     }
 
 }
